@@ -86,6 +86,12 @@ Class Player(){
     }
 }
 ```
+### deck.js
+```
+Class Deck(){
+    this.deck = []
+}
+```
 
 
 ## States y States Transitions
