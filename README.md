@@ -104,7 +104,7 @@ Class Player(){
 ```
 
 
-## Task
+## Tasks
 - Card - Define class properties
 - Card - loadImage
 - Card - getFileName
@@ -116,6 +116,7 @@ Class Player(){
 - Main - removeGameScreen
 - Main - createGameOverScreen
 - Main - removeGameOverScreen
+- Main - createHTMLElement
 - Main - addEventListeners
 - Game - Define class properties
 - Game - start
