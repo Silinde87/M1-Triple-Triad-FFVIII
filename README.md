@@ -112,21 +112,24 @@ Class Game(gameScreen){
 ```
 ### player.js
 ```
-Class Player(){
+Class Player(name){
     this.cardsInHand = [];
     this.name;
     this.numCards;
 
     updateNumCards(){
     }
+    getRandomCards(){
+    }
 }
 ```
 ### card.js
 ```
 Class Card(){
+    this.card;
     this.id;
     this.name;
-    this.rank = [TOP,LEFT,RIGHT,BOTTOM];
+    this.ranks = [TOP,LEFT,RIGHT,BOTTOM];
     this.backgroundColor
     this.imgSrc;
     this.positionOnBoard;
@@ -137,7 +140,7 @@ Class Card(){
     getFileName(){        
     }
 
-    loadCardRanks(){
+    loadCardRanks(card){
     }
 
     drawCard(){

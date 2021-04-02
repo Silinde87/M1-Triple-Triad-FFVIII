@@ -12,26 +12,31 @@ class Game {
 		this.opponentNumCardsElem;
 	}
 
-	start() {}
+	start() {
+		//test player creation
+		let testPlayer = new Player("Player One");
+        debugger
+		console.log(testPlayer);
+	}
 	gameOver() {}
 
 	updateGameNumCardsElements() {}
 
 	showPlayerShiftElem() {}
-    removePlayerShiftelem() {}
-    swapPlayerShiftElem(){}
+	removePlayerShiftelem() {}
+	swapPlayerShiftElem() {}
 
-    showCursorGameElem(){}
-    removeCursorGameElem(){}
-    updatePositionCursorGameElem(){}
+	showCursorGameElem() {}
+	removeCursorGameElem() {}
+	updatePositionCursorGameElem() {}
 
-    showGameCardLabelElem(){}
-    removeGameCardLabelElem(){}
-    updateGameCardLabelElem(){}
+	showGameCardLabelElem() {}
+	removeGameCardLabelElem() {}
+	updateGameCardLabelElem() {}
 
-    draftCardsToHand(){}
-    chooseCardOnHand(){}
-    moveCardToGameBoard(){}
+	draftCardsToHand() {}
+	chooseCardOnHand() {}
+	moveCardToGameBoard() {}
 
-    handleKeydown(){}
+	handleKeydown() {}
 }
