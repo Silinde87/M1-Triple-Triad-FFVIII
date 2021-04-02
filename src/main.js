@@ -4,7 +4,8 @@ let gameScreen;
 let gameOverScreen;
 let gameStatus = "initial"; //Allows switch the "return key" behaviour
 
-// Splash screen
+// SPLASH SCREEN //
+// Create splash
 createSplashScreen = () => {
 	splashScreen = createHtmlElement(
 		"main",
@@ -21,9 +22,11 @@ createSplashScreen = () => {
 	);
 	document.body.appendChild(splashScreen);
 };
+// Remove Splash
 removeSplashScreen = () => splashScreen.remove();
 
-// Game screen
+// GAME SCREEN //
+// Create game
 createGameScreen = () => {
 	gameStatus = "started";
 
@@ -32,27 +35,43 @@ createGameScreen = () => {
 		"game-screen-container",
 		["background"],
 		`<div id="canvas-container">
-            <canvas id="game-canvas"></canvas>
             <header>
                 <div id="turn-game-selector">X</div>
             </header>
+            <canvas id="game-canvas"></canvas>
             <footer>
-                <div id="opponent-num-cards">5</div>
-                <div id="login-label" class="info-label">
+                <div id="opponent-num-cards" class="num-card-label">5</div>
+                <div id="card-game-label" class="info-label">
                     <img class="info-text"src="/assets/img/info-text.png" alt="info-label">
-                    <p id="card-game"></p>
+                    <p id="card-game-name"></p>
                 </div>
-                <div id="player-num-cards">5</div>
+                <div id="player-num-cards" class="num-card-label">5</div>
             </footer>
         </div>            
     `
 	);
 	document.body.appendChild(gameScreen);
 };
+// Remove game
 removeGameScreen = () => gameScreen.remove();
 
-// Game Over screen
-createGameOverScreen = (result) => {};
+// GAME OVER SCREEN //
+// Create game over
+createGameOverScreen = (result) => {
+	gameStatus = "ended";
+
+	gameOverScreen = createHtmlElement(
+		"main",
+		"gameover-screen-container",
+		["background"],
+		`<div>
+            <img id='result-label' src='/assets/img/label-${result}.png' alt='result-label'>
+            <div>Press ENTER to restart</div>
+        </div>`
+	);
+	document.body.appendChild(gameOverScreen);
+};
+// Remove game over
 removeGameOverScreen = () => gameOverScreen.remove();
 
 // Creates DOM elements with many configuration optional parameters
@@ -89,8 +108,10 @@ startGame = () => {
 
 endGame = () => {
 	removeGameScreen();
-	createGameOverScreen(result);
+	createGameOverScreen('lose');
 };
+
+// EVENTS LISTENERS //
 
 window.addEventListener("load", createSplashScreen);
 
@@ -100,6 +121,10 @@ window.addEventListener("keydown", (e) => {
 		switch (gameStatus) {
 			case "initial":
 				startGame();
+				break;
+			case "started":
+				// Testing removGameScreen and createGameOverScreen. Logic goes here
+				endGame();
 				break;
 		}
 	}
