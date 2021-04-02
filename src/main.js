@@ -12,10 +12,10 @@ createSplashScreen = () => {
 		"splash-screen-container",
 		["background"],
 		`<div id="login-label" class="info-label">
-            <img class="info-text"src="/assets/img/info-text.png" alt="info-label">
+            <img class="info-text"src="../assets/img/info-text.png" alt="info-label">
             <p>Do you want to play?</p>
             <ul>
-                <li><img class="cursor" src="/assets/img/cursor.png" alt="cursor">Yes</li>
+                <li><img class="cursor" src="../assets/img/cursor.png" alt="cursor">Yes</li>
             </ul>
         </div>
     `
@@ -42,7 +42,7 @@ createGameScreen = () => {
             <footer>
                 <div id="opponent-num-cards" class="num-card-label">5</div>
                 <div id="card-game-label" class="info-label">
-                    <img class="info-text"src="/assets/img/info-text.png" alt="info-label">
+                    <img class="info-text"src="../assets/img/info-text.png" alt="info-label">
                     <p id="card-game-name"></p>
                 </div>
                 <div id="player-num-cards" class="num-card-label">5</div>
@@ -65,7 +65,7 @@ createGameOverScreen = (result) => {
 		"gameover-screen-container",
 		["background"],
 		`<div>
-            <img id='result-label' src='/assets/img/label-${result}.png' alt='result-label'>
+            <img id='result-label' src='../assets/img/label-${result}.png' alt='result-label'>
             <div>Press ENTER to restart</div>
         </div>`
 	);

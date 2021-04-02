@@ -23,7 +23,7 @@ ul li {
     align-self: flex-start;
 }
 .info-label {
-	background-image: url("/assets/img/info-box.png");
+	background-image: url("../assets/img/info-box.png");
 	background-repeat: no-repeat;
 	border-radius: 5px;
 }
@@ -32,7 +32,7 @@ ul li {
     margin-right: 10px;
 }
 .background {
-	background-image: url("/assets/img/board-mat.jpg");
+	background-image: url("../assets/img/board-mat.jpg");
 	background-size: contain;
 	background-repeat: no-repeat;
 	width: 1536px;
@@ -64,6 +64,7 @@ ul li {
 #game-canvas{
     width: 1536px;
     height: 600px;
+    border: 1px solid greenyellow;
 }
 #canvas-container header{
     height: 146px;
