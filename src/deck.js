@@ -2,7 +2,7 @@
 /* ranks: [Top, Left, Right, Bottom] */
 class Deck {
 	constructor() {
-		this.deck = [
+		this.cardList = [
 			{ id: 1, name: "Geezard", ranks: [1, 5, 4, 1] },
 			{ id: 2, name: "Funguar", ranks: [5, 3, 1, 1] },
 			{ id: 3, name: "Bite Bug", ranks: [1, 5, 3, 3] },

@@ -112,7 +112,7 @@ Class Game(gameScreen){
 ```
 ### player.js
 ```
-Class Player(name){
+Class Player(name, deck){
     this.cardsInHand = [];
     this.name;
     this.numCards;
@@ -125,7 +125,7 @@ Class Player(name){
 ```
 ### card.js
 ```
-Class Card(){
+Class Card(deck){
     this.card;
     this.id;
     this.name;
@@ -143,7 +143,7 @@ Class Card(){
     loadCardRanks(card){
     }
 
-    drawCard(){
+    drawCard(deck){
     }
 
     fillCardBackground(){
@@ -159,7 +159,7 @@ Class Card(){
 ### deck.js
 ```
 Class Deck(){
-    this.deck = []
+    this.cardList = []
 }
 ```
 

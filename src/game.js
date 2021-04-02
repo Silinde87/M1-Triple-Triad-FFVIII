@@ -10,13 +10,15 @@ class Game {
 		this.gameBoardMatrix = Array.from(Array(3), () => new Array(3));
 		this.playerNumCardsElem;
 		this.opponentNumCardsElem;
+        this.deck = new Deck().cardList;
 	}
 
 	start() {
 		//test player creation
-		let testPlayer = new Player("Player One");
-        debugger
-		console.log(testPlayer);
+		this.player = new Player("player", this.deck);
+        this.opponent = new Player('opponent', this.deck)
+        console.log(this.player);
+        console.log(this.opponent);
 	}
 	gameOver() {}
 

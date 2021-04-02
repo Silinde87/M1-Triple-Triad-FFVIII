@@ -1,6 +1,6 @@
 class Card {
-	constructor() {
-		this.card = this.drawCard();
+	constructor(deck) {
+		this.card = this.drawCard(deck);
 		this.id = this.card.id;
 		this.cardName = this.card.name;
 		this.ranks = this.loadCardRanks(this.card);
@@ -20,10 +20,9 @@ class Card {
 		}
         return ranks;
 	}
-	drawCard() {
-		const deck = new Deck();        
-		const index = Math.floor(Math.random() * deck.deck.length);
-		return deck.deck[index];
+	drawCard(deck) {        
+		const index = Math.floor(Math.random() * deck.length);
+		return deck[index];
 	}
 	fillCardBackground() {}
 	flipCard() {}
