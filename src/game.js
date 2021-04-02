@@ -10,19 +10,29 @@ class Game {
 		this.gameBoardMatrix = Array.from(Array(3), () => new Array(3));
 		this.playerNumCardsElem;
 		this.opponentNumCardsElem;
-        this.deck = new Deck().cardList;
+		this.deck = new Deck().cardList;
 	}
 
 	start() {
-		//test player creation
-		this.player = new Player("player", this.deck);
-        this.opponent = new Player('opponent', this.deck)
-        console.log(this.player);
-        console.log(this.opponent);
+		//Number of cards elements
+		this.playerNumCardsElem = this.gameScreen.querySelector("#player-num-cards");
+		this.opponentNumCardsElem = this.gameScreen.querySelector("#opponent-num-cards");
+
+		//Get and create the canvas and it's content
+		this.canvas = this.gameScreen.querySelector("#game-canvas");
+		this.ctx = this.canvas.getContext("2d");
+
+		//Player creation
+		this.player = new Player("player", this.deck, this.canvas);
+		this.opponent = new Player("opponent", this.deck, this.canvas);
+		this.wichPlayerIsUp = this.player.name;
+
+		//TEST
+		this.player.cardsInHand[1].drawImageCard();
 	}
 	gameOver() {}
 
-	updateGameNumCardsElements() {}
+	updateGameNumCardsElements(gameScreen) {}
 
 	showPlayerShiftElem() {}
 	removePlayerShiftelem() {}

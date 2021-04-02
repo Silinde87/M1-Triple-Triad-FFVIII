@@ -68,6 +68,7 @@ Class Game(gameScreen){
     this.gameBoardMatrix = [];
     this.playerNumCardsElem = HTMLElem;
     this.opponentNumCardsElem = HTMLElem;
+    this.deck = new Deck().cardList;
 
     start(){        
     }
@@ -75,7 +76,7 @@ Class Game(gameScreen){
     gameOver(){        
     }
 
-    updateGameNumCardsElems(){        
+    updateGameNumCardsElems(gameScreen){        
     }
 
     showPlayerShiftElem(){
@@ -112,7 +113,9 @@ Class Game(gameScreen){
 ```
 ### player.js
 ```
-Class Player(name, deck){
+Class Player(name, deck, canvas){
+    this.deck;
+    this.canvas;
     this.cardsInHand = [];
     this.name;
     this.numCards;
@@ -125,7 +128,7 @@ Class Player(name, deck){
 ```
 ### card.js
 ```
-Class Card(deck){
+Class Card(deck, canvas){
     this.card;
     this.id;
     this.name;
@@ -134,8 +137,10 @@ Class Card(deck){
     this.imgSrc;
     this.positionOnBoard;
     this.playerOwner;
+    this.canvas;
+    this.ctx;
 
-    loadImage(){        
+    drawImageCard(){        
     }
     getFileName(){        
     }
@@ -143,7 +148,7 @@ Class Card(deck){
     loadCardRanks(card){
     }
 
-    drawCard(deck){
+    getCard(deck){
     }
 
     fillCardBackground(){
