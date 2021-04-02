@@ -8,10 +8,19 @@ The player with the most cards on the board wins the game.
 
 ## MVP (DOM - CANVAS)
 Player vs player plays the card game with a keyboard.
+Without "hand cursor", just only changing card borders. With background solid color.
+Without game card name label.
+Without animations. Card disappear from hand and appears at gameboard.
 
 
 ## Backlog
-- todo
+- Define classes and objects
+- Implement Game Logic for player vs player
+- Create animations for card movements
+- Add music and sound effects
+- Implement Random IA for player vs IA
+- Implement realistic IA
+- Add mouse support
 
 
 ## Data structure
@@ -49,8 +58,10 @@ Class Game(gameScreen){
     this.player;
     this.gameIsOver = false;
     this.whichPlayerIsUp;
+    this.gameBoardMatrix = [];
     this.playerNumCardsElem = HTMLElem;
     this.opponentNumCardsElem = HTMLElem;
+    this.status; //Allows switch the "return key" behaviour
 
     start(){        
     }
@@ -58,7 +69,38 @@ Class Game(gameScreen){
     gameOver(){        
     }
 
-    updateGameNumCards(){        
+    updateGameNumCardsElems(){        
+    }
+
+    showPlayerShiftElem(){
+    }
+    removePlayerShiftElem(){
+    }
+    swapPlayerShiftElem(){
+    }
+
+    showCursorGameElem(){
+    }
+    removeCursorGameElem(){
+    }
+    updatePositionCursorGameElem(){
+    }
+
+    showGameCardLabelElem(){
+    }
+    removeGameCardLabelElem(){
+    }
+    updateGameCardLabelElem(){
+    }
+
+    draftCardsToHand(){
+    }
+    chooseCardOnHand(){
+    }
+    moveCardToGameBoard(){
+    }
+
+    handleKeyDown(){
     }
 }
 ```
@@ -66,13 +108,16 @@ Class Game(gameScreen){
 ```
 Class Player(){
     this.cardsInHand = [];
-    this.playerName;
-    this.playerNumCards;
+    this.name;
+    this.numCards;
+
+    updatePlayerNumCards(){
+    }
 }
 ```
 ### card.js
 ```
-Class Player(){
+Class Card(){
     this.idCard;
     this.cardName;
     this.rank = [TOP,LEFT,RIGHT,BOTTOM];
@@ -83,6 +128,21 @@ Class Player(){
     loadImage(){        
     }
     getFileName(){        
+    }
+
+    loadCardRanks(){
+    }
+
+    drawCard(){
+    }
+
+    fillCardBackground(){
+    }
+
+    flipCard(){
+    }
+
+    compareRank(){
     }
 }
 ```
@@ -114,7 +174,13 @@ Class Deck(){
 - Card - Define class properties
 - Card - loadImage
 - Card - getFileName
+- Card - loadCardRanks
+- Card - drawCard
+- Card - fillCardBackground
+- Card - flipCard
+- Card - compareRank
 - Player - Define class properties
+- Player - updatePlayerNumCards
 - Main - Define properties
 - Main - createSplashScreen
 - Main - removeSplashScreen
@@ -127,8 +193,14 @@ Class Deck(){
 - Game - Define class properties
 - Game - start
 - Game - gameOver
-- Game - updateGameNumCards
-
+- Game - updateGameNumCardsElems
+- Game - Handle CardName Element
+- Game - Handle PlayerShift Element
+- Game - Handle CursorGame Element
+- Game - draftCardsToHand
+- Game - chooseCardOnHand
+- Game - moveCardToGameBoard
+- Game - handleKeyDown
 
 
 ## Links
