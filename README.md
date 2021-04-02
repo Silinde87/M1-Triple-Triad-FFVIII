@@ -30,6 +30,7 @@ const game = new Game();
 const splashScreen = HTMLElement;
 const gameScreen = HTMLElement;
 const gameOverScreen = HTMLElement;
+let gameStatus; //Allows switch the "return key" behaviour
 
 createSplashScreen(){
 }
@@ -48,6 +49,11 @@ removeGameOverScreen(){
 
 createHTMLElement(){    
 }
+
+startGame(){
+}
+endGame(){
+}
 ```
 ### game.js
 ```
@@ -56,12 +62,12 @@ Class Game(gameScreen){
     this.ctx;
     this.gameScreen;
     this.player;
+    this.opponent;
     this.gameIsOver = false;
     this.whichPlayerIsUp;
     this.gameBoardMatrix = [];
     this.playerNumCardsElem = HTMLElem;
     this.opponentNumCardsElem = HTMLElem;
-    this.status; //Allows switch the "return key" behaviour
 
     start(){        
     }
@@ -100,7 +106,7 @@ Class Game(gameScreen){
     moveCardToGameBoard(){
     }
 
-    handleKeyDown(){
+    handleKeydown(){
     }
 }
 ```
@@ -111,16 +117,17 @@ Class Player(){
     this.name;
     this.numCards;
 
-    updatePlayerNumCards(){
+    updateNumCards(){
     }
 }
 ```
 ### card.js
 ```
 Class Card(){
-    this.idCard;
-    this.cardName;
+    this.id;
+    this.name;
     this.rank = [TOP,LEFT,RIGHT,BOTTOM];
+    this.backgroundColor
     this.imgSrc;
     this.positionOnBoard;
     this.playerOwner;
@@ -142,7 +149,7 @@ Class Card(){
     flipCard(){
     }
 
-    compareRank(){
+    compareRank(rankToCompare){
     }
 }
 ```

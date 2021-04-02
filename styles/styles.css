@@ -1,6 +1,100 @@
+/* Resets */
 html,
-body{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+body {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	height: 100vh;
+	width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+ul li {
+	list-style-type: none;
+    display: flex;
+}
+
+/* Common Styles */
+.info-text {
+	width: 40px;
+	height: 17px;
+	margin: 2px 5px;
+    align-self: flex-start;
+}
+.info-label {
+	background-image: url("/assets/img/info-box.png");
+	background-repeat: no-repeat;
+	border-radius: 5px;
+}
+.cursor {
+	height: 20px;
+    margin-right: 10px;
+}
+.background {
+	background-image: url("/assets/img/board-mat.jpg");
+	background-size: contain;
+	background-repeat: no-repeat;
+	width: 1536px;
+	height: 896px;
+}
+
+/* Splash Screen */
+#splash-screen-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+#login-label {
+	background-size: 400px 150px;
+	width: 400px;
+	height: 150px;
+	color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* Game Screen */
+#canvas-container{
+    width: 100%;
+    height: 150px;
+}
+#game-canvas{
+    width: 1536px;
+    height: 600px;
+}
+#canvas-container header{
+    height: 146px;
+    z-index: 99;
+}
+#canvas-container footer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 99;
+}
+.num-card-label{
+    font-size: 50px;
+    color: white;
+}
+#turn-game-selector{
+    font-size: 50px;
+    color: white;
+}
+#card-game-label{
+    background-size: 400px 90px;
+	width: 400px;
+	height: 90px;
+}
+
+/* Game Over Screen */
+#gameover-screen-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+    text-align: center;
+    color: red;
+    font-size: 50px;
 }
