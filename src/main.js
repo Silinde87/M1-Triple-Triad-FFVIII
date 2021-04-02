@@ -12,10 +12,10 @@ createSplashScreen = () => {
 		"splash-screen-container",
 		["background"],
 		`<div id="login-label" class="info-label">
-            <img class="info-text"src="../assets/img/info-text.png" alt="info-label">
+            <img class="info-text"src="./../assets/img/info-text.png" alt="info-label">
             <p>Do you want to play?</p>
             <ul>
-                <li><img class="cursor" src="../assets/img/cursor.png" alt="cursor">Yes</li>
+                <li><img class="cursor" src="./../assets/img/cursor.png" alt="cursor">Yes</li>
             </ul>
         </div>
     `
