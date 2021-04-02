@@ -10,7 +10,6 @@ class Game {
 		this.gameBoardMatrix = Array.from(Array(3), () => new Array(3));
 		this.playerNumCardsElem;
 		this.opponentNumCardsElem;
-		this.gameStatus; //allows switch "return key" behaviour
 	}
 
 	start() {}
