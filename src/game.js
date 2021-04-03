@@ -11,6 +11,20 @@ class Game {
 		this.playerNumCardsElem;
 		this.opponentNumCardsElem;
 		this.deck = new Deck().cardList;
+		this.playerHandCoordinates = [
+			{ x: 1070, y: 30 }, // First Card
+			{ x: 1070, y: 130 }, // Second Card
+			{ x: 1070, y: 230 }, // Third Card
+			{ x: 1070, y: 330 }, // Fourth Card
+			{ x: 1070, y: 430 }, // Fifth Card
+		];
+		this.opponentHandCoordinates = [
+			{ x: 60, y: 30 }, // First Card
+			{ x: 60, y: 130 }, // Second Card
+			{ x: 60, y: 230 }, // Third Card
+			{ x: 60, y: 330 }, // Fourth Card
+			{ x: 60, y: 430 }, // Fifth Card
+		];
 	}
 
 	start() {
@@ -35,11 +49,11 @@ class Game {
 		this.opponent = new Player("opponent", this.deck, this.canvas);
 		this.wichPlayerIsUp = this.player.name;
 
-		///// TESTS /////
-		//TEST DRAW IMAGE
-		this.player.cardsInHand[1].drawImageCard();
-		//this.opponent.cardsInHand[1].drawImageCard();
+		//Draft cards
+		this.draftCardsToHand(this.player);
+		this.draftCardsToHand(this.opponent);
 
+		///// TESTS /////
 		//TEST HANDLE CARD NAME
 		this.updateGameCardLabelElem(this.player.cardsInHand[1].cardName);
 		//this.updateGameCardLabelElem(this.opponent.cardsInHand[1].cardName);
@@ -51,7 +65,7 @@ class Game {
 		this.updateGameNumCardsElements();
 
 		//TEST SWAP SHIFT ELEMENT
-		//this.swapPlayersShift();
+		this.swapPlayersShift();
 	}
 	gameOver() {}
 
@@ -91,16 +105,30 @@ class Game {
 	updatePositionCursorGameElem() {}
 
 	showGameCardLabelElem() {
-		document.querySelector("#card-game-label").style.visibility = 'visible';
+		document.querySelector("#card-game-label").style.visibility = "visible";
 	}
 	removeGameCardLabelElem() {
-		document.querySelector("#card-game-label").style.visibility = 'hidden';
+		document.querySelector("#card-game-label").style.visibility = "hidden";
 	}
 	updateGameCardLabelElem(cardName) {
 		this.gameScreen.querySelector("#card-game-name").innerHTML = cardName;
 	}
 
-	draftCardsToHand() {}
+	draftCardsToHand(playerToDraft) {
+		for (let i = 0; i < 5; i++) {
+			let x = this.playerHandCoordinates[i].x;
+			let y = this.playerHandCoordinates[i].y;
+			if (playerToDraft.name === "opponent") {
+				x = this.opponentHandCoordinates[i].x;
+				y = this.opponentHandCoordinates[i].y;
+			}
+
+			playerToDraft.cardsInHand[i].drawImageCard(x, y);
+			//TO FIX: SETTIMEOUT DOESNT WORKS
+			//setTimeout(playerToDraft.cardsInHand[i].drawImageCard.bind(playerToDraft.cardsInHand[i]), 1000, x, y);
+		}
+	}
+
 	chooseCardOnHand() {}
 	moveCardToGameBoard() {}
 

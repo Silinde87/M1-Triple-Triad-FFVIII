@@ -160,6 +160,8 @@ Class Card(deck, canvas, playerOwner){
     }
     drawRanksCard() {        
     }
+    getRankFileName(){        
+    }
 
     flipCard(){
     }
