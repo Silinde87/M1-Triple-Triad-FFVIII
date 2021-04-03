@@ -68,33 +68,33 @@ p {
 #login-label {
 	background-size: 400px 150px;
 	width: 400px;
-	height: 150px;
-	
+	height: 150px;	
 	display: flex;
 	align-items: center;
 	flex-direction: column;
 }
 
 /* Game Screen */
-#canvas-container {
-	width: 100%;
-	height: 100%;
+#game-screen-container{
+	display: flex;
+	flex-direction: column;
 }
-#game-canvas {
-	width: 100%;
-	height: 86%;
-	border: 1px solid greenyellow;
+#canvas-container{
+	flex: 1 1 auto;
 }
-#canvas-container header {
-	height: 7%;
+#game-screen-container header {
+	flex: 0 1 auto;
 	z-index: 99;
 }
-#canvas-container footer {
-	height: 6%;
+#game-screen-container footer {
+	flex: 0 1 50px;
 	z-index: 99;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+}
+#game-canvas {
+	border: 1px solid greenyellow;
 }
 .num-card-label {
 	font-size: 2rem;
@@ -116,6 +116,7 @@ p {
 	font-size: 3rem;
 	margin: 0px;
 }
+
 
 
 /* Game Over Screen */

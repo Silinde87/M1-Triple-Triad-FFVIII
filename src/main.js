@@ -34,20 +34,20 @@ createGameScreen = () => {
 		"main",
 		"game-screen-container",
 		["background"],
-		`<div id="canvas-container">
-            <header>
-                <div id="turn-game-selector">X</div>
-            </header>
-            <canvas id="game-canvas"></canvas>
-            <footer>
-                <div id="opponent-num-cards" class="num-card-label"><span>5</div>
-                <div id="card-game-label" class="info-label">
-                    <img class="info-text"src="assets/img/info-text.png" alt="info-label">
-                    <p id="card-game-name">Sefirot</p>
-                </div>
-                <div id="player-num-cards" class="num-card-label">5</div>
-            </footer>
-        </div>            
+		`<header>
+			<div id="turn-game-selector">X</div>
+		</header>
+		<div id="canvas-container">
+			<canvas id="game-canvas"></canvas>
+		</div>    
+		<footer>
+			<div id="opponent-num-cards" class="num-card-label"><span>5</div>
+			<div id="card-game-label" class="info-label">
+			<img class="info-text"src="assets/img/info-text.png" alt="info-label">
+			<p id="card-game-name">Sefirot</p>
+			</div>
+			<div id="player-num-cards" class="num-card-label">5</div>
+		</footer>			  
     `
 	);
 	document.body.appendChild(gameScreen);
@@ -107,7 +107,7 @@ startGame = () => {
 
 endGame = () => {
 	removeGameScreen();
-	createGameOverScreen('lose');
+	createGameOverScreen("lose");
 };
 
 // EVENTS LISTENERS //

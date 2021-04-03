@@ -21,6 +21,14 @@ class Game {
 		//Get and create the canvas and it's content
 		this.canvas = this.gameScreen.querySelector("#game-canvas");
 		this.ctx = this.canvas.getContext("2d");
+		
+		//Set canvas dimensions
+		this.canvasContainer = this.gameScreen.querySelector("#canvas-container");
+		this.containerWidth = this.canvasContainer.clientWidth;
+		this.containerHeight = this.canvasContainer.clientHeight;
+		this.canvas.setAttribute("width", this.containerWidth);
+		this.canvas.setAttribute("height", this.containerHeight);
+
 
 		//Player creation
 		this.player = new Player("player", this.deck, this.canvas);

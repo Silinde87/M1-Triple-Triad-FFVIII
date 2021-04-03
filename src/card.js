@@ -1,5 +1,7 @@
 class Card {
 	constructor(deck, canvas) {
+		this.canvas = canvas;
+		this.ctx = this.canvas.getContext("2d");
 		this.card = this.getCard(deck);
 		this.id = this.card.id;
 		this.cardName = this.card.name;
@@ -8,15 +10,16 @@ class Card {
 		this.imgSrc = this.getFileName();
 		this.positionOnBoard;
 		this.playerOwner;
-		this.canvas = canvas;
-		this.ctx = this.canvas.getContext("2d");
+		this.x;
+		this.y;
 	}
 	drawImageCard() {
-		//debugger
 		const img = document.createElement("img");
 		//Test image
 		img.src = "https://i.imgur.com/nOYDmEE.png";
-		this.ctx.drawImage(img, 30, 30, 1000, 1000);
+		//ctx.clearRect(0, 0, canvas.width, canvas.height);
+		//this.ctx.drawImage(img, 30, 30, 50, 50);
+		this.ctx.fillRect(10,10, 200,200);
 	}
 
 	getFileName() {

@@ -142,6 +142,8 @@ Class Card(deck, canvas){
     this.playerOwner;
     this.canvas;
     this.ctx;
+    this.x;
+    this.y;
 
     drawImageCard(){        
     }
