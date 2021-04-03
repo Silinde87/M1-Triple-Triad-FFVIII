@@ -21,26 +21,35 @@ class Game {
 		//Get and create the canvas and it's content
 		this.canvas = this.gameScreen.querySelector("#game-canvas");
 		this.ctx = this.canvas.getContext("2d");
-		
+
 		//Set canvas dimensions
 		this.canvasContainer = this.gameScreen.querySelector("#canvas-container");
 		this.containerWidth = this.canvasContainer.clientWidth;
 		this.containerHeight = this.canvasContainer.clientHeight;
 		this.canvas.setAttribute("width", this.containerWidth);
 		this.canvas.setAttribute("height", this.containerHeight);
-
+		this.canvas.style.visibility = "visible";
 
 		//Player creation
 		this.player = new Player("player", this.deck, this.canvas);
 		this.opponent = new Player("opponent", this.deck, this.canvas);
 		this.wichPlayerIsUp = this.player.name;
 
-		//TEST
+		//TEST DRAW IMAGE
 		this.player.cardsInHand[1].drawImageCard();
+
+		//TEST UPDATE
+		this.player.cardsInHand.push(this.opponent.cardsInHand.pop());
+		this.updateGameNumCardsElements();
 	}
 	gameOver() {}
 
-	updateGameNumCardsElements(gameScreen) {}
+	updateGameNumCardsElements() {
+		this.player.updateNumCards();
+		this.playerNumCardsElem.innerHTML = `<img src="assets/img/scores/${this.player.numCards}.png" alt="Player Score">`;
+		this.opponent.updateNumCards();
+		this.opponentNumCardsElem.innerHTML = `<img src="assets/img/scores/${this.opponent.numCards}.png" alt="Opponent Score">`;
+	}
 
 	showPlayerShiftElem() {}
 	removePlayerShiftelem() {}
@@ -59,11 +68,9 @@ class Game {
 	moveCardToGameBoard() {}
 
 	fillGameBoardMatrix() {
-		//todo: Sets the real initial x & y from canvas.
-		//todo: Sets the real size card
-		const initX = 0;
-		const initY = 0;
-		const size = 256;
+		const initX = 340;
+		const initY = 20;
+		const size = 220;
 		const matrix = [
 			[
 				{ x: initX, y: initY },

@@ -14,16 +14,17 @@ class Card {
 		this.y;
 	}
 	drawImageCard() {
-		const img = document.createElement("img");
+		const img = document.createElement('img');
 		//Test image
-		img.src = "https://i.imgur.com/nOYDmEE.png";
-		//ctx.clearRect(0, 0, canvas.width, canvas.height);
-		//this.ctx.drawImage(img, 30, 30, 50, 50);
-		this.ctx.fillRect(10,10, 200,200);
+		//img.src = this.getFileName();
+		img.src = "https://mdn.mozillademos.org/files/5397/rhino.jpg";
+	
+		this.ctx.drawImage(img, 30, 30, 50, 50);		
+		this.ctx.fillRect(340,20, 220,220);
 	}
 
 	getFileName() {
-		return "../assets/img/cards/" + ("00" + this.id).slice(-3) + ".png";
+		return "./../assets/img/cards/" + ("00" + this.id).slice(-3) + ".png";
 	}
 
 	loadCardRanks(card) {

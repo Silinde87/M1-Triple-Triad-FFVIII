@@ -90,15 +90,16 @@ p {
 	flex: 0 1 50px;
 	z-index: 99;
 	display: flex;
-	justify-content: space-between;
+	justify-content: space-around;
 	align-items: center;
 }
 #game-canvas {
 	border: 1px solid greenyellow;
+	visibility: hidden;
 }
-.num-card-label {
-	font-size: 2rem;
-	color: white;
+.num-card-label img{
+	height: 70px;
+	margin-top: -45px;
 }
 #turn-game-selector {
 	font-size: 3rem;

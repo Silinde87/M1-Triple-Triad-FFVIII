@@ -76,7 +76,7 @@ Class Game(gameScreen){
     gameOver(){        
     }
 
-    updateGameNumCardsElems(gameScreen){        
+    updateGameNumCardsElems(){        
     }
 
     showPlayerShiftElem(){

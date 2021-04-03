@@ -7,7 +7,9 @@ class Player {
 		this.numCards = this.cardsInHand.length;
 	}
 
-	updateNumCards() {}
+	updateNumCards() {
+		this.numCards = this.cardsInHand.length;
+	}
 	getRandomCards() {
 		const randomCards = [];
 		for (let i = 0; i < 5; i++) {
