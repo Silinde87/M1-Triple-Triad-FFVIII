@@ -1,5 +1,9 @@
 # M1-Triple-Triad-FFVIII
 
+## How it looks
+
+🔗 [Live Demo](https://silinde87.github.io/M1-Triple-Triad-FFVIII/)
+
 ## Description
 Game Card Triple Triad from Final Fantasy VIII replica. Each player starts with five cards and places one card for each turn on the board. The one with the highest rank converts the adjacent one.
 The player with the most cards on the board wins the game.

@@ -34,7 +34,7 @@ class Card {
 
 	// Assist function. Used to get the filename of the card image
 	getFileName() {
-		return "./../assets/img/cards/" + ("00" + this.id).slice(-3) + ".png";
+		return "assets/img/cards/" + ("00" + this.id).slice(-3) + ".png";
 	}
 
 	// Get ranks from a card passed as parameter and pushes it at ranks[].
@@ -90,7 +90,7 @@ class Card {
 	}
 	// Assist function. Used to get the filename of the rank images
 	getRankFileName(index) {
-		return "./../assets/img/ranks/" + ("" + this.ranks[index]).slice(-3) + ".png";
+		return "assets/img/ranks/" + ("" + this.ranks[index]).slice(-3) + ".png";
 	}
 
 	// Prints the back of a card when called.
@@ -104,7 +104,7 @@ class Card {
 	}
 	// Assist function. Used to get the filename of the back of a card.
 	getBackFileName() {
-		return "./../assets/img/card-back.png";
+		return "assets/img/card-back.png";
 	}
 	compareRank(rankToCompare) {}
 }
