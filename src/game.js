@@ -7,7 +7,7 @@ class Game {
 		this.opponent = null;
 		this.gameIsOver = false;
 		this.wichPlayerIsUp = null;
-		this.gameBoardMatrix = Array.from(Array(3), () => new Array(3));
+		this.gameBoardMatrix = this.fillGameBoardMatrix();
 		this.playerNumCardsElem;
 		this.opponentNumCardsElem;
 		this.deck = new Deck().cardList;
@@ -49,6 +49,32 @@ class Game {
 	draftCardsToHand() {}
 	chooseCardOnHand() {}
 	moveCardToGameBoard() {}
+
+	fillGameBoardMatrix() {
+		//todo: Sets the real initial x & y from canvas.
+		//todo: Sets the real size card
+		const initX = 0;
+		const initY = 0;
+		const size = 256;
+		const matrix = [
+			[
+				{ x: initX, y: initY },
+				{ x: initX + size, y: initY },
+				{ x: initX + size * 2, y: initY },
+			],
+			[
+				{ x: initX, y: initY + size },
+				{ x: initX + size, y: initY + size },
+				{ x: initX + size * 2, y: initY + size },
+			],
+			[
+				{ x: initX, y: initY + size * 2 },
+				{ x: initX + size, y: initY + size * 2 },
+				{ x: initX + size * 2, y: initY + size * 2 },
+			],
+		];
+		return matrix;
+	}
 
 	handleKeydown() {}
 }

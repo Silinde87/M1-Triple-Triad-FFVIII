@@ -12,10 +12,10 @@ class Card {
 		this.ctx = this.canvas.getContext("2d");
 	}
 	drawImageCard() {
+		//debugger
 		const img = document.createElement("img");
 		//Test image
 		img.src = "https://i.imgur.com/nOYDmEE.png";
-		debugger;
 		this.ctx.drawImage(img, 30, 30, 1000, 1000);
 	}
 

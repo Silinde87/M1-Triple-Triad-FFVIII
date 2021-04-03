@@ -15,7 +15,7 @@ createSplashScreen = () => {
             <img class="info-text"src="assets/img/info-text.png" alt="info-label">
             <p>Do you want to play?</p>
             <ul>
-                <li><img class="cursor" src="assets/img/cursor.png" alt="cursor">Yes</li>
+                <li><img class="cursor" src="assets/img/cursor.png" alt="cursor"><p>Yes</p></li>
             </ul>
         </div>
     `
@@ -40,10 +40,10 @@ createGameScreen = () => {
             </header>
             <canvas id="game-canvas"></canvas>
             <footer>
-                <div id="opponent-num-cards" class="num-card-label">5</div>
+                <div id="opponent-num-cards" class="num-card-label"><span>5</div>
                 <div id="card-game-label" class="info-label">
                     <img class="info-text"src="assets/img/info-text.png" alt="info-label">
-                    <p id="card-game-name"></p>
+                    <p id="card-game-name">Sefirot</p>
                 </div>
                 <div id="player-num-cards" class="num-card-label">5</div>
             </footer>
@@ -101,7 +101,6 @@ startGame = () => {
 		removeGameOverScreen();
 	}
 	createGameScreen();
-
 	game = new Game(gameScreen);
 	game.start();
 };

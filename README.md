@@ -107,6 +107,9 @@ Class Game(gameScreen){
     moveCardToGameBoard(){
     }
 
+    fillGameBoardMatrix() {	
+	}
+
     handleKeydown(){
     }
 }
