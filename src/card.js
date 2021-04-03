@@ -14,24 +14,30 @@ class Card {
 		this.y;
 		this.size = 220;
 	}
+
+	// Used to manage setTiemout of drawImage()
+	drawImageTimeOut;
+
+	// Prints the whole card at x,y coordinates. Background, image and ranks.
 	drawImageCard(x, y) {
 		this.x = x;
 		this.y = y;
 		const img = document.createElement("img");
 		img.src = this.getFileName();
 
-		//Draws complete card, with background and ranks.
-		img.onload = () => {
+		this.drawImageTimeOut = setTimeout(() => {
 			this.fillCardBackground();
 			this.ctx.drawImage(img, this.x, this.y, this.size, this.size);
 			this.drawRanksCard();
-		};
+		}, 100);
 	}
 
+	// Assist function. Used to get the filename of the card image
 	getFileName() {
 		return "./../assets/img/cards/" + ("00" + this.id).slice(-3) + ".png";
 	}
 
+	// Get ranks from a card passed as parameter and pushes it at ranks[].
 	loadCardRanks(card) {
 		const ranks = [];
 		for (let i = 0; i < card.ranks.length; i++) {
@@ -39,10 +45,13 @@ class Card {
 		}
 		return ranks;
 	}
+	// Get a random card from deck.
 	getCard(deck) {
 		const index = Math.floor(Math.random() * deck.length);
 		return deck[index];
 	}
+
+	// Prints the card background when called.
 	fillCardBackground() {
 		const gradientX1 = this.x + this.size / 2;
 		const gradientY1 = this.y;
@@ -62,6 +71,7 @@ class Card {
 		this.ctx.fillRect(this.x + 3, this.y + 3, this.size - 7, this.size - 7);
 	}
 
+	// Prints the ranks on card when called.
 	drawRanksCard() {
 		const extra = [
 			{ x: 30, y: 15 }, // Top Rank
@@ -78,10 +88,23 @@ class Card {
 			imgRank.onload = () => this.ctx.drawImage(imgRank, x, y, rankSize, rankSize);
 		}
 	}
+	// Assist function. Used to get the filename of the rank images
 	getRankFileName(index) {
 		return "./../assets/img/ranks/" + ("" + this.ranks[index]).slice(-3) + ".png";
 	}
 
-	flipCard() {}
+	// Prints the back of a card when called.
+	flipCard() {
+		clearTimeout(this.drawImageTimeOut);
+		const imgBack = document.createElement("img");
+		imgBack.src = this.getBackFileName();
+		setTimeout(() => {
+			this.ctx.drawImage(imgBack, this.x, this.y, this.size, this.size);
+		},100);
+	}
+	// Assist function. Used to get the filename of the back of a card.
+	getBackFileName() {
+		return "./../assets/img/card-back.png";
+	}
 	compareRank(rankToCompare) {}
 }

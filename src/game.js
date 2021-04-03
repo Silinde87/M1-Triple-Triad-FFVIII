@@ -11,26 +11,27 @@ class Game {
 		this.playerNumCardsElem;
 		this.opponentNumCardsElem;
 		this.deck = new Deck().cardList;
-		this.playerHandCoordinates = [
-			{ x: 1070, y: 30 }, // First Card
-			{ x: 1070, y: 130 }, // Second Card
-			{ x: 1070, y: 230 }, // Third Card
-			{ x: 1070, y: 330 }, // Fourth Card
-			{ x: 1070, y: 430 }, // Fifth Card
-		];
-		this.opponentHandCoordinates = [
-			{ x: 60, y: 30 }, // First Card
-			{ x: 60, y: 130 }, // Second Card
-			{ x: 60, y: 230 }, // Third Card
-			{ x: 60, y: 330 }, // Fourth Card
-			{ x: 60, y: 430 }, // Fifth Card
-		];
 	}
+	playerHandCoordinates = [
+		{ x: 1070, y: 30 }, // First Card
+		{ x: 1070, y: 130 }, // Second Card
+		{ x: 1070, y: 230 }, // Third Card
+		{ x: 1070, y: 330 }, // Fourth Card
+		{ x: 1070, y: 430 }, // Fifth Card
+	];
+	opponentHandCoordinates = [
+		{ x: 60, y: 30 }, // First Card
+		{ x: 60, y: 130 }, // Second Card
+		{ x: 60, y: 230 }, // Third Card
+		{ x: 60, y: 330 }, // Fourth Card
+		{ x: 60, y: 430 }, // Fifth Card
+	];
+
 
 	start() {
 		//Number of cards elements
 		this.playerNumCardsElem = this.gameScreen.querySelector("#player-num-cards");
-		this.opponentNumCardsElem = this.gameScreen.querySelector("#opponent-num-cards");
+		this.opponentNumCardsElem = this.gameScreen.querySelector("#opponent-num-cards");		
 
 		//Get and create the canvas and it's content
 		this.canvas = this.gameScreen.querySelector("#game-canvas");
@@ -52,8 +53,13 @@ class Game {
 		//Draft cards
 		this.draftCardsToHand(this.player);
 		this.draftCardsToHand(this.opponent);
+		//Flip Opponent Cards for the first round
+		this.opponent.cardsInHand.forEach(card =>card.flipCard());
 
+		
+		/////////////////
 		///// TESTS /////
+		/////////////////
 		//TEST HANDLE CARD NAME
 		this.updateGameCardLabelElem(this.player.cardsInHand[1].cardName);
 		//this.updateGameCardLabelElem(this.opponent.cardsInHand[1].cardName);
@@ -65,10 +71,11 @@ class Game {
 		this.updateGameNumCardsElements();
 
 		//TEST SWAP SHIFT ELEMENT
-		this.swapPlayersShift();
+		//this.swapPlayersShift();
 	}
 	gameOver() {}
 
+	//Modify the quantity of cards of each player
 	updateGameNumCardsElements() {
 		this.player.updateNumCards();
 		this.playerNumCardsElem.innerHTML = `<img src="assets/img/scores/${this.player.numCards}.png" alt="Player Score">`;
@@ -76,15 +83,21 @@ class Game {
 		this.opponentNumCardsElem.innerHTML = `<img src="assets/img/scores/${this.opponent.numCards}.png" alt="Opponent Score">`;
 	}
 
+	//Move the Chocobo element and flips and shows the cards of each player
 	swapPlayersShift() {
 		if (this.wichPlayerIsUp === this.player.name) {
 			this.wichPlayerIsUp = this.opponent.name;
+			this.player.cardsInHand.forEach(card =>card.flipCard());
+			this.draftCardsToHand(this.opponent);
 		} else {
 			this.wichPlayerIsUp = this.player.name;
+			this.opponent.cardsInHand.forEach(card =>card.flipCard());
+			this.draftCardsToHand(this.player);
 		}
 		this.swapPlayerShiftElem(this.wichPlayerIsUp);
 	}
 
+	// Move the Chocobo Element
 	swapPlayerShiftElem(wichPlayerIsUp) {
 		const shiftElementContainer = this.gameScreen.querySelector("#turn-game-selector");
 		const shiftElement = shiftElementContainer.querySelector("img");
@@ -96,7 +109,7 @@ class Game {
 			shiftElementContainer.style.justifyContent = "flex-start";
 		} else {
 			//swap to player
-			shiftElementContainer.styles.justifyContent = "flex-end";
+			shiftElementContainer.style.justifyContent = "flex-end";
 		}
 	}
 
@@ -104,6 +117,7 @@ class Game {
 	removeCursorGameElem() {}
 	updatePositionCursorGameElem() {}
 
+	//Handle GameCard Label Element
 	showGameCardLabelElem() {
 		document.querySelector("#card-game-label").style.visibility = "visible";
 	}
@@ -114,6 +128,7 @@ class Game {
 		this.gameScreen.querySelector("#card-game-name").innerHTML = cardName;
 	}
 
+	// Shows all the cards from the player passed as parameter
 	draftCardsToHand(playerToDraft) {
 		for (let i = 0; i < 5; i++) {
 			let x = this.playerHandCoordinates[i].x;
@@ -124,14 +139,13 @@ class Game {
 			}
 
 			playerToDraft.cardsInHand[i].drawImageCard(x, y);
-			//TO FIX: SETTIMEOUT DOESNT WORKS
-			//setTimeout(playerToDraft.cardsInHand[i].drawImageCard.bind(playerToDraft.cardsInHand[i]), 1000, x, y);
 		}
 	}
 
 	chooseCardOnHand() {}
 	moveCardToGameBoard() {}
 
+	// Creates a matrix with the coordinates of the gameboard
 	fillGameBoardMatrix() {
 		const initX = 340;
 		const initY = 20;
