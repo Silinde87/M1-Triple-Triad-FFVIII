@@ -1,5 +1,5 @@
 class Card {
-	constructor(deck, canvas) {
+	constructor(deck, canvas, playerOwner) {
 		this.canvas = canvas;
 		this.ctx = this.canvas.getContext("2d");
 		this.card = this.getCard(deck);
@@ -9,18 +9,21 @@ class Card {
 		this.backgroundColor;
 		this.imgSrc = this.getFileName();
 		this.positionOnBoard;
-		this.playerOwner;
-		this.x;
-		this.y;
+		this.playerOwner = playerOwner;
+		//todo: IMPLEMENT GET POSITION
+		this.x = 340;
+		this.y = 20;
+		this.size = 220;
 	}
 	drawImageCard() {
-		const img = document.createElement('img');
+		const img = document.createElement("img");
 		//Test image
-		//img.src = this.getFileName();
-		img.src = "https://mdn.mozillademos.org/files/5397/rhino.jpg";
-	
-		this.ctx.drawImage(img, 30, 30, 50, 50);		
-		this.ctx.fillRect(340,20, 220,220);
+		img.src = this.getFileName();
+
+		img.onload = () => {
+			this.fillCardBackground();
+			this.ctx.drawImage(img, this.x, this.y, this.size, this.size);
+		};
 	}
 
 	getFileName() {
@@ -38,7 +41,24 @@ class Card {
 		const index = Math.floor(Math.random() * deck.length);
 		return deck[index];
 	}
-	fillCardBackground() {}
+	fillCardBackground() {
+		const gradientX1 = this.x + this.size / 2;
+		const gradientY1 = this.y;
+		const gradientX2 = this.x + this.size / 2;
+		const gradientY2 = this.y + this.size;
+		let gradient = this.ctx.createLinearGradient(gradientX1, gradientY1, gradientX2, gradientY2);
+		gradient.addColorStop(0, "#ffffff"); // White
+
+		if (this.playerOwner === "player") {
+			gradient.addColorStop(1, "#2140ac"); // Blue
+		} else {
+			gradient.addColorStop(1, "#ec1b1b"); // Red
+		}
+
+		this.ctx.fillStyle = gradient;
+		this.ctx.fillRect(this.x + 3, this.y + 3, this.size - 7, this.size - 7);
+	}
+	drawRanksCard() {}
 	flipCard() {}
 	compareRank(rankToCompare) {}
 }

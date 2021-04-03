@@ -35,17 +35,23 @@ class Game {
 		this.opponent = new Player("opponent", this.deck, this.canvas);
 		this.wichPlayerIsUp = this.player.name;
 
-
+		///// TESTS /////
 		//TEST DRAW IMAGE
 		this.player.cardsInHand[1].drawImageCard();
+		//this.opponent.cardsInHand[1].drawImageCard();
+
+		//TEST HANDLE CARD NAME
+		this.updateGameCardLabelElem(this.player.cardsInHand[1].cardName);
+		//this.updateGameCardLabelElem(this.opponent.cardsInHand[1].cardName);
+		this.removeGameCardLabelElem();
+		this.showGameCardLabelElem();
 
 		//TEST UPDATE
-		this.player.cardsInHand.push(this.opponent.cardsInHand.pop());
+		//this.player.cardsInHand.push(this.opponent.cardsInHand.pop());
 		this.updateGameNumCardsElements();
 
 		//TEST SWAP SHIFT ELEMENT
-		this.swapPlayersShift();
-
+		//this.swapPlayersShift();
 	}
 	gameOver() {}
 
@@ -56,8 +62,8 @@ class Game {
 		this.opponentNumCardsElem.innerHTML = `<img src="assets/img/scores/${this.opponent.numCards}.png" alt="Opponent Score">`;
 	}
 
-	swapPlayersShift(){
-		if(this.wichPlayerIsUp === this.player.name){
+	swapPlayersShift() {
+		if (this.wichPlayerIsUp === this.player.name) {
 			this.wichPlayerIsUp = this.opponent.name;
 		} else {
 			this.wichPlayerIsUp = this.player.name;
@@ -68,15 +74,15 @@ class Game {
 	swapPlayerShiftElem(wichPlayerIsUp) {
 		const shiftElementContainer = this.gameScreen.querySelector("#turn-game-selector");
 		const shiftElement = shiftElementContainer.querySelector("img");
-		shiftElement.classList.toggle('player-turn');
-		shiftElement.classList.toggle('opponent-turn');
+		shiftElement.classList.toggle("player-turn");
+		shiftElement.classList.toggle("opponent-turn");
 
-		if(wichPlayerIsUp === 'opponent'){
+		if (wichPlayerIsUp === "opponent") {
 			//swap to opponent
-			shiftElementContainer.style.justifyContent = 'flex-start';
+			shiftElementContainer.style.justifyContent = "flex-start";
 		} else {
 			//swap to player
-			shiftElementContainer.styles.justifyContent = 'flex-end';
+			shiftElementContainer.styles.justifyContent = "flex-end";
 		}
 	}
 
@@ -84,9 +90,15 @@ class Game {
 	removeCursorGameElem() {}
 	updatePositionCursorGameElem() {}
 
-	showGameCardLabelElem() {}
-	removeGameCardLabelElem() {}
-	updateGameCardLabelElem() {}
+	showGameCardLabelElem() {
+		document.querySelector("#card-game-label").style.visibility = 'visible';
+	}
+	removeGameCardLabelElem() {
+		document.querySelector("#card-game-label").style.visibility = 'hidden';
+	}
+	updateGameCardLabelElem(cardName) {
+		this.gameScreen.querySelector("#card-game-name").innerHTML = cardName;
+	}
 
 	draftCardsToHand() {}
 	chooseCardOnHand() {}

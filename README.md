@@ -130,7 +130,7 @@ Class Player(name, deck, canvas){
 ```
 ### card.js
 ```
-Class Card(deck, canvas){
+Class Card(deck, canvas, playerOwner){
     this.card;
     this.id;
     this.name;
@@ -143,6 +143,7 @@ Class Card(deck, canvas){
     this.ctx;
     this.x;
     this.y;
+    this.size;
 
     drawImageCard(){        
     }
@@ -156,6 +157,8 @@ Class Card(deck, canvas){
     }
 
     fillCardBackground(){
+    }
+    drawRanksCard() {        
     }
 
     flipCard(){
