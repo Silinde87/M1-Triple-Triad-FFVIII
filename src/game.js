@@ -35,12 +35,17 @@ class Game {
 		this.opponent = new Player("opponent", this.deck, this.canvas);
 		this.wichPlayerIsUp = this.player.name;
 
+
 		//TEST DRAW IMAGE
 		this.player.cardsInHand[1].drawImageCard();
 
 		//TEST UPDATE
 		this.player.cardsInHand.push(this.opponent.cardsInHand.pop());
 		this.updateGameNumCardsElements();
+
+		//TEST SWAP SHIFT ELEMENT
+		this.swapPlayersShift();
+
 	}
 	gameOver() {}
 
@@ -51,9 +56,29 @@ class Game {
 		this.opponentNumCardsElem.innerHTML = `<img src="assets/img/scores/${this.opponent.numCards}.png" alt="Opponent Score">`;
 	}
 
-	showPlayerShiftElem() {}
-	removePlayerShiftelem() {}
-	swapPlayerShiftElem() {}
+	swapPlayersShift(){
+		if(this.wichPlayerIsUp === this.player.name){
+			this.wichPlayerIsUp = this.opponent.name;
+		} else {
+			this.wichPlayerIsUp = this.player.name;
+		}
+		this.swapPlayerShiftElem(this.wichPlayerIsUp);
+	}
+
+	swapPlayerShiftElem(wichPlayerIsUp) {
+		const shiftElementContainer = this.gameScreen.querySelector("#turn-game-selector");
+		const shiftElement = shiftElementContainer.querySelector("img");
+		shiftElement.classList.toggle('player-turn');
+		shiftElement.classList.toggle('opponent-turn');
+
+		if(wichPlayerIsUp === 'opponent'){
+			//swap to opponent
+			shiftElementContainer.style.justifyContent = 'flex-start';
+		} else {
+			//swap to player
+			shiftElementContainer.styles.justifyContent = 'flex-end';
+		}
+	}
 
 	showCursorGameElem() {}
 	removeCursorGameElem() {}

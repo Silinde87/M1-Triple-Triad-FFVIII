@@ -79,11 +79,10 @@ Class Game(gameScreen){
     updateGameNumCardsElems(){        
     }
 
-    showPlayerShiftElem(){
+    swapPlayersShift(){        
     }
-    removePlayerShiftElem(){
-    }
-    swapPlayerShiftElem(){
+
+    swapPlayerShiftElem(wichPlayerIsUp){
     }
 
     showCursorGameElem(){

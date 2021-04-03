@@ -35,7 +35,9 @@ createGameScreen = () => {
 		"game-screen-container",
 		["background"],
 		`<header>
-			<div id="turn-game-selector">X</div>
+			<div id="turn-game-selector">
+				<img src="assets/img/chocobo.webp" alt="Chocobo turn selector" class="player-turn">
+			</div>
 		</header>
 		<div id="canvas-container">
 			<canvas id="game-canvas"></canvas>

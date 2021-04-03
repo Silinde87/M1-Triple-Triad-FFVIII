@@ -83,7 +83,7 @@ p {
 	flex: 1 1 auto;
 }
 #game-screen-container header {
-	flex: 0 1 auto;
+	flex: 0 1 41px;
 	z-index: 99;
 }
 #game-screen-container footer {
@@ -101,12 +101,23 @@ p {
 	height: 70px;
 	margin-top: -45px;
 }
-#turn-game-selector {
-	font-size: 3rem;
-	color: white;
-	height: fit-content;
-	width: fit-content;
+#turn-game-selector{
+	width: 100%;
+	display: flex;
+	align-items: flex-end;
+	justify-content: flex-end;
 }
+#turn-game-selector img{
+	height: 38px;
+	margin-bottom: -80px;
+}
+.opponent-turn{
+	margin-left: 150px;
+}
+.player-turn{
+	margin-right: 150px;
+}
+
 #card-game-label {
 	background-size: 350px 80px;
 	width: 350px;
