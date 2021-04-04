@@ -51,6 +51,16 @@ class Game {
 		this.opponent = new Player("opponent", this.deck, this.canvas);
 		this.wichPlayerIsUp = this.player.name;
 
+		/////////////////////////////////////////////////////
+		//TESTING removecardfromhand and movecardtogameboard
+		debugger
+		const testCard = this.player.cardsInHand[3];
+		const testX = this.gameBoardMatrix[1][2].x;
+		const testY = this.gameBoardMatrix[1][2].y;
+		this.moveCardToGameBoard(this.player.removeCardFromHand(testCard),testX,testY);
+		/////////////////////////////////////////////////////
+
+
 		//Draft cards
 		this.draftCardsToHand(this.player);
 		this.draftCardsToHand(this.opponent);
@@ -144,7 +154,16 @@ class Game {
 	}
 
 	chooseCardOnHand() {}
-	moveCardToGameBoard() {}
+
+	// Change x & y from card passed as parameter
+	// pushes it to cardsInPlay Array
+	// Draws it at new x & y.
+	moveCardToGameBoard(card,x,y) {
+		card.x = x;
+		card.y = y;
+		this.cardsInPlay.push(card);
+		card.drawImageCard(x, y);
+	}
 
 	// Creates a matrix with the coordinates of the gameboard
 	fillGameBoardMatrix() {

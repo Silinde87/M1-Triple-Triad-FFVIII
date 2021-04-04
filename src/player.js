@@ -22,4 +22,8 @@ class Player {
 		}
 		return randomCards;
 	}
+	removeCardFromHand(card){
+		const indexFromCard = this.cardsInHand.indexOf(card);
+		return this.cardsInHand.splice(indexFromCard, 1)[0];
+	}
 }

@@ -131,6 +131,8 @@ Class Player(name, deck, canvas){
     }
     getRandomCards(){
     }
+    removeCardFromHand(){        
+    }
 }
 ```
 ### card.js
