@@ -53,7 +53,8 @@ createGameScreen = () => {
 			<div id="player-num-cards" class="num-card-label">
 				<img src="assets/img/scores/5.png" alt="Player Score">
 			</div>
-		</footer>			  
+		</footer>
+		<!--<audio src="assets/sounds/bgm.mp3" autoplay loop></audio>-->
     `
 	);
 	document.body.appendChild(gameScreen);
@@ -73,7 +74,9 @@ createGameOverScreen = (result) => {
 		`<div>
             <img id='result-label' src='assets/img/label-${result}.png' alt='result-label'>
             <div>Press ENTER to restart</div>
-        </div>`
+        </div>
+		<!--<audio src="assets/sounds/victory-fanfare.mp3" autoplay></audio>-->
+	`
 	);
 	document.body.appendChild(gameOverScreen);
 };

@@ -73,6 +73,7 @@ Class Game(gameScreen){
     this.playerNumCardsElem = HTMLElem;
     this.opponentNumCardsElem = HTMLElem;
     this.deck = new Deck().cardList;
+    this.cardsInPlay;
 
     start(){        
     }

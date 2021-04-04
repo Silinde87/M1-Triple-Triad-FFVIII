@@ -11,6 +11,7 @@ class Game {
 		this.playerNumCardsElem;
 		this.opponentNumCardsElem;
 		this.deck = new Deck().cardList;
+		this.cardsInPlay = [];
 	}
 	playerHandCoordinates = [
 		{ x: 1070, y: 30 }, // First Card
@@ -64,7 +65,7 @@ class Game {
 		this.updateGameCardLabelElem(this.player.cardsInHand[1].cardName);
 		//this.updateGameCardLabelElem(this.opponent.cardsInHand[1].cardName);
 		this.removeGameCardLabelElem();
-		this.showGameCardLabelElem();
+		//this.showGameCardLabelElem();
 
 		//TEST UPDATE
 		//this.player.cardsInHand.push(this.opponent.cardsInHand.pop());
@@ -130,7 +131,7 @@ class Game {
 
 	// Shows all the cards from the player passed as parameter
 	draftCardsToHand(playerToDraft) {
-		for (let i = 0; i < 5; i++) {
+		for (let i = 0; i < playerToDraft.cardsInHand.length; i++) {
 			let x = this.playerHandCoordinates[i].x;
 			let y = this.playerHandCoordinates[i].y;
 			if (playerToDraft.name === "opponent") {
