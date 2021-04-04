@@ -12,7 +12,7 @@ The player with the most cards on the board wins the game.
 
 ## MVP (DOM - CANVAS)
 Player vs player plays the card game with a keyboard.
-Without "hand cursor", just only changing card borders. With background solid color.
+Without "hand cursor", just only changing card borders.
 Without game card name label.
 Without animations. Card disappear from hand and appears at gameboard.
 
@@ -34,30 +34,25 @@ const game = new Game();
 const splashScreen = HTMLElement;
 const gameScreen = HTMLElement;
 const gameOverScreen = HTMLElement;
-let gameStatus; //Allows switch the "return key" behaviour
+let gameStatus; // Allows switch the "return key" behaviour.
 
-createSplashScreen(){
-}
-removeSplashScreen(){    
-}
+// Splash screen.
+createSplashScreen()
+removeSplashScreen()
 
-creteGameScreen(){
-}
-removeGameScreen(){    
-}
+// Game screen.
+creteGameScreen()
+removeGameScreen()
 
-createGameOverScreen(){
-}
-removeGameOverScreen(){    
-}
+// Gameover Screen.
+createGameOverScreen()
+removeGameOverScreen()
 
-createHTMLElement(){    
-}
+// Assist Function. Creates HTML Elements on demand.
+createHTMLElement()
 
-startGame(){
-}
-endGame(){
-}
+startGame()
+endGame()
 ```
 ### game.js
 ```
@@ -73,66 +68,60 @@ Class Game(gameScreen){
     this.playerNumCardsElem = HTMLElem;
     this.opponentNumCardsElem = HTMLElem;
     this.deck = new Deck().cardList;
-    this.cardsInPlay;
+    this.cardsInPlay = [];
+    this.playerHandCoordinates = [];
+    this.opponentHandCoordinates = [];
 
-    start(){        
-    }
+    start()
+    gameOver()
 
-    gameOver(){        
-    }
+    updateGameNumCardsElements()
+    
+    // Handle player's shift
+    swapPlayersShift()
+    swapPlayerShiftElem(wichPlayerIsUp)
+    
+    // Handle cursor position on canvas
+    showCursorGameElem()
+    removeCursorGameElem()
+    updatePositionCursorGameElem()
 
-    updateGameNumCardsElems(){        
-    }
+    // Handle GameCard label element
+    showGameCardLabelElem()
+    removeGameCardLabelElem()
+    updateGameCardLabelElem()
 
-    swapPlayersShift(){        
-    }
+    // Prints all the cards from the player passed as parameter
+    draftCardsToHand()
 
-    swapPlayerShiftElem(wichPlayerIsUp){
-    }
+    chooseCardOnHand()
 
-    showCursorGameElem(){
-    }
-    removeCursorGameElem(){
-    }
-    updatePositionCursorGameElem(){
-    }
+    // Change x & y from a card, pushes to cardsInPlay array and prints it.
+    moveCardToGameBoard()
 
-    showGameCardLabelElem(){
-    }
-    removeGameCardLabelElem(){
-    }
-    updateGameCardLabelElem(){
-    }
+    // Creates a matrix with the coordinates of the gameboard
+    fillGameBoardMatrix()
 
-    draftCardsToHand(){
-    }
-    chooseCardOnHand(){
-    }
-    moveCardToGameBoard(){
-    }
-
-    fillGameBoardMatrix() {	
-	}
-
-    handleKeydown(){
-    }
+    handleKeydown()
 }
 ```
 ### player.js
 ```
 Class Player(name, deck, canvas){
+    this.name;
     this.deck;
     this.canvas;
     this.cardsInHand = [];
-    this.name;
     this.numCards;
 
-    updateNumCards(){
-    }
-    getRandomCards(){
-    }
-    removeCardFromHand(){        
-    }
+    // Count the total cards in hands and returns it.
+    updateNumCards()
+
+    // Get 5 random unique cards from deck.
+    getRandomCards()
+
+    // Remove the card passed as parameter from the player and returns it.
+    removeCardFromHand(card)
 }
 ```
 ### card.js
@@ -152,29 +141,33 @@ Class Card(deck, canvas, playerOwner){
     this.y;
     this.size;
 
-    drawImageCard(){        
-    }
-    getFileName(){        
-    }
+    // Used to manage setTiemout of drawImage()
+    let drawImageTimeOut;
 
-    loadCardRanks(card){
-    }
+    // Prints the whole card at x,y coordinates. Background, image and ranks.
+    drawImageCard(x, y)
+    // Assist function. Used to get the filename of the card image.
+    getFileName()
 
-    getCard(deck){
-    }
+    // Get ranks from a card passed as parameter and pushes it at ranks[].
+    loadCardRanks(card)
 
-    fillCardBackground(){
-    }
-    drawRanksCard() {        
-    }
-    getRankFileName(){        
-    }
+    // Get a random card from deck.
+    getCard(deck)
 
-    flipCard(){
-    }
+    // Prints the card background.
+    fillCardBackground()
+    // Prints the ranks on card.
+    drawRanksCard()
+    // Assist function. Used to get the filename of the rank images
+    getRankFileName()
 
-    compareRank(rankToCompare){
-    }
+    // Prints the back of a card.
+    flipCard()
+    // Assist function. Used to get the filename of the back of a card.
+    getBackFileName()
+
+    compareRank(rankToCompare)
 }
 ```
 ### deck.js
