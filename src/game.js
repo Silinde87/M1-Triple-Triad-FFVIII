@@ -28,11 +28,10 @@ class Game {
 		{ x: 60, y: 430 }, // Fifth Card
 	];
 
-
 	start() {
 		//Number of cards elements
 		this.playerNumCardsElem = this.gameScreen.querySelector("#player-num-cards");
-		this.opponentNumCardsElem = this.gameScreen.querySelector("#opponent-num-cards");		
+		this.opponentNumCardsElem = this.gameScreen.querySelector("#opponent-num-cards");
 
 		//Get and create the canvas and it's content
 		this.canvas = this.gameScreen.querySelector("#game-canvas");
@@ -53,21 +52,21 @@ class Game {
 
 		/////////////////////////////////////////////////////
 		//TESTING removecardfromhand and movecardtogameboard
-		debugger
+		/////////////////////////////////////////////////////
+		debugger;
 		const testCard = this.player.cardsInHand[3];
+		testCard.playerOwner = 'opponent';
 		const testX = this.gameBoardMatrix[1][2].x;
 		const testY = this.gameBoardMatrix[1][2].y;
-		this.moveCardToGameBoard(this.player.removeCardFromHand(testCard),testX,testY);
+		this.moveCardToGameBoard(this.player.removeCardFromHand(testCard), testX, testY);
 		/////////////////////////////////////////////////////
-
 
 		//Draft cards
 		this.draftCardsToHand(this.player);
 		this.draftCardsToHand(this.opponent);
 		//Flip Opponent Cards for the first round
-		this.opponent.cardsInHand.forEach(card =>card.flipCard());
+		this.opponent.cardsInHand.forEach((card) => card.flipCard());
 
-		
 		/////////////////
 		///// TESTS /////
 		/////////////////
@@ -88,21 +87,27 @@ class Game {
 
 	//Modify the quantity of cards of each player
 	updateGameNumCardsElements() {
-		this.player.updateNumCards();
-		this.playerNumCardsElem.innerHTML = `<img src="assets/img/scores/${this.player.numCards}.png" alt="Player Score">`;
-		this.opponent.updateNumCards();
-		this.opponentNumCardsElem.innerHTML = `<img src="assets/img/scores/${this.opponent.numCards}.png" alt="Opponent Score">`;
+		let playerCards = 0;
+		let opponentCards = 0;
+		playerCards += this.player.updateNumCards();
+		playerCards += this.cardsInPlay.filter((card) => card.playerOwner === "player").length;
+
+		opponentCards += this.opponent.updateNumCards();
+		opponentCards += this.cardsInPlay.filter((card) => card.playerOwner === "opponent").length;
+
+		this.playerNumCardsElem.innerHTML = `<img src="assets/img/scores/${playerCards}.png" alt="Player Score">`;
+		this.opponentNumCardsElem.innerHTML = `<img src="assets/img/scores/${opponentCards}.png" alt="Opponent Score">`;
 	}
 
 	//Move the Chocobo element and flips and shows the cards of each player
 	swapPlayersShift() {
 		if (this.wichPlayerIsUp === this.player.name) {
 			this.wichPlayerIsUp = this.opponent.name;
-			this.player.cardsInHand.forEach(card =>card.flipCard());
+			this.player.cardsInHand.forEach((card) => card.flipCard());
 			this.draftCardsToHand(this.opponent);
 		} else {
 			this.wichPlayerIsUp = this.player.name;
-			this.opponent.cardsInHand.forEach(card =>card.flipCard());
+			this.opponent.cardsInHand.forEach((card) => card.flipCard());
 			this.draftCardsToHand(this.player);
 		}
 		this.swapPlayerShiftElem(this.wichPlayerIsUp);
@@ -158,7 +163,7 @@ class Game {
 	// Change x & y from card passed as parameter
 	// pushes it to cardsInPlay Array
 	// Draws it at new x & y.
-	moveCardToGameBoard(card,x,y) {
+	moveCardToGameBoard(card, x, y) {
 		card.x = x;
 		card.y = y;
 		this.cardsInPlay.push(card);

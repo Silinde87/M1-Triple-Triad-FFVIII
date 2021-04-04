@@ -9,6 +9,7 @@ class Player {
 
 	updateNumCards() {
 		this.numCards = this.cardsInHand.length;
+		return this.numCards;
 	}
 	getRandomCards() {
 		const randomCards = [];
