@@ -94,7 +94,6 @@ p {
 	align-items: center;
 }
 #game-canvas {
-	border: 1px solid greenyellow;
 	visibility: hidden;
 }
 .num-card-label img{

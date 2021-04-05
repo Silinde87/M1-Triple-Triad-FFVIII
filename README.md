@@ -108,13 +108,16 @@ Class Game(gameScreen){
 
     // Prints all the cards from the player passed as parameter
     draftCardsToHand()
-    removeCardsELems(player);
+    // Remove cards from canvas on player pased as parameter.
+    removeCardsElems(player);
 
     // Returns a card from hand's player based on y.
     chooseCardOnHand()
 
     // Change x & y from a card, pushes to cardsInPlay array and prints it.
     moveCardToGameBoard()
+    // Look for an x & y in a matrix and returns his position in 2d Array
+    getPositionFromMatrixToArray(matrix, x, y)
 
     // Creates a matrix with the coordinates of the gameboard
     fillGameBoardMatrix()

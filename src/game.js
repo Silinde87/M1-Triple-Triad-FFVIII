@@ -10,7 +10,7 @@ class Game {
 		this.playerNumCardsElem;
 		this.opponentNumCardsElem;
 		this.deck = new Deck().cardList;
-		this.cardsInPlay = [];
+		this.cardsInPlay = new Array(9).fill(null);
 		this.lastCursorX;
 		this.lastCursorY;
 		this.gameBoardMatrix = this.fillGameBoardMatrix();
@@ -165,7 +165,8 @@ class Game {
 			}
 		}
 	}
-
+	
+	// Remove cards from canvas on player pased as parameter.
 	removeCardElements(player) {
 		let x, y;
 		if (player.name === "player") {
@@ -208,9 +209,20 @@ class Game {
 	moveCardToGameBoard(card, x, y) {
 		card.x = x;
 		card.y = y;
-		this.cardsInPlay.push(card);
 		card.updatePositionAndDrawImageCard(x, y);
 		card.drawRanksCard();
+	}
+	// Look for an x & y in a matrix and returns his position in 2d Array
+	getPositionFromMatrixToArray(matrix,x,y){
+		let index = 0;
+		for(let array of matrix){
+			for(let elem of array){
+				if(elem.x === x && elem.y === y){
+					return index;
+				}
+				index++
+			}
+		}
 	}
 
 	// Creates a matrix with the coordinates of the gameboard
