@@ -53,6 +53,9 @@ createHTMLElement()
 
 startGame()
 endGame()
+
+handleEnterKeyDown()
+handleArrowKeyDown()
 ```
 ### game.js
 ```
@@ -82,9 +85,10 @@ Class Game(gameScreen){
     swapPlayerShiftElem(wichPlayerIsUp)
     
     // Handle cursor position on canvas
-    showCursorGameElem()
+    drawCursorGameElem()
     removeCursorGameElem()
     updatePositionCursorGameElem()
+    getCursorFileName()
 
     // Handle GameCard label element
     showGameCardLabelElem()

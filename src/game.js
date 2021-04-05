@@ -12,6 +12,8 @@ class Game {
 		this.opponentNumCardsElem;
 		this.deck = new Deck().cardList;
 		this.cardsInPlay = [];
+		this.lastCursorX;
+		this.lastCursorY;
 	}
 	playerHandCoordinates = [
 		{ x: 1070, y: 30 }, // First Card
@@ -53,12 +55,12 @@ class Game {
 		/////////////////////////////////////////////////////
 		//TESTING removecardfromhand and movecardtogameboard
 		/////////////////////////////////////////////////////
-		debugger;
 		const testCard = this.player.cardsInHand[3];
-		testCard.playerOwner = 'opponent';
+		testCard.playerOwner = "opponent";
 		const testX = this.gameBoardMatrix[1][2].x;
 		const testY = this.gameBoardMatrix[1][2].y;
-		this.moveCardToGameBoard(this.player.removeCardFromHand(testCard), testX, testY);
+		this.player.removeCardFromHand(testCard);
+		this.moveCardToGameBoard(testCard, testX, testY);
 		/////////////////////////////////////////////////////
 
 		//Draft cards
@@ -82,6 +84,15 @@ class Game {
 
 		//TEST SWAP SHIFT ELEMENT
 		//this.swapPlayersShift();
+
+		//TEST SHOW CURSOR
+		//this.updatePositionCursorGameElem(1030,80); //Initial cursor position for player's hand
+		//this.wichPlayerIsUp = this.opponent.name;
+		//this.updatePositionCursorGameElem(20,80); // Initial cursor position for opponent's hand.
+		//Initial cursor position for gameboard
+		let initialCursorGameboardX = this.gameBoardMatrix[1][1].x + 72;
+		let initialcursorGameBoardY = this.gameBoardMatrix[1][1].y + 88;
+		this.updatePositionCursorGameElem(initialCursorGameboardX, initialcursorGameBoardY);
 	}
 	gameOver() {}
 
@@ -129,9 +140,24 @@ class Game {
 		}
 	}
 
-	showCursorGameElem() {}
-	removeCursorGameElem() {}
-	updatePositionCursorGameElem() {}
+	// Handle cursor position on canvas
+	drawCursorGameElem() {
+		const imgCursor = document.createElement("img");
+		imgCursor.src = this.getCursorFileName();
+		imgCursor.onload = () => this.ctx.drawImage(imgCursor, this.lastCursorX, this.lastCursorY, 38, 22);
+	}
+	removeCursorGameElem() {
+		this.ctx.clearRect(this.lastCursorX, this.lastCursorY, 38, 22);
+	}
+	updatePositionCursorGameElem(x, y) {
+		this.removeCursorGameElem();
+		this.lastCursorX = x;
+		this.lastCursorY = y;
+		this.drawCursorGameElem();
+	}
+	getCursorFileName() {
+		return "assets/img/cursor.png";
+	}
 
 	//Handle GameCard Label Element
 	showGameCardLabelElem() {
