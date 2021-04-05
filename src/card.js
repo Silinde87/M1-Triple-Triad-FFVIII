@@ -14,11 +14,8 @@ class Card {
 		this.size = 220;
 	}
 
-	// Used to manage setTiemout of drawImage()
-	drawImageTimeOut;
-
 	// Prints the whole card at x,y coordinates. Background and image
-	drawImageCard(x, y) {
+	updatePositionAndDrawImageCard(x, y) {
 		this.x = x;
 		this.y = y;
 		const img = document.getElementById(`${this.id}`);
@@ -73,7 +70,7 @@ class Card {
 			const x = this.x + extra[i].x;
 			const y = this.y + extra[i].y;
 			const imgRank = document.getElementById(`rank-${this.ranks[i]}`);
-			this.ctx.drawImage(imgRank, x, y, rankSize, rankSize)
+			this.ctx.drawImage(imgRank, x, y, rankSize, rankSize);
 		}
 	}
 
@@ -85,4 +82,5 @@ class Card {
 	}
 
 	compareRank(rankToCompare) {}
+	captures(){}
 }

@@ -3,7 +3,6 @@ let splashScreen;
 let gameScreen;
 let gameOverScreen;
 let gameStatus = "initial"; //Allows switch the "return key" behaviour
-let cardsElements;
 const cardSize = 220;
 let cardToMove;
 
@@ -180,6 +179,7 @@ handleEnterKeyDown = () => {
 			let gameboardY = game.cursorCoordinates.gameboard.y;
 			// Move cursor to middle gameboard
 			game.updatePositionCursorGameElem(gameboardX, gameboardY);
+
 			gameStatus = "placingCard";
 			break;
 		case "placingCard":
@@ -193,6 +193,10 @@ handleEnterKeyDown = () => {
 			game.draftCardsToHand(game.whichPlayerIsUp);
 
 			game.swapPlayersShift();
+
+			//Updating game card label and showing it.
+			game.updateGameCardLabelElem(game.whichPlayerIsUp.cardsInHand[0].cardName);
+			game.showGameCardLabelElem();
 			gameStatus = "choosingCard";
 			break;
 		case "cardPlaced":
@@ -273,7 +277,7 @@ window.addEventListener("keydown", (e) => {
 	if (arrowKeys.includes(e.key)) handleArrowKeyDown(e);
 	// Redrawing the cards in play after moving the cursor. not working.
 	game.cardsInPlay.forEach((card) => {
-		card.drawImageCard(card.x, card.y);
+		card.updatePositionAndDrawImageCard(card.x, card.y);
 		card.drawRanksCard();
 	});
 });
