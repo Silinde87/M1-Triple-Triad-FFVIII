@@ -85,9 +85,10 @@ class Game {
 
 	//Move the Chocobo element and flips and shows the cards of each player
 	swapPlayersShift() {
+		debugger
 		if (this.whichPlayerIsUp.name === "player") {
 			this.whichPlayerIsUp = this.opponent;
-			this.player.cardsInHand.forEach((card) => card.flipCard());
+			//this.player.cardsInHand.forEach((card) => card.flipCard());
 			this.draftCardsToHand(this.opponent);
 			this.updatePositionCursorGameElem(
 				this.cursorCoordinates.opponentsHand.x,
@@ -95,7 +96,7 @@ class Game {
 			);
 		} else {
 			this.whichPlayerIsUp = this.player;
-			this.opponent.cardsInHand.forEach((card) => card.flipCard());
+			//this.opponent.cardsInHand.forEach((card) => card.flipCard());
 			this.draftCardsToHand(this.player);
 			this.updatePositionCursorGameElem(
 				this.cursorCoordinates.playersHand.x,
@@ -162,6 +163,9 @@ class Game {
 			}
 
 			playerToDraft.cardsInHand[i].drawImageCard(x, y);
+			if(playerToDraft.name === this.whichPlayerIsUp.name){
+				playerToDraft.cardsInHand[i].drawRanksCard();
+			}
 		}
 	}
 

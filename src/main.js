@@ -3,6 +3,7 @@ let splashScreen;
 let gameScreen;
 let gameOverScreen;
 let gameStatus = "initial"; //Allows switch the "return key" behaviour
+let cardsElements;
 const cardSize = 220;
 let cardToMove;
 
@@ -84,6 +85,26 @@ createGameOverScreen = (result) => {
 };
 // Remove game over
 removeGameOverScreen = () => gameOverScreen.remove();
+
+// Preload the html elements with all the cards in play
+createPreloadedCardsElement = (game) => {
+	let deck = new Deck().cardList;
+
+	const preloadedCardsElement = createHtmlElement('div','preloaded-cards', null, null);
+
+	deck.forEach(card => {
+		let img = document.createElement('img');
+		img.src = "assets/img/cards/" + ("00" + card.id).slice(-3) + ".png";
+		img.setAttribute('id', `${card.id}`)
+		preloadedCardsElement.appendChild(img);
+	})
+	let img = document.createElement('img');
+	img.src = "assets/img/card-back.png";
+	img.setAttribute('id','card-back')
+	preloadedCardsElement.appendChild(img);
+
+	document.body.appendChild(preloadedCardsElement);
+}
 
 // Creates DOM elements with many configuration optional parameters
 createHtmlElement = (type, id, arrayClasses, content) => {
@@ -226,7 +247,10 @@ handleArrowKeyDown = (e) => {
 };
 
 // EVENTS LISTENERS //
-window.addEventListener("load", createSplashScreen);
+window.addEventListener("load", () => {
+	createSplashScreen();
+	createPreloadedCardsElement();
+});
 
 //Press Enter to continue
 window.addEventListener("keydown", (e) => {

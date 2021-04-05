@@ -140,3 +140,7 @@ p {
 	color: red;
 	font-size: 5rem;
 }
+
+#preloaded-cards{
+	display: none;
+}

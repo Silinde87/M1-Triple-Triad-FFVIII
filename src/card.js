@@ -18,18 +18,14 @@ class Card {
 	// Used to manage setTiemout of drawImage()
 	drawImageTimeOut;
 
-	// Prints the whole card at x,y coordinates. Background, image and ranks.
+	// Prints the whole card at x,y coordinates. Background and image
 	drawImageCard(x, y) {
 		this.x = x;
 		this.y = y;
-		const img = document.createElement("img");
-		img.src = this.getFileName();
-
-		this.drawImageTimeOut = setTimeout(() => {
-			this.fillCardBackground();
-			this.ctx.drawImage(img, this.x, this.y, this.size, this.size);
-			this.drawRanksCard();
-		}, 100);
+		const preloadedContainer = document.getElementById("preloaded-cards");
+		const img = document.getElementById(`${this.id}`);
+		this.fillCardBackground();
+		this.ctx.drawImage(img, this.x, this.y, this.size, this.size);
 	}
 
 	// Assist function. Used to get the filename of the card image
@@ -95,12 +91,10 @@ class Card {
 
 	// Prints the back of a card when called.
 	flipCard() {
-		clearTimeout(this.drawImageTimeOut);
-		const imgBack = document.createElement("img");
-		imgBack.src = this.getBackFileName();
-		setTimeout(() => {
-			this.ctx.drawImage(imgBack, this.x, this.y, this.size, this.size);
-		},100);
+		const preloadedContainer = document.getElementById("preloaded-cards");
+		const imgBack = document.getElementById(`card-back`);
+
+		this.ctx.drawImage(imgBack, this.x, this.y, this.size, this.size);
 	}
 	// Assist function. Used to get the filename of the back of a card.
 	getBackFileName() {
