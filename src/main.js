@@ -4,6 +4,7 @@ let gameScreen;
 let gameOverScreen;
 let gameStatus = "initial"; //Allows switch the "return key" behaviour
 const cardSize = 220;
+let cardToMove;
 
 // SPLASH SCREEN //
 // Create splash
@@ -126,27 +127,36 @@ endGame = () => {
 };
 
 handleEnterKeyDown = () => {
-	let cardToMove;
 	switch (gameStatus) {
 		case "initial":
 			startGame();
 			gameStatus = "choosingCard";
 			break;
 		case "choosingCard":
-			// Testing removGameScreen and createGameOverScreen. Logic goes here
+			// Choose a card from hand
 			cardToMove = game.chooseCardOnHand(game.whichPlayerIsUp, game.lastCursorY);
+			// Remove it from player card's array.
 			game.whichPlayerIsUp.removeCardFromHand(cardToMove);
+			//Hide card name label elem
 			game.removeGameCardLabelElem();
 			let gameboardX = game.cursorCoordinates.gameboard.x;
 			let gameboardY = game.cursorCoordinates.gameboard.y;
+			// Move cursor to middle gameboard
 			game.updatePositionCursorGameElem(gameboardX, gameboardY);
 			gameStatus = 'placingCard';
 			break;
 		case "placingCard":
-			debugger
-			console.log(game.lastCursorX, game.lastCursorY);
+			let cellX = game.lastCursorX - 72;
+			let cellY = game.lastCursorY - 88;
+			// Move the card the card from hand to keyboard
+			game.moveCardToGameBoard(cardToMove, cellX, cellY);
+			// Erase player  card's elements
+			game.removeCardElements(game.whichPlayerIsUp);
+			// Draw again player card's element.
+			game.draftCardsToHand(game.whichPlayerIsUp);
 
-			
+			game.swapPlayersShift();
+			gameStatus = 'choosingCard';
 			break;
 		case 'cardPlaced':
 			break;

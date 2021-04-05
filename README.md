@@ -98,6 +98,7 @@ Class Game(gameScreen){
 
     // Prints all the cards from the player passed as parameter
     draftCardsToHand()
+    removeCardsELems(player);
 
     chooseCardOnHand()
 

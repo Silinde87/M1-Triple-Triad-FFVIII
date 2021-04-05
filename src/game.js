@@ -165,6 +165,20 @@ class Game {
 		}
 	}
 
+	removeCardElements(player){
+		let x, y;
+		if(player.name === 'player'){
+			x = this.playerHandCoordinates[0].x;
+			y = this.playerHandCoordinates[0].y + 220;
+		} else {
+			x = this.opponentHandCoordinates[0].x;
+			y = this.opponentHandCoordinates[0].y + 220;
+		}
+		let width = 220;
+		let height = 400;
+		this.ctx.clearRect(x,y, width, height);
+	}
+
 	chooseCardOnHand(player, y) {
 		let selectedCard;
 		switch (y) {
