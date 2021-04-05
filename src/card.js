@@ -7,7 +7,6 @@ class Card {
 		this.cardName = this.card.name;
 		this.ranks = this.loadCardRanks(this.card);
 		this.backgroundColor;
-		this.imgSrc = this.getFileName();
 		this.positionOnBoard;
 		this.playerOwner = playerOwner;
 		this.x;
@@ -22,15 +21,9 @@ class Card {
 	drawImageCard(x, y) {
 		this.x = x;
 		this.y = y;
-		const preloadedContainer = document.getElementById("preloaded-cards");
 		const img = document.getElementById(`${this.id}`);
 		this.fillCardBackground();
 		this.ctx.drawImage(img, this.x, this.y, this.size, this.size);
-	}
-
-	// Assist function. Used to get the filename of the card image
-	getFileName() {
-		return "assets/img/cards/" + ("00" + this.id).slice(-3) + ".png";
 	}
 
 	// Get ranks from a card passed as parameter and pushes it at ranks[].
@@ -79,26 +72,17 @@ class Card {
 		for (let i = 0; i < 4; i++) {
 			const x = this.x + extra[i].x;
 			const y = this.y + extra[i].y;
-			const imgRank = document.createElement("img");
-			imgRank.src = this.getRankFileName(i);
-			imgRank.onload = () => this.ctx.drawImage(imgRank, x, y, rankSize, rankSize);
+			const imgRank = document.getElementById(`rank-${this.ranks[i]}`);
+			this.ctx.drawImage(imgRank, x, y, rankSize, rankSize)
 		}
-	}
-	// Assist function. Used to get the filename of the rank images
-	getRankFileName(index) {
-		return "assets/img/ranks/" + ("" + this.ranks[index]).slice(-3) + ".png";
 	}
 
 	// Prints the back of a card when called.
 	flipCard() {
-		const preloadedContainer = document.getElementById("preloaded-cards");
 		const imgBack = document.getElementById(`card-back`);
 
 		this.ctx.drawImage(imgBack, this.x, this.y, this.size, this.size);
 	}
-	// Assist function. Used to get the filename of the back of a card.
-	getBackFileName() {
-		return "assets/img/card-back.png";
-	}
+
 	compareRank(rankToCompare) {}
 }

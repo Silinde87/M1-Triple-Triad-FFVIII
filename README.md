@@ -89,7 +89,6 @@ Class Game(gameScreen){
     drawCursorGameElem()
     removeCursorGameElem()
     updatePositionCursorGameElem()
-    getCursorFileName()
 
     // Handle GameCard label element
     showGameCardLabelElem()
@@ -136,7 +135,6 @@ Class Card(deck, canvas, playerOwner){
     this.name;
     this.ranks = [TOP,LEFT,RIGHT,BOTTOM];
     this.backgroundColor
-    this.imgSrc;
     this.positionOnBoard;
     this.playerOwner;
     this.canvas;
@@ -150,8 +148,6 @@ Class Card(deck, canvas, playerOwner){
 
     // Prints the whole card at x,y coordinates. Background, image and ranks.
     drawImageCard(x, y)
-    // Assist function. Used to get the filename of the card image.
-    getFileName()
 
     // Get ranks from a card passed as parameter and pushes it at ranks[].
     loadCardRanks(card)
@@ -163,13 +159,9 @@ Class Card(deck, canvas, playerOwner){
     fillCardBackground()
     // Prints the ranks on card.
     drawRanksCard()
-    // Assist function. Used to get the filename of the rank images
-    getRankFileName()
 
     // Prints the back of a card.
     flipCard()
-    // Assist function. Used to get the filename of the back of a card.
-    getBackFileName()
 
     compareRank(rankToCompare)
 }
@@ -201,7 +193,6 @@ Class Deck(){
 ## Tasks
 - Card - Define class properties
 - Card - loadImage
-- Card - getFileName
 - Card - loadCardRanks
 - Card - drawCard
 - Card - fillCardBackground

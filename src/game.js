@@ -88,7 +88,8 @@ class Game {
 		debugger
 		if (this.whichPlayerIsUp.name === "player") {
 			this.whichPlayerIsUp = this.opponent;
-			//this.player.cardsInHand.forEach((card) => card.flipCard());
+			this.player.cardsInHand.forEach((card) => card.flipCard());
+			this.removeCardElements(this.opponent)
 			this.draftCardsToHand(this.opponent);
 			this.updatePositionCursorGameElem(
 				this.cursorCoordinates.opponentsHand.x,
@@ -96,7 +97,8 @@ class Game {
 			);
 		} else {
 			this.whichPlayerIsUp = this.player;
-			//this.opponent.cardsInHand.forEach((card) => card.flipCard());
+			this.opponent.cardsInHand.forEach((card) => card.flipCard());
+			this.removeCardElements(this.player)
 			this.draftCardsToHand(this.player);
 			this.updatePositionCursorGameElem(
 				this.cursorCoordinates.playersHand.x,
@@ -124,9 +126,8 @@ class Game {
 
 	// Handle cursor position on canvas
 	drawCursorGameElem() {
-		const imgCursor = document.createElement("img");
-		imgCursor.src = this.getCursorFileName();
-		imgCursor.onload = () => this.ctx.drawImage(imgCursor, this.lastCursorX, this.lastCursorY, 38, 22);
+		const imgCursor = document.getElementById("cursor");
+		this.ctx.drawImage(imgCursor, this.lastCursorX, this.lastCursorY, 38, 22);
 	}
 	removeCursorGameElem() {
 		this.ctx.clearRect(this.lastCursorX, this.lastCursorY, 38, 22);
@@ -136,9 +137,6 @@ class Game {
 		this.lastCursorX = x;
 		this.lastCursorY = y;
 		this.drawCursorGameElem();
-	}
-	getCursorFileName() {
-		return "assets/img/cursor.png";
 	}
 
 	//Handle GameCard Label Element
@@ -163,24 +161,24 @@ class Game {
 			}
 
 			playerToDraft.cardsInHand[i].drawImageCard(x, y);
-			if(playerToDraft.name === this.whichPlayerIsUp.name){
+			if (playerToDraft.name === this.whichPlayerIsUp.name) {
 				playerToDraft.cardsInHand[i].drawRanksCard();
 			}
 		}
 	}
 
-	removeCardElements(player){
+	removeCardElements(player) {
 		let x, y;
-		if(player.name === 'player'){
+		if (player.name === "player") {
 			x = this.playerHandCoordinates[0].x;
-			y = this.playerHandCoordinates[0].y + 220;
+			y = this.playerHandCoordinates[0].y;
 		} else {
 			x = this.opponentHandCoordinates[0].x;
-			y = this.opponentHandCoordinates[0].y + 220;
+			y = this.opponentHandCoordinates[0].y;
 		}
 		let width = 220;
-		let height = 400;
-		this.ctx.clearRect(x,y, width, height);
+		let height = 630;
+		this.ctx.clearRect(x, y, width, height);
 	}
 
 	chooseCardOnHand(player, y) {
@@ -213,6 +211,7 @@ class Game {
 		card.y = y;
 		this.cardsInPlay.push(card);
 		card.drawImageCard(x, y);
+		card.drawRanksCard();
 	}
 
 	// Creates a matrix with the coordinates of the gameboard

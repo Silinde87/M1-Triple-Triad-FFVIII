@@ -90,21 +90,37 @@ removeGameOverScreen = () => gameOverScreen.remove();
 createPreloadedCardsElement = (game) => {
 	let deck = new Deck().cardList;
 
-	const preloadedCardsElement = createHtmlElement('div','preloaded-cards', null, null);
+	const preloadedCardsElement = createHtmlElement("div", "preloaded-cards", null, null);
 
-	deck.forEach(card => {
-		let img = document.createElement('img');
+	// Preload card imgs
+	deck.forEach((card) => {
+		let img = document.createElement("img");
 		img.src = "assets/img/cards/" + ("00" + card.id).slice(-3) + ".png";
-		img.setAttribute('id', `${card.id}`)
+		img.setAttribute("id", `${card.id}`);
 		preloadedCardsElement.appendChild(img);
-	})
-	let img = document.createElement('img');
+	});
+	// Preload card back
+	let img = document.createElement("img");
 	img.src = "assets/img/card-back.png";
-	img.setAttribute('id','card-back')
+	img.setAttribute("id", "card-back");
 	preloadedCardsElement.appendChild(img);
 
+	// Preload cursor img
+	img = document.createElement("img");
+	img.src = "assets/img/cursor.png";
+	img.setAttribute("id", "cursor");
+	preloadedCardsElement.appendChild(img);
+
+	// Preload ranks
+	for (let i = 0; i < 11; i++) {
+		let img = document.createElement("img");
+		img.src = "assets/img/ranks/" + ("" + i).slice(-3) + ".png";
+		img.setAttribute("id", `rank-${i}`);
+		preloadedCardsElement.appendChild(img);
+	}
+
 	document.body.appendChild(preloadedCardsElement);
-}
+};
 
 // Creates DOM elements with many configuration optional parameters
 createHtmlElement = (type, id, arrayClasses, content) => {
@@ -164,7 +180,7 @@ handleEnterKeyDown = () => {
 			let gameboardY = game.cursorCoordinates.gameboard.y;
 			// Move cursor to middle gameboard
 			game.updatePositionCursorGameElem(gameboardX, gameboardY);
-			gameStatus = 'placingCard';
+			gameStatus = "placingCard";
 			break;
 		case "placingCard":
 			let cellX = game.lastCursorX - 72;
@@ -177,9 +193,9 @@ handleEnterKeyDown = () => {
 			game.draftCardsToHand(game.whichPlayerIsUp);
 
 			game.swapPlayersShift();
-			gameStatus = 'choosingCard';
+			gameStatus = "choosingCard";
 			break;
-		case 'cardPlaced':
+		case "cardPlaced":
 			break;
 		case "ending":
 			endGame();
@@ -188,62 +204,60 @@ handleEnterKeyDown = () => {
 };
 
 handleArrowKeyDown = (e) => {
-	setTimeout(() => {
-		switch (gameStatus) {
-			// ChoosingCard game status.
-			case "choosingCard":
-				const borders = [80, 190, 300, 410, 520];
-				let index = borders.indexOf(game.lastCursorY);
-				switch (e.key) {
-					case "ArrowDown":
-						let playerHand = game.player.cardsInHand.length;
-						let opponentHand = game.opponent.cardsInHand.length;
-						if (game.whichPlayerIsUp.name === "player") {
-							borderBottom = borders[playerHand - 1];
-							if (game.lastCursorY + 110 > borderBottom) return;
-							game.updateGameCardLabelElem(game.player.cardsInHand[index + 1].cardName);
-						} else {
-							borderBottom = borders[opponentHand - 1];
-							if (game.lastCursorY + 110 > borderBottom) return;
-							game.updateGameCardLabelElem(game.opponent.cardsInHand[index + 1].cardName);
-						}
-						game.updatePositionCursorGameElem(game.lastCursorX, game.lastCursorY + cardSize / 2);
-						break;
-					case "ArrowUp":
-						if (game.lastCursorY - 110 < borders[0]) return; // Sets top border
-						if (game.whichPlayerIsUp.name === "player") {
-							game.updateGameCardLabelElem(game.player.cardsInHand[index - 1].cardName);
-						} else {
-							game.updateGameCardLabelElem(game.opponent.cardsInHand[index - 1].cardName);
-						}
-						game.updatePositionCursorGameElem(game.lastCursorX, game.lastCursorY - cardSize / 2);
-						break;
-				}
-				break;
-			// PlacingCard game status
-			case "placingCard":
-				const bordersGameBoard = { top: 80, left: 412, right: 852, bottom: 548 };
-				switch (e.key) {
-					case "ArrowDown":
-						if (game.lastCursorY + cardSize > bordersGameBoard.bottom) return; // Sets bottom border
-						game.updatePositionCursorGameElem(game.lastCursorX, game.lastCursorY + cardSize);
-						break;
-					case "ArrowUp":
-						if (game.lastCursorY - cardSize < bordersGameBoard.top) return; // Sets top border
-						game.updatePositionCursorGameElem(game.lastCursorX, game.lastCursorY - cardSize);
-						break;
-					case "ArrowLeft":
-						if (game.lastCursorX - cardSize < bordersGameBoard.left) return;
-						game.updatePositionCursorGameElem(game.lastCursorX - cardSize, game.lastCursorY);
-						break;
-					case "ArrowRight":
-						if (game.lastCursorX + cardSize > bordersGameBoard.right) return;
-						game.updatePositionCursorGameElem(game.lastCursorX + cardSize, game.lastCursorY);
-						break;
-				}
-				break;
-		}
-	}, 101);
+	switch (gameStatus) {
+		// ChoosingCard game status.
+		case "choosingCard":
+			const borders = [80, 190, 300, 410, 520];
+			let index = borders.indexOf(game.lastCursorY);
+			switch (e.key) {
+				case "ArrowDown":
+					let playerHand = game.player.cardsInHand.length;
+					let opponentHand = game.opponent.cardsInHand.length;
+					if (game.whichPlayerIsUp.name === "player") {
+						borderBottom = borders[playerHand - 1];
+						if (game.lastCursorY + 110 > borderBottom) return;
+						game.updateGameCardLabelElem(game.player.cardsInHand[index + 1].cardName);
+					} else {
+						borderBottom = borders[opponentHand - 1];
+						if (game.lastCursorY + 110 > borderBottom) return;
+						game.updateGameCardLabelElem(game.opponent.cardsInHand[index + 1].cardName);
+					}
+					game.updatePositionCursorGameElem(game.lastCursorX, game.lastCursorY + cardSize / 2);
+					break;
+				case "ArrowUp":
+					if (game.lastCursorY - 110 < borders[0]) return; // Sets top border
+					if (game.whichPlayerIsUp.name === "player") {
+						game.updateGameCardLabelElem(game.player.cardsInHand[index - 1].cardName);
+					} else {
+						game.updateGameCardLabelElem(game.opponent.cardsInHand[index - 1].cardName);
+					}
+					game.updatePositionCursorGameElem(game.lastCursorX, game.lastCursorY - cardSize / 2);
+					break;
+			}
+			break;
+		// PlacingCard game status
+		case "placingCard":
+			const bordersGameBoard = { top: 80, left: 412, right: 852, bottom: 548 };
+			switch (e.key) {
+				case "ArrowDown":
+					if (game.lastCursorY + cardSize > bordersGameBoard.bottom) return; // Sets bottom border
+					game.updatePositionCursorGameElem(game.lastCursorX, game.lastCursorY + cardSize);
+					break;
+				case "ArrowUp":
+					if (game.lastCursorY - cardSize < bordersGameBoard.top) return; // Sets top border
+					game.updatePositionCursorGameElem(game.lastCursorX, game.lastCursorY - cardSize);
+					break;
+				case "ArrowLeft":
+					if (game.lastCursorX - cardSize < bordersGameBoard.left) return;
+					game.updatePositionCursorGameElem(game.lastCursorX - cardSize, game.lastCursorY);
+					break;
+				case "ArrowRight":
+					if (game.lastCursorX + cardSize > bordersGameBoard.right) return;
+					game.updatePositionCursorGameElem(game.lastCursorX + cardSize, game.lastCursorY);
+					break;
+			}
+			break;
+	}
 };
 
 // EVENTS LISTENERS //
@@ -258,5 +272,8 @@ window.addEventListener("keydown", (e) => {
 	let arrowKeys = ["ArrowLeft", "ArrowUp", "ArrowRight", "ArrowDown"];
 	if (arrowKeys.includes(e.key)) handleArrowKeyDown(e);
 	// Redrawing the cards in play after moving the cursor. not working.
-	//game.cardsInPlay.forEach((card) => card.drawImageCard(card.x, card.y));
+	game.cardsInPlay.forEach((card) => {
+		card.drawImageCard(card.x, card.y);
+		card.drawRanksCard();
+	});
 });
