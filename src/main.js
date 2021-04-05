@@ -113,12 +113,11 @@ startGame = () => {
 	createGameScreen();
 	game = new Game(gameScreen);
 	game.start();
-	
+
 	game.updatePositionCursorGameElem(
 		game.cursorCoordinates.playersHand.x,
 		game.cursorCoordinates.playersHand.y
 	);
-	gameStatus = "choosingCard";
 };
 
 endGame = () => {
@@ -127,15 +126,29 @@ endGame = () => {
 };
 
 handleEnterKeyDown = () => {
+	let cardToMove;
 	switch (gameStatus) {
 		case "initial":
 			startGame();
+			gameStatus = "choosingCard";
 			break;
 		case "choosingCard":
 			// Testing removGameScreen and createGameOverScreen. Logic goes here
-			game.chooseCardOnHand(game.wichPlayerIsUp, game.lastCursorY);
+			cardToMove = game.chooseCardOnHand(game.whichPlayerIsUp, game.lastCursorY);
+			game.whichPlayerIsUp.removeCardFromHand(cardToMove);
+			game.removeGameCardLabelElem();
+			let gameboardX = game.cursorCoordinates.gameboard.x;
+			let gameboardY = game.cursorCoordinates.gameboard.y;
+			game.updatePositionCursorGameElem(gameboardX, gameboardY);
+			gameStatus = 'placingCard';
 			break;
 		case "placingCard":
+			debugger
+			console.log(game.lastCursorX, game.lastCursorY);
+
+			
+			break;
+		case 'cardPlaced':
 			break;
 		case "ending":
 			endGame();
@@ -149,21 +162,29 @@ handleArrowKeyDown = (e) => {
 			// ChoosingCard game status.
 			case "choosingCard":
 				const borders = [80, 190, 300, 410, 520];
+				let index = borders.indexOf(game.lastCursorY);
 				switch (e.key) {
 					case "ArrowDown":
 						let playerHand = game.player.cardsInHand.length;
 						let opponentHand = game.opponent.cardsInHand.length;
-						debugger
-						if (game.wichPlayerIsUp === "player") {
+						if (game.whichPlayerIsUp.name === "player") {
 							borderBottom = borders[playerHand - 1];
+							if (game.lastCursorY + 110 > borderBottom) return;
+							game.updateGameCardLabelElem(game.player.cardsInHand[index + 1].cardName);
 						} else {
 							borderBottom = borders[opponentHand - 1];
+							if (game.lastCursorY + 110 > borderBottom) return;
+							game.updateGameCardLabelElem(game.opponent.cardsInHand[index + 1].cardName);
 						}
-						if (game.lastCursorY + 110 > borderBottom) return;
 						game.updatePositionCursorGameElem(game.lastCursorX, game.lastCursorY + cardSize / 2);
 						break;
 					case "ArrowUp":
 						if (game.lastCursorY - 110 < borders[0]) return; // Sets top border
+						if (game.whichPlayerIsUp.name === "player") {
+							game.updateGameCardLabelElem(game.player.cardsInHand[index - 1].cardName);
+						} else {
+							game.updateGameCardLabelElem(game.opponent.cardsInHand[index - 1].cardName);
+						}
 						game.updatePositionCursorGameElem(game.lastCursorX, game.lastCursorY - cardSize / 2);
 						break;
 				}

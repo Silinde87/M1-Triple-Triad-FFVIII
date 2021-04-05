@@ -6,7 +6,7 @@ class Game {
 		this.player = null;
 		this.opponent = null;
 		this.gameIsOver = false;
-		this.wichPlayerIsUp = null;	
+		this.whichPlayerIsUp = null;
 		this.playerNumCardsElem;
 		this.opponentNumCardsElem;
 		this.deck = new Deck().cardList;
@@ -55,8 +55,7 @@ class Game {
 		//Player creation
 		this.player = new Player("player", this.deck, this.canvas);
 		this.opponent = new Player("opponent", this.deck, this.canvas);
-		this.wichPlayerIsUp = this.player;
-
+		this.whichPlayerIsUp = this.player;
 
 		//Draft cards
 		this.draftCardsToHand(this.player);
@@ -64,30 +63,9 @@ class Game {
 		//Flip Opponent Cards for the first round
 		this.opponent.cardsInHand.forEach((card) => card.flipCard());
 
-		/////////////////
-		///// TESTS /////
-		/////////////////
-		//TEST HANDLE CARD NAME
-		this.updateGameCardLabelElem(this.player.cardsInHand[1].cardName);
-		//this.updateGameCardLabelElem(this.opponent.cardsInHand[1].cardName);
-		this.removeGameCardLabelElem();
-		//this.showGameCardLabelElem();
-
-		//TEST UPDATE
-		//this.player.cardsInHand.push(this.opponent.cardsInHand.pop());
-		this.updateGameNumCardsElements();
-
-		//TEST SWAP SHIFT ELEMENT
-		//this.swapPlayersShift();
-
-		//TEST SHOW CURSOR
-		//this.updatePositionCursorGameElem(1030,80); //Initial cursor position for player's hand
-		//this.wichPlayerIsUp = this.opponent.name;
-		//this.updatePositionCursorGameElem(20,80); // Initial cursor position for opponent's hand.
-		//Initial cursor position for gameboard
-		 let initialCursorGameboardX = this.gameBoardMatrix[1][1].x + 72;
-		 let initialcursorGameBoardY = this.gameBoardMatrix[1][1].y + 88;
-		 this.updatePositionCursorGameElem(initialCursorGameboardX, initialcursorGameBoardY);
+		//Updating and showing card label element for first load.
+		this.updateGameCardLabelElem(this.player.cardsInHand[0].cardName);
+		this.showGameCardLabelElem();
 	}
 	gameOver() {}
 
@@ -107,26 +85,34 @@ class Game {
 
 	//Move the Chocobo element and flips and shows the cards of each player
 	swapPlayersShift() {
-		if (this.wichPlayerIsUp === this.player.name) {
-			this.wichPlayerIsUp = this.opponent.name;
+		if (this.whichPlayerIsUp.name === "player") {
+			this.whichPlayerIsUp = this.opponent;
 			this.player.cardsInHand.forEach((card) => card.flipCard());
 			this.draftCardsToHand(this.opponent);
+			this.updatePositionCursorGameElem(
+				this.cursorCoordinates.opponentsHand.x,
+				this.cursorCoordinates.opponentsHand.y
+			);
 		} else {
-			this.wichPlayerIsUp = this.player.name;
+			this.whichPlayerIsUp = this.player;
 			this.opponent.cardsInHand.forEach((card) => card.flipCard());
 			this.draftCardsToHand(this.player);
+			this.updatePositionCursorGameElem(
+				this.cursorCoordinates.playersHand.x,
+				this.cursorCoordinates.playersHand.y
+			);
 		}
-		this.swapPlayerShiftElem(this.wichPlayerIsUp);
+		this.swapPlayerShiftElem(this.whichPlayerIsUp);
 	}
 
 	// Move the Chocobo Element
-	swapPlayerShiftElem(wichPlayerIsUp) {
+	swapPlayerShiftElem(whichPlayerIsUp) {
 		const shiftElementContainer = this.gameScreen.querySelector("#turn-game-selector");
 		const shiftElement = shiftElementContainer.querySelector("img");
 		shiftElement.classList.toggle("player-turn");
 		shiftElement.classList.toggle("opponent-turn");
 
-		if (wichPlayerIsUp.name === "opponent") {
+		if (whichPlayerIsUp.name === "opponent") {
 			//swap to opponent
 			shiftElementContainer.style.justifyContent = "flex-start";
 		} else {
@@ -180,9 +166,8 @@ class Game {
 	}
 
 	chooseCardOnHand(player, y) {
-		console.log(player, y);
 		let selectedCard;
-		switch(y){
+		switch (y) {
 			case 80:
 				selectedCard = player.cardsInHand[0];
 				break;
