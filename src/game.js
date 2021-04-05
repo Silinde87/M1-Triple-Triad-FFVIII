@@ -6,29 +6,34 @@ class Game {
 		this.player = null;
 		this.opponent = null;
 		this.gameIsOver = false;
-		this.wichPlayerIsUp = null;
-		this.gameBoardMatrix = this.fillGameBoardMatrix();
+		this.wichPlayerIsUp = null;	
 		this.playerNumCardsElem;
 		this.opponentNumCardsElem;
 		this.deck = new Deck().cardList;
 		this.cardsInPlay = [];
 		this.lastCursorX;
 		this.lastCursorY;
+		this.gameBoardMatrix = this.fillGameBoardMatrix();
+		this.playerHandCoordinates = [
+			{ x: 1070, y: 30 }, // First Card
+			{ x: 1070, y: 130 }, // Second Card
+			{ x: 1070, y: 230 }, // Third Card
+			{ x: 1070, y: 330 }, // Fourth Card
+			{ x: 1070, y: 430 }, // Fifth Card
+		];
+		this.opponentHandCoordinates = [
+			{ x: 60, y: 30 }, // First Card
+			{ x: 60, y: 130 }, // Second Card
+			{ x: 60, y: 230 }, // Third Card
+			{ x: 60, y: 330 }, // Fourth Card
+			{ x: 60, y: 430 }, // Fifth Card
+		];
+		this.cursorCoordinates = {
+			playersHand: { x: 1030, y: 80 },
+			opponentsHand: { x: 20, y: 80 },
+			gameboard: { x: this.gameBoardMatrix[1][1].x + 72, y: this.gameBoardMatrix[1][1].y + 88 },
+		};
 	}
-	playerHandCoordinates = [
-		{ x: 1070, y: 30 }, // First Card
-		{ x: 1070, y: 130 }, // Second Card
-		{ x: 1070, y: 230 }, // Third Card
-		{ x: 1070, y: 330 }, // Fourth Card
-		{ x: 1070, y: 430 }, // Fifth Card
-	];
-	opponentHandCoordinates = [
-		{ x: 60, y: 30 }, // First Card
-		{ x: 60, y: 130 }, // Second Card
-		{ x: 60, y: 230 }, // Third Card
-		{ x: 60, y: 330 }, // Fourth Card
-		{ x: 60, y: 430 }, // Fifth Card
-	];
 
 	start() {
 		//Number of cards elements
@@ -50,18 +55,8 @@ class Game {
 		//Player creation
 		this.player = new Player("player", this.deck, this.canvas);
 		this.opponent = new Player("opponent", this.deck, this.canvas);
-		this.wichPlayerIsUp = this.player.name;
+		this.wichPlayerIsUp = this.player;
 
-		/////////////////////////////////////////////////////
-		//TESTING removecardfromhand and movecardtogameboard
-		/////////////////////////////////////////////////////
-		const testCard = this.player.cardsInHand[3];
-		testCard.playerOwner = "opponent";
-		const testX = this.gameBoardMatrix[1][2].x;
-		const testY = this.gameBoardMatrix[1][2].y;
-		this.player.removeCardFromHand(testCard);
-		this.moveCardToGameBoard(testCard, testX, testY);
-		/////////////////////////////////////////////////////
 
 		//Draft cards
 		this.draftCardsToHand(this.player);
@@ -90,9 +85,9 @@ class Game {
 		//this.wichPlayerIsUp = this.opponent.name;
 		//this.updatePositionCursorGameElem(20,80); // Initial cursor position for opponent's hand.
 		//Initial cursor position for gameboard
-		let initialCursorGameboardX = this.gameBoardMatrix[1][1].x + 72;
-		let initialcursorGameBoardY = this.gameBoardMatrix[1][1].y + 88;
-		this.updatePositionCursorGameElem(initialCursorGameboardX, initialcursorGameBoardY);
+		 let initialCursorGameboardX = this.gameBoardMatrix[1][1].x + 72;
+		 let initialcursorGameBoardY = this.gameBoardMatrix[1][1].y + 88;
+		 this.updatePositionCursorGameElem(initialCursorGameboardX, initialcursorGameBoardY);
 	}
 	gameOver() {}
 
@@ -131,7 +126,7 @@ class Game {
 		shiftElement.classList.toggle("player-turn");
 		shiftElement.classList.toggle("opponent-turn");
 
-		if (wichPlayerIsUp === "opponent") {
+		if (wichPlayerIsUp.name === "opponent") {
 			//swap to opponent
 			shiftElementContainer.style.justifyContent = "flex-start";
 		} else {
@@ -184,7 +179,28 @@ class Game {
 		}
 	}
 
-	chooseCardOnHand() {}
+	chooseCardOnHand(player, y) {
+		console.log(player, y);
+		let selectedCard;
+		switch(y){
+			case 80:
+				selectedCard = player.cardsInHand[0];
+				break;
+			case 190:
+				selectedCard = player.cardsInHand[1];
+				break;
+			case 300:
+				selectedCard = player.cardsInHand[2];
+				break;
+			case 410:
+				selectedCard = player.cardsInHand[3];
+				break;
+			case 520:
+				selectedCard = player.cardsInHand[4];
+				break;
+		}
+		return selectedCard;
+	}
 
 	// Change x & y from card passed as parameter
 	// pushes it to cardsInPlay Array
@@ -220,6 +236,4 @@ class Game {
 		];
 		return matrix;
 	}
-
-	handleKeydown() {}
 }

@@ -67,13 +67,14 @@ Class Game(gameScreen){
     this.opponent;
     this.gameIsOver = false;
     this.whichPlayerIsUp;
-    this.gameBoardMatrix = [];
     this.playerNumCardsElem = HTMLElem;
     this.opponentNumCardsElem = HTMLElem;
     this.deck = new Deck().cardList;
     this.cardsInPlay = [];
+    this.gameBoardMatrix = [];
     this.playerHandCoordinates = [];
     this.opponentHandCoordinates = [];
+    this.cursorCoordinates = {}
 
     start()
     gameOver()
@@ -82,7 +83,7 @@ Class Game(gameScreen){
     
     // Handle player's shift
     swapPlayersShift()
-    swapPlayerShiftElem(wichPlayerIsUp)
+    swapPlayerShiftElem(whichPlayerIsUp)
     
     // Handle cursor position on canvas
     drawCursorGameElem()
@@ -105,8 +106,6 @@ Class Game(gameScreen){
 
     // Creates a matrix with the coordinates of the gameboard
     fillGameBoardMatrix()
-
-    handleKeydown()
 }
 ```
 ### player.js

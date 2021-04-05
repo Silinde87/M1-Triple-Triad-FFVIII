@@ -3,6 +3,7 @@ let splashScreen;
 let gameScreen;
 let gameOverScreen;
 let gameStatus = "initial"; //Allows switch the "return key" behaviour
+const cardSize = 220;
 
 // SPLASH SCREEN //
 // Create splash
@@ -112,6 +113,12 @@ startGame = () => {
 	createGameScreen();
 	game = new Game(gameScreen);
 	game.start();
+	
+	game.updatePositionCursorGameElem(
+		game.cursorCoordinates.playersHand.x,
+		game.cursorCoordinates.playersHand.y
+	);
+	gameStatus = "choosingCard";
 };
 
 endGame = () => {
@@ -126,16 +133,17 @@ handleEnterKeyDown = () => {
 			break;
 		case "choosingCard":
 			// Testing removGameScreen and createGameOverScreen. Logic goes here
-			endGame();
+			game.chooseCardOnHand(game.wichPlayerIsUp, game.lastCursorY);
 			break;
 		case "placingCard":
+			break;
+		case "ending":
+			endGame();
+			break;
 	}
 };
 
 handleArrowKeyDown = (e) => {
-	gameStatus = "placingCard"; //TEST. Remove this
-	const cardSize = 220;
-
 	setTimeout(() => {
 		switch (gameStatus) {
 			// ChoosingCard game status.
@@ -145,6 +153,7 @@ handleArrowKeyDown = (e) => {
 					case "ArrowDown":
 						let playerHand = game.player.cardsInHand.length;
 						let opponentHand = game.opponent.cardsInHand.length;
+						debugger
 						if (game.wichPlayerIsUp === "player") {
 							borderBottom = borders[playerHand - 1];
 						} else {
@@ -194,5 +203,5 @@ window.addEventListener("keydown", (e) => {
 	let arrowKeys = ["ArrowLeft", "ArrowUp", "ArrowRight", "ArrowDown"];
 	if (arrowKeys.includes(e.key)) handleArrowKeyDown(e);
 	// Redrawing the cards in play after moving the cursor. not working.
-	game.cardsInPlay.forEach((card) => card.drawImageCard(card.x, card.y)); 
+	//game.cardsInPlay.forEach((card) => card.drawImageCard(card.x, card.y));
 });
