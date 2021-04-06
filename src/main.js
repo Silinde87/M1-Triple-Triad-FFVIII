@@ -187,6 +187,11 @@ handleEnterKeyDown = () => {
 			// Exit condition if trying to place the card in occupied spot
 			let index = game.getPositionFromMatrixToArray(game.gameBoardMatrix, cellX, cellY);
 			if(game.cardsInPlay[index]) return;
+
+
+			game.calculateResult(index, cardToMove);
+
+
 			// Move the card from the hand to the gameboard
 			game.moveCardToGameBoard(cardToMove, cellX, cellY);
 			// Add the card to the cardsInPlay Array.
