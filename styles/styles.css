@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@500&display=swap');
+
 /* Resets */
 html,
 body {
@@ -17,6 +19,10 @@ ul,
 p {
 	margin: 0;
 	padding: 0;
+}
+
+#preloaded-cards{
+	display: none;
 }
 
 /* Common Styles */
@@ -136,11 +142,26 @@ p {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	text-align: center;
-	color: red;
-	font-size: 5rem;
 }
 
-#preloaded-cards{
-	display: none;
+#result{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	height: 100%;
+	justify-content: center;
+}
+
+#result-gameover{
+	margin-top: 100px;
+	background-size: 390px 110px;
+	width: 390px;
+	height: 110px;
+	color: white;
+	font-family: 'Roboto Slab', serif;
+	font-size: 3rem;
+	text-shadow: 1px 1px 2px black;
+	display: flex;
+	align-items: center;
+	text-align: center;
 }

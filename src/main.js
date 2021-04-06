@@ -66,19 +66,25 @@ removeGameScreen = () => gameScreen.remove();
 
 // GAME OVER SCREEN //
 // Create game over
-createGameOverScreen = (result) => {
+createGameOverScreen = (result, winner) => {
 	gameOverScreen = createHtmlElement(
 		"main",
 		"gameover-screen-container",
 		["background"],
-		`<div>
+		`<div id="result">
             <img id='result-label' src='assets/img/label-${result}.png' alt='result-label'>
-            <div>Press ENTER to restart</div>
+            <div id="result-gameover" class="info-label">Congratulations ${winner} Press ENTER to start</div>
         </div>
 		<!--<audio src="assets/sounds/victory-fanfare.mp3" autoplay></audio>-->
 	`
 	);
 	document.body.appendChild(gameOverScreen);
+	debugger
+	if(result === 'draw'){
+		const resultGameOver = document.getElementById('result-gameover')
+		resultGameOver.innerHTML = 'Well done both of you! \nPress ENTER to start';
+	}
+		
 };
 // Remove game over
 removeGameOverScreen = () => gameOverScreen.remove();
@@ -155,9 +161,9 @@ startGame = () => {
 	);
 };
 
-endGame = (result) => {
+endGame = (result, winner) => {
 	removeGameScreen();
-	createGameOverScreen(result);
+	createGameOverScreen(result, winner);
 };
 
 handleEnterKeyDown = () => {
@@ -213,8 +219,8 @@ handleEnterKeyDown = () => {
 				let playerCards = game.countCardsOnGame(game.player);
 				let opponentCards = game.countCardsOnGame(game.opponent);
 
-				if (playerCards > opponentCards) endGame("win");
-				if (playerCards < opponentCards) endGame("lose");
+				if (playerCards > opponentCards) endGame("win", 'Player');
+				if (playerCards < opponentCards) endGame("win", 'Opponent');
 				if (playerCards == opponentCards) endGame("draw");
 
 				gameStatus = "initial";
