@@ -87,10 +87,11 @@ Class Game(gameScreen){
     this.cursorCoordinates = {}
 
     start()
-    gameOver()
+    isGameOver()
 
     // Updates the num card elements counting each player's cards.
     updateGameNumCardsElements()
+    countCardsOnGame()
 
     // Handle player's shift
     swapPlayersShift()

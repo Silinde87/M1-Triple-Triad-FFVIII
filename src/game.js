@@ -67,24 +67,29 @@ class Game {
 		this.updateGameCardLabelElem(this.player.cardsInHand[0].cardName);
 		this.showGameCardLabelElem();
 	}
-	gameOver() {}
+	// Returns true if the cardsInPlay array is full.
+	isGameOver() {
+		return this.cardsInPlay.filter(card => card!==null).length === 9
+	}
 
 	//Modify the quantity of cards of each player
 	updateGameNumCardsElements() {
-		let playerCards = 0;
-		let opponentCards = 0;
-		playerCards += this.player.updateNumCards();
-		playerCards += this.cardsInPlay
-			.filter((card) => card !== null)
-			.filter((card) => card.playerOwner === "player").length;
-
-		opponentCards += this.opponent.updateNumCards();
-		opponentCards += this.cardsInPlay
-			.filter((card) => card !== null)
-			.filter((card) => card.playerOwner === "opponent").length;
+		let playerCards = this.countCardsOnGame(this.player);
+		let opponentCards = this.countCardsOnGame(this.opponent);
 
 		this.playerNumCardsElem.innerHTML = `<img src="assets/img/scores/${playerCards}.png" alt="Player Score">`;
 		this.opponentNumCardsElem.innerHTML = `<img src="assets/img/scores/${opponentCards}.png" alt="Opponent Score">`;
+	}
+
+	// Count all cards fromm a player
+	countCardsOnGame(player){
+		let num = 0;
+		num += player.updateNumCards();
+		num += this.cardsInPlay
+			.filter((card) => card !== null)
+			.filter((card) => card.playerOwner === player.name).length;
+
+		return num;
 	}
 
 	//Move the Chocobo element and flips and shows the cards of each player

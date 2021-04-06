@@ -67,8 +67,6 @@ removeGameScreen = () => gameScreen.remove();
 // GAME OVER SCREEN //
 // Create game over
 createGameOverScreen = (result) => {
-	gameStatus = "ended";
-
 	gameOverScreen = createHtmlElement(
 		"main",
 		"gameover-screen-container",
@@ -157,9 +155,9 @@ startGame = () => {
 	);
 };
 
-endGame = () => {
+endGame = (result) => {
 	removeGameScreen();
-	createGameOverScreen("lose");
+	createGameOverScreen(result);
 };
 
 handleEnterKeyDown = () => {
@@ -211,12 +209,18 @@ handleEnterKeyDown = () => {
 
 			//Update the number of cards element of players.
 			game.updateGameNumCardsElements();
-			gameStatus = "choosingCard";
-			break;
-		case "cardPlaced":
-			break;
-		case "ending":
-			endGame();
+			if (game.isGameOver()) {
+				let playerCards = game.countCardsOnGame(game.player);
+				let opponentCards = game.countCardsOnGame(game.opponent);
+
+				if (playerCards > opponentCards) endGame("win");
+				if (playerCards < opponentCards) endGame("lose");
+				if (playerCards == opponentCards) endGame("draw");
+
+				gameStatus = "initial";
+			} else {
+				gameStatus = "choosingCard";
+			}
 			break;
 	}
 };
