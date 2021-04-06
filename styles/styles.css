@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 
 /* Resets */
 html,
@@ -71,6 +72,20 @@ li {
 p {
 	margin: 10px 0px;
 }
+.fas{
+	color: white;
+	font-size: 7rem;
+	position: fixed;
+	bottom: 30px;
+	right: 30px;
+	transition: transform 0.1s;
+}
+.fas:hover{
+	transform: scale(1.1);
+}
+.hide-sound{
+	visibility: hidden;
+}
 
 /* Splash Screen */
 #splash-screen-container {
@@ -140,7 +155,6 @@ p {
 	font-size: 3rem;
 	margin: 0px;
 }
-
 
 
 /* Game Over Screen */

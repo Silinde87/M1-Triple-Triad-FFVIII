@@ -6,6 +6,9 @@ let gameStatus = "initial"; //Allows switch the "return key" behaviour
 const cardSize = 220;
 let cardToMove;
 let sounds = new Sounds();
+let volumeButtons = document.querySelector("#volume-btns");
+let volumeUp = document.querySelector(".fa-volume-up");
+let volumeMute = document.querySelector(".fa-volume-mute");
 
 // SPLASH SCREEN //
 // Create splash
@@ -225,7 +228,6 @@ handleEnterKeyDown = () => {
 			//Update the number of cards element of players.
 			game.updateGameNumCardsElements();
 			if (game.isGameOver()) {
-				debugger
 				let playerCards = game.countCardsOnGame(game.player);
 				let opponentCards = game.countCardsOnGame(game.opponent);
 
@@ -341,5 +343,19 @@ window.addEventListener("keydown", (e) => {
 				game.drawCursorGameElem();
 			}
 		});
+	}
+});
+
+volumeButtons.addEventListener("click", () => {
+	volumeUp.classList.toggle("hide-sound");
+	volumeMute.classList.toggle("hide-sound");
+	debugger;
+	if (sounds.bgm.paused && gameStatus !== "initial") {
+		sounds.playBGM();
+	} else if (sounds.fanfare.paused && game.player.cardsInHand <= 1) {
+		sounds.playFanfare();
+	} else {
+		sounds.stopBGM();
+		sounds.stopFanfare();
 	}
 });

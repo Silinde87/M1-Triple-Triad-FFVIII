@@ -4,7 +4,7 @@ class Sounds {
 		this.card = new Audio("assets/sounds/sound-back.wav");
 		this.invalid = new Audio("assets/sounds/sound-invalid.wav");
 		this.select = new Audio("assets/sounds/sound-select.wav");
-		this.special = new Audio("assets/sounds/special.wav");
+		this.special = new Audio("assets/sounds/sound-special.wav");
 		this.bgm = new Audio("assets/sounds/bgm.mp3");
 		this.fanfare = new Audio("assets/sounds/victory-fanfare.mp3");
 	}
@@ -26,17 +26,17 @@ class Sounds {
 		this.special.play();
 	}
 	playBGM(){
+		this.bgm.volume = 0.5;
 		this.bgm.play();
 	}
 	stopBGM(){
 		this.bgm.pause();
-		this.bgm.currentTime = 0;
 	}
 	playFanfare(){
+		this.bgm.volume = 0.5;
 		this.fanfare.play();
 	}
 	stopFanfare(){
 		this.fanfare.pause();
-		this.fanfare.currentTime = 0;
 	}
 }
