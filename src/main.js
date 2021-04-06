@@ -57,7 +57,6 @@ createGameScreen = () => {
 				<img src="assets/img/scores/5.png" alt="Player Score">
 			</div>
 		</footer>
-		<audio src="assets/sounds/bgm.mp3" autoplay loop></audio>
     `
 	);
 	document.body.appendChild(gameScreen);
@@ -76,7 +75,6 @@ createGameOverScreen = (result, winner) => {
             <img id='result-label' src='assets/img/label-${result}.png' alt='result-label'>
             <div id="result-gameover" class="info-label">Congratulations ${winner} Press ENTER to start</div>
         </div>
-		<audio src="assets/sounds/victory-fanfare.mp3" autoplay></audio>
 	`
 	);
 	document.body.appendChild(gameOverScreen);
@@ -145,10 +143,12 @@ createHtmlElement = (type, id, arrayClasses, content) => {
 	return element;
 };
 
-// Setting game state. start or game over
+// Setting game state. Start Game.
 startGame = () => {
+	sounds.playBGM();
 	removeSplashScreen();
 	if (gameOverScreen) {
+		sounds.stopFanfare();
 		removeGameOverScreen();
 	}
 	createGameScreen();
@@ -161,11 +161,15 @@ startGame = () => {
 	);
 };
 
+// Setting game state. End Game.
 endGame = (result, winner) => {
+	sounds.stopBGM();
+	sounds.playFanfare();
 	removeGameScreen();
 	createGameOverScreen(result, winner);
 };
 
+// Handle ENTER keydown. Uses gameStatus to modify his functionality
 handleEnterKeyDown = () => {
 	switch (gameStatus) {
 		case "initial":
@@ -182,6 +186,7 @@ handleEnterKeyDown = () => {
 			let gameboardY = game.cursorCoordinates.gameboard.y;
 			// Move cursor to middle gameboard
 			game.updatePositionCursorGameElem(gameboardX, gameboardY);
+			sounds.playSelect();
 
 			gameStatus = "placingCard";
 			break;
@@ -195,8 +200,6 @@ handleEnterKeyDown = () => {
 				return;
 			}
 			sounds.playCard();
-
-			debugger;
 
 			// Calculate the fight between the cards.
 			calculateResult(index, cardToMove, game.cardsInPlay);
@@ -213,7 +216,6 @@ handleEnterKeyDown = () => {
 			game.draftCardsToHand(game.whichPlayerIsUp);
 
 			// Swap players
-			sounds.playFlip();
 			game.swapPlayersShift();
 
 			//Updating game card label and showing it.
@@ -239,6 +241,7 @@ handleEnterKeyDown = () => {
 	}
 };
 
+// Handle ARROWS keydown. Uses gameStatus to modify his functionality
 handleArrowKeyDown = (e) => {
 	switch (gameStatus) {
 		// ChoosingCard game status.
@@ -298,6 +301,7 @@ handleArrowKeyDown = (e) => {
 	}
 };
 
+// Handle ESCAPE keydown. Returns to choosingCard status.
 handleEscKeyDown = () => {
 	gameStatus = "choosingCard";
 	let handX;
@@ -313,6 +317,7 @@ handleEscKeyDown = () => {
 	}
 	game.updatePositionCursorGameElem(handX, handY);
 	game.showGameCardLabelElem();
+	sounds.playSelect();
 };
 
 // EVENTS LISTENERS //

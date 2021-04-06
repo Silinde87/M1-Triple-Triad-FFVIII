@@ -105,6 +105,7 @@ compareRank = (cardAtt, cardDef, ranksAtt, ranksDef, posAtt, posDef) => {
 	}
 };
 isCaptured = (rankAttacker, rankDefender) => {
+	if(rankAttacker > rankDefender) sounds.playFlip();
 	return rankAttacker > rankDefender;
 };
 captures = (direction, cont) => {
