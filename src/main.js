@@ -5,6 +5,7 @@ let gameOverScreen;
 let gameStatus = "initial"; //Allows switch the "return key" behaviour
 const cardSize = 220;
 let cardToMove;
+let sounds = new Sounds();
 
 // SPLASH SCREEN //
 // Create splash
@@ -56,7 +57,7 @@ createGameScreen = () => {
 				<img src="assets/img/scores/5.png" alt="Player Score">
 			</div>
 		</footer>
-		<!--<audio src="assets/sounds/bgm.mp3" autoplay loop></audio>-->
+		<audio src="assets/sounds/bgm.mp3" autoplay loop></audio>
     `
 	);
 	document.body.appendChild(gameScreen);
@@ -75,7 +76,7 @@ createGameOverScreen = (result, winner) => {
             <img id='result-label' src='assets/img/label-${result}.png' alt='result-label'>
             <div id="result-gameover" class="info-label">Congratulations ${winner} Press ENTER to start</div>
         </div>
-		<!--<audio src="assets/sounds/victory-fanfare.mp3" autoplay></audio>-->
+		<audio src="assets/sounds/victory-fanfare.mp3" autoplay></audio>
 	`
 	);
 	document.body.appendChild(gameOverScreen);
@@ -189,7 +190,11 @@ handleEnterKeyDown = () => {
 			let cellY = game.lastCursorY - 88;
 			// Exit condition if trying to place the card in occupied spot
 			let index = game.getPositionFromMatrixToArray(game.gameBoardMatrix, cellX, cellY);
-			if (game.cardsInPlay[index]) return;
+			if (game.cardsInPlay[index]){
+				sounds.playInvalid();
+				return;
+			} 
+			sounds.playCard();
 
 			// Calculate the fight between the cards.
 			calculateResult(index, cardToMove, game.cardsInPlay);
@@ -206,6 +211,7 @@ handleEnterKeyDown = () => {
 			game.draftCardsToHand(game.whichPlayerIsUp);
 
 			// Swap players
+			sounds.playFlip();
 			game.swapPlayersShift();
 
 			//Updating game card label and showing it.
@@ -236,6 +242,7 @@ handleArrowKeyDown = (e) => {
 		case "choosingCard":
 			const borders = [80, 190, 300, 410, 520];
 			let index = borders.indexOf(game.lastCursorY);
+			sounds.playSelect();
 			switch (e.key) {
 				case "ArrowDown":
 					let playerHand = game.player.cardsInHand.length;
@@ -265,6 +272,7 @@ handleArrowKeyDown = (e) => {
 		// PlacingCard game status
 		case "placingCard":
 			const bordersGameBoard = { top: 80, left: 412, right: 852, bottom: 548 };
+			sounds.playSelect();
 			switch (e.key) {
 				case "ArrowDown":
 					if (game.lastCursorY + cardSize > bordersGameBoard.bottom) return; // Sets bottom border
