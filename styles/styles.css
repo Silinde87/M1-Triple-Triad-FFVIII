@@ -14,11 +14,15 @@ body {
 	font-size: 10px;
 	font-family: "Open Sans", sans-serif;
 	overflow: hidden;
+	background-color: rgb(13,1,1);
 }
 ul,
 p {
 	margin: 0;
 	padding: 0;
+}
+main{
+	border-radius: 50px;
 }
 
 #preloaded-cards{
@@ -47,6 +51,8 @@ p {
 	background-repeat: no-repeat;
 	width: 1344px;
 	height: 784px;
+	filter: drop-shadow(10px 10px 130px #a97e11) drop-shadow(-10px -10px 50px #461d18) drop-shadow(0px 0px 1px #f7f7f7); 
+	box-shadow: inset 0px -1px 20px 7px rgba(0,0,0,1);
 }
 ul li,
 p,
@@ -166,8 +172,9 @@ p {
 	text-align: center;
 }
 
-@media (max-width: 1344px) {
-	main, canvas {
+@media (max-width: 1340px) {
+	main, canvas,
+	#card-game-label {
 		visibility: hidden !important;
 	}
 }

@@ -223,6 +223,7 @@ handleEnterKeyDown = () => {
 			//Update the number of cards element of players.
 			game.updateGameNumCardsElements();
 			if (game.isGameOver()) {
+				debugger
 				let playerCards = game.countCardsOnGame(game.player);
 				let opponentCards = game.countCardsOnGame(game.opponent);
 
