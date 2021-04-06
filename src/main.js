@@ -171,7 +171,7 @@ handleEnterKeyDown = () => {
 		case "choosingCard":
 			// Choose a card from hand
 			cardToMove = game.chooseCardOnHand(game.whichPlayerIsUp, game.lastCursorY);
-			
+
 			//Hide card name label elem
 			game.removeGameCardLabelElem();
 			let gameboardX = game.cursorCoordinates.gameboard.x;
@@ -186,11 +186,10 @@ handleEnterKeyDown = () => {
 			let cellY = game.lastCursorY - 88;
 			// Exit condition if trying to place the card in occupied spot
 			let index = game.getPositionFromMatrixToArray(game.gameBoardMatrix, cellX, cellY);
-			if(game.cardsInPlay[index]) return;
+			if (game.cardsInPlay[index]) return;
 
-
+			// Calculate the fight between the cards.
 			game.calculateResult(index, cardToMove);
-
 
 			// Move the card from the hand to the gameboard
 			game.moveCardToGameBoard(cardToMove, cellX, cellY);
@@ -203,11 +202,15 @@ handleEnterKeyDown = () => {
 			// Draw again player card's element.
 			game.draftCardsToHand(game.whichPlayerIsUp);
 
+			// Swap players
 			game.swapPlayersShift();
 
 			//Updating game card label and showing it.
 			game.updateGameCardLabelElem(game.whichPlayerIsUp.cardsInHand[0].cardName);
 			game.showGameCardLabelElem();
+
+			//Update the number of cards element of players.
+			game.updateGameNumCardsElements();
 			gameStatus = "choosingCard";
 			break;
 		case "cardPlaced":
@@ -287,13 +290,12 @@ window.addEventListener("keydown", (e) => {
 	let arrowKeys = ["ArrowLeft", "ArrowUp", "ArrowRight", "ArrowDown"];
 	if (arrowKeys.includes(e.key)) handleArrowKeyDown(e);
 	// Redrawing the cards in play after moving the cursor.
-	if(game){		
+	if (game) {
 		game.cardsInPlay.forEach((card) => {
-			if(card){
+			if (card) {
 				card.updatePositionAndDrawImageCard(card.x, card.y);
-				card.drawRanksCard();				
+				card.drawRanksCard();
 			}
 		});
 	}
-	
 });

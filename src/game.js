@@ -74,10 +74,14 @@ class Game {
 		let playerCards = 0;
 		let opponentCards = 0;
 		playerCards += this.player.updateNumCards();
-		playerCards += this.cardsInPlay.filter((card) => card.playerOwner === "player").length;
+		playerCards += this.cardsInPlay
+			.filter((card) => card !== null)
+			.filter((card) => card.playerOwner === "player").length;
 
 		opponentCards += this.opponent.updateNumCards();
-		opponentCards += this.cardsInPlay.filter((card) => card.playerOwner === "opponent").length;
+		opponentCards += this.cardsInPlay
+			.filter((card) => card !== null)
+			.filter((card) => card.playerOwner === "opponent").length;
 
 		this.playerNumCardsElem.innerHTML = `<img src="assets/img/scores/${playerCards}.png" alt="Player Score">`;
 		this.opponentNumCardsElem.innerHTML = `<img src="assets/img/scores/${opponentCards}.png" alt="Opponent Score">`;
@@ -165,7 +169,7 @@ class Game {
 			}
 		}
 	}
-	
+
 	// Remove cards from canvas on player pased as parameter.
 	removeCardElements(player) {
 		let x, y;
@@ -228,46 +232,70 @@ class Game {
 		let cards = this.cardsInPlay;
 		switch (posAtt) {
 			case 0: // Attacker at first cell
-				if(cards[1]) cardAtt.compareRank(cardAtt, cards[1], cardAtt.ranks, cards[1].ranks, posAtt, 1);
-				if(cards[3]) cardAtt.compareRank(cardAtt, cards[3], cardAtt.ranks, cards[3].ranks, posAtt, 3);
+				if (cards[1])
+					cardAtt.compareRank(cardAtt, cards[1], cardAtt.ranks, cards[1].ranks, posAtt, 1);
+				if (cards[3])
+					cardAtt.compareRank(cardAtt, cards[3], cardAtt.ranks, cards[3].ranks, posAtt, 3);
 				break;
 			case 1: // Attacker at second cell
-				if(cards[0]) cardAtt.compareRank(cardAtt, cards[0], cardAtt.ranks, cards[0].ranks, posAtt, 0);
-				if(cards[4]) cardAtt.compareRank(cardAtt, cards[4], cardAtt.ranks, cards[4].ranks, posAtt, 4);
-				if(cards[2]) cardAtt.compareRank(cardAtt, cards[2], cardAtt.ranks, cards[2].ranks, posAtt, 2);
+				if (cards[0])
+					cardAtt.compareRank(cardAtt, cards[0], cardAtt.ranks, cards[0].ranks, posAtt, 0);
+				if (cards[4])
+					cardAtt.compareRank(cardAtt, cards[4], cardAtt.ranks, cards[4].ranks, posAtt, 4);
+				if (cards[2])
+					cardAtt.compareRank(cardAtt, cards[2], cardAtt.ranks, cards[2].ranks, posAtt, 2);
 				break;
 			case 2: // Attacker at third cell
-				if(cards[1]) cardAtt.compareRank(cardAtt, cards[1], cardAtt.ranks, cards[1].ranks, posAtt, 1);
-				if(cards[5]) cardAtt.compareRank(cardAtt, cards[5], cardAtt.ranks, cards[5].ranks, posAtt, 5);
+				if (cards[1])
+					cardAtt.compareRank(cardAtt, cards[1], cardAtt.ranks, cards[1].ranks, posAtt, 1);
+				if (cards[5])
+					cardAtt.compareRank(cardAtt, cards[5], cardAtt.ranks, cards[5].ranks, posAtt, 5);
 				break;
 			case 3: // Attacker at fourth cell
-				if(cards[0]) cardAtt.compareRank(cardAtt, cards[0], cardAtt.ranks, cards[0].ranks, posAtt, 0);
-				if(cards[4]) cardAtt.compareRank(cardAtt, cards[4], cardAtt.ranks, cards[4].ranks, posAtt, 4);
-				if(cards[6]) cardAtt.compareRank(cardAtt, cards[6], cardAtt.ranks, cards[6].ranks, posAtt, 6);
+				if (cards[0])
+					cardAtt.compareRank(cardAtt, cards[0], cardAtt.ranks, cards[0].ranks, posAtt, 0);
+				if (cards[4])
+					cardAtt.compareRank(cardAtt, cards[4], cardAtt.ranks, cards[4].ranks, posAtt, 4);
+				if (cards[6])
+					cardAtt.compareRank(cardAtt, cards[6], cardAtt.ranks, cards[6].ranks, posAtt, 6);
 				break;
 			case 4: // Attacker at fifth cell
-				if(cards[1]) cardAtt.compareRank(cardAtt, cards[1], cardAtt.ranks, cards[1].ranks, posAtt, 1);
-				if(cards[3]) cardAtt.compareRank(cardAtt, cards[3], cardAtt.ranks, cards[3].ranks, posAtt, 3);
-				if(cards[5]) cardAtt.compareRank(cardAtt, cards[5], cardAtt.ranks, cards[5].ranks, posAtt, 5);
-				if(cards[7]) cardAtt.compareRank(cardAtt, cards[7], cardAtt.ranks, cards[7].ranks, posAtt, 7);
+				if (cards[1])
+					cardAtt.compareRank(cardAtt, cards[1], cardAtt.ranks, cards[1].ranks, posAtt, 1);
+				if (cards[3])
+					cardAtt.compareRank(cardAtt, cards[3], cardAtt.ranks, cards[3].ranks, posAtt, 3);
+				if (cards[5])
+					cardAtt.compareRank(cardAtt, cards[5], cardAtt.ranks, cards[5].ranks, posAtt, 5);
+				if (cards[7])
+					cardAtt.compareRank(cardAtt, cards[7], cardAtt.ranks, cards[7].ranks, posAtt, 7);
 				break;
 			case 5: // Attacker at sixth cell
-				if(cards[2]) cardAtt.compareRank(cardAtt, cards[2], cardAtt.ranks, cards[2].ranks, posAtt, 2);
-				if(cards[4]) cardAtt.compareRank(cardAtt, cards[4], cardAtt.ranks, cards[4].ranks, posAtt, 4);
-				if(cards[8]) cardAtt.compareRank(cardAtt, cards[8], cardAtt.ranks, cards[8].ranks, posAtt, 8);
+				if (cards[2])
+					cardAtt.compareRank(cardAtt, cards[2], cardAtt.ranks, cards[2].ranks, posAtt, 2);
+				if (cards[4])
+					cardAtt.compareRank(cardAtt, cards[4], cardAtt.ranks, cards[4].ranks, posAtt, 4);
+				if (cards[8])
+					cardAtt.compareRank(cardAtt, cards[8], cardAtt.ranks, cards[8].ranks, posAtt, 8);
 				break;
 			case 6: // Attacker at seventh cell
-				if(cards[3]) cardAtt.compareRank(cardAtt, cards[3], cardAtt.ranks, cards[3].ranks, posAtt, 3);
-				if(cards[7]) cardAtt.compareRank(cardAtt, cards[7], cardAtt.ranks, cards[7].ranks, posAtt, 7);
+				if (cards[3])
+					cardAtt.compareRank(cardAtt, cards[3], cardAtt.ranks, cards[3].ranks, posAtt, 3);
+				if (cards[7])
+					cardAtt.compareRank(cardAtt, cards[7], cardAtt.ranks, cards[7].ranks, posAtt, 7);
 				break;
 			case 7: // Attacker at sixth cell
-				if(cards[4]) cardAtt.compareRank(cardAtt, cards[4], cardAtt.ranks, cards[4].ranks, posAtt, 4);
-				if(cards[6]) cardAtt.compareRank(cardAtt, cards[6], cardAtt.ranks, cards[6].ranks, posAtt, 6);
-				if(cards[8]) cardAtt.compareRank(cardAtt, cards[8], cardAtt.ranks, cards[8].ranks, posAtt, 8);
+				if (cards[4])
+					cardAtt.compareRank(cardAtt, cards[4], cardAtt.ranks, cards[4].ranks, posAtt, 4);
+				if (cards[6])
+					cardAtt.compareRank(cardAtt, cards[6], cardAtt.ranks, cards[6].ranks, posAtt, 6);
+				if (cards[8])
+					cardAtt.compareRank(cardAtt, cards[8], cardAtt.ranks, cards[8].ranks, posAtt, 8);
 				break;
 			case 8: // Attacker at seventh cell
-				if(cards[5]) cardAtt.compareRank(cardAtt, cards[5], cardAtt.ranks, cards[5].ranks, posAtt, 5);
-				if(cards[7]) cardAtt.compareRank(cardAtt, cards[7], cardAtt.ranks, cards[7].ranks, posAtt, 7);
+				if (cards[5])
+					cardAtt.compareRank(cardAtt, cards[5], cardAtt.ranks, cards[5].ranks, posAtt, 5);
+				if (cards[7])
+					cardAtt.compareRank(cardAtt, cards[7], cardAtt.ranks, cards[7].ranks, posAtt, 7);
 				break;
 		}
 	}
