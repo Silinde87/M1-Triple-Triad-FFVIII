@@ -7,22 +7,34 @@ class Player {
 		this.numCards = this.cardsInHand.length;
 	}
 
+	// Updates the quantity of cards.
 	updateNumCards() {
 		this.numCards = this.cardsInHand.length;
 		return this.numCards;
 	}
+	// Get 5 unique random cards from Deck
 	getRandomCards() {
 		const randomCards = [];
 		for (let i = 0; i < 5; i++) {
 			let card = null;
-			//Avoid duplicated cards on hand
 			do {
 				card = new Card(this.deck, this.canvas, this.name);
-				randomCards.push(card);
-			} while (!randomCards.includes(card));
+			} while(this.isDuplicated(randomCards, card));
+			randomCards.push(card);
 		}
 		return randomCards;
 	}
+
+	// Assist function, checks for duplicated cards in an array. Looking for name.
+	isDuplicated(arr, card){
+		let output = false;
+		arr.forEach(el => {
+			if(el.cardName === card.card.name) output = true;
+		});
+		return output;
+	}
+
+	// Removes the card passed as parameter in cardsInHandArray
 	removeCardFromHand(card){
 		const indexFromCard = this.cardsInHand.indexOf(card);
 		return this.cardsInHand.splice(indexFromCard, 1)[0];
