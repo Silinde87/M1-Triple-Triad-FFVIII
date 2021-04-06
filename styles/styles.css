@@ -167,7 +167,7 @@ p {
 }
 
 @media (max-width: 1344px) {
-	main{
-		visibility: hidden;
+	main, canvas {
+		visibility: hidden !important;
 	}
 }

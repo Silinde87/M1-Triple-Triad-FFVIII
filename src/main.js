@@ -190,11 +190,13 @@ handleEnterKeyDown = () => {
 			let cellY = game.lastCursorY - 88;
 			// Exit condition if trying to place the card in occupied spot
 			let index = game.getPositionFromMatrixToArray(game.gameBoardMatrix, cellX, cellY);
-			if (game.cardsInPlay[index]){
+			if (game.cardsInPlay[index]) {
 				sounds.playInvalid();
 				return;
-			} 
+			}
 			sounds.playCard();
+
+			debugger;
 
 			// Calculate the fight between the cards.
 			calculateResult(index, cardToMove, game.cardsInPlay);
@@ -295,6 +297,23 @@ handleArrowKeyDown = (e) => {
 	}
 };
 
+handleEscKeyDown = () => {
+	gameStatus = "choosingCard";
+	let handX;
+	let handY;
+	if (game.whichPlayerIsUp.name === "player") {
+		handX = game.cursorCoordinates.playersHand.x;
+		handY = game.cursorCoordinates.playersHand.y;
+		game.updateGameCardLabelElem(game.player.cardsInHand[0].cardName);
+	} else {
+		handX = game.cursorCoordinates.opponentsHand.x;
+		handY = game.cursorCoordinates.opponentsHand.y;
+		game.updateGameCardLabelElem(game.opponent.cardsInHand[0].cardName);
+	}
+	game.updatePositionCursorGameElem(handX, handY);
+	game.showGameCardLabelElem();
+};
+
 // EVENTS LISTENERS //
 window.addEventListener("load", () => {
 	createSplashScreen();
@@ -306,6 +325,7 @@ window.addEventListener("keydown", (e) => {
 	if (e.key === "Enter") handleEnterKeyDown();
 	let arrowKeys = ["ArrowLeft", "ArrowUp", "ArrowRight", "ArrowDown"];
 	if (arrowKeys.includes(e.key)) handleArrowKeyDown(e);
+	if (e.key === "Escape") handleEscKeyDown();
 	// Redrawing the cards in play after moving the cursor.
 	if (game) {
 		game.cardsInPlay.forEach((card) => {
