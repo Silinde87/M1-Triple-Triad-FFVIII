@@ -26,6 +26,7 @@ class Sounds {
 		this.special.play();
 	}
 	playBGM(){
+		this.bgm.currentTime = 0;
 		this.bgm.volume = 0.5;
 		this.bgm.play();
 	}
@@ -33,7 +34,8 @@ class Sounds {
 		this.bgm.pause();
 	}
 	playFanfare(){
-		this.bgm.volume = 0.5;
+		this.fanfare.currentTime = 0;
+		this.fanfare.volume = 0.5;
 		this.fanfare.play();
 	}
 	stopFanfare(){
