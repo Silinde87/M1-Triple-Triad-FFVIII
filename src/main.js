@@ -3,12 +3,11 @@ let splashScreen;
 let gameScreen;
 let gameOverScreen;
 let gameStatus = "initial"; //Allows switch the "return key" behaviour
-const cardSize = 220;
 let cardToMove;
-let sounds = new Sounds();
-let volumeButtons = document.querySelector("#volume-btns");
-let volumeUp = document.querySelector(".fa-volume-up");
-let volumeMute = document.querySelector(".fa-volume-mute");
+const sounds = new Sounds();
+const volumeButtons = document.querySelector("#volume-btns");
+const volumeUp = document.querySelector(".fa-volume-up");
+const volumeMute = document.querySelector(".fa-volume-mute");
 
 // SPLASH SCREEN //
 // Create splash
@@ -349,7 +348,6 @@ window.addEventListener("keydown", (e) => {
 volumeButtons.addEventListener("click", () => {
 	volumeUp.classList.toggle("hide-sound");
 	volumeMute.classList.toggle("hide-sound");
-	debugger;
 	if (sounds.bgm.paused && gameStatus !== "initial") {
 		sounds.playBGM();
 	} else if (sounds.fanfare.paused && game.player.cardsInHand <= 1) {

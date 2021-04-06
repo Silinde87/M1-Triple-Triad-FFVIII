@@ -12,16 +12,11 @@ The player with the most cards on the board wins the game.
 ## MVP (DOM - CANVAS)
 
 Player vs player plays the card game with a keyboard.
-Without "hand cursor", just only changing card borders.
-Without game card name label.
 Without animations. Card disappear from hand and appears at gameboard.
 
 ## Backlog
 
--   Define classes and objects
--   Implement Game Logic for player vs player
 -   Create animations for card movements
--   Add music and sound effects
 -   Implement Random IA for player vs IA
 -   Implement realistic IA
 -   Add mouse support
@@ -31,13 +26,16 @@ Without animations. Card disappear from hand and appears at gameboard.
 ### main.js
 
 ```
-const game = new Game();
-const splashScreen = HTMLElement;
-const gameScreen = HTMLElement;
-const gameOverScreen = HTMLElement;
+let game = new Game();
+let splashScreen = HTMLElement;
+let gameScreen = HTMLElement;
+let gameOverScreen = HTMLElement;
 let gameStatus; // Allows switch the "return key" behaviour.
-const cardSize = 220;
 let cardToMove;
+const sounds = new Sounds();
+const volumeButtons = HTMLElement;
+const volumeUp = HTMLElement;
+const volumeMute = HTMLElement;
 
 // Splash screen.
 createSplashScreen()
@@ -54,44 +52,55 @@ removeGameOverScreen()
 // Preload the html elements with all the cards in play
 createPreloadedCardsElement()
 
-// Assist Function. Creates HTML Elements on demand.
+// Creates DOM elements with many configuration optional parameters
 createHTMLElement()
 
+// Setting game state. Start Game.
 startGame()
+// Setting game state. End Game.
 endGame()
 
+// Handle ENTER keydown. Uses gameStatus to modify his functionality
 handleEnterKeyDown()
+
+// Handle ARROWS keydown. Uses gameStatus to modify his functionality
 handleArrowKeyDown()
+
+// Handle ESCAPE keydown. Returns to choosingCard status.
+handleEscKeyDown()
 ```
 
 ### game.js
 
 ```
 Class Game(gameScreen){
+    this.gameScreen;    
+    this.playerNumCardsElem = HTMLElem;
+    this.opponentNumCardsElem = HTMLElem;
     this.canvas;
     this.ctx;
-    this.gameScreen;
+    this.deck = new Deck().cardList;
     this.player;
     this.opponent;
     this.gameIsOver = false;
     this.whichPlayerIsUp = "";
-    this.playerNumCardsElem = HTMLElem;
-    this.opponentNumCardsElem = HTMLElem;
-    this.deck = new Deck().cardList;
     this.cardsInPlay = [];
     this.lastCursorX;
-    this.lastCursorY;
+    this.lastCursorY;    
     this.gameBoardMatrix = [];
     this.playerHandCoordinates = [];
     this.opponentHandCoordinates = [];
-    this.cursorCoordinates = {}
+    this.cursorCoordinates = {}  
 
+    // Initializes game
     start()
+    // Returns true if the cardsInPlay array is full. The game is ended
     isGameOver()
 
     // Updates the num card elements counting each player's cards.
     updateGameNumCardsElements()
-    countCardsOnGame()
+    // Count all cards from a player
+    countCardsOnGame(player)
 
     // Handle player's shift
     swapPlayersShift()
@@ -113,15 +122,12 @@ Class Game(gameScreen){
     removeCardsElems(player);
 
     // Returns a card from hand's player based on y.
-    chooseCardOnHand()
+    chooseCardOnHand(player, y)
 
     // Change x & y from a card, pushes to cardsInPlay array and prints it.
-    moveCardToGameBoard()
+    moveCardToGameBoard(card, x, y)
     // Look for an x & y in a matrix and returns his position in 2d Array
     getPositionFromMatrixToArray(matrix, x, y)
-
-    // Creates a matrix with the coordinates of the gameboard
-    fillGameBoardMatrix()
 }
 ```
 
@@ -141,6 +147,9 @@ Class Player(name, deck, canvas){
     // Get 5 random unique cards from deck.
     getRandomCards()
 
+    // Assist function, checks for duplicated cards in an array. Looking for name.
+    isDuplicated(array, card)
+
     // Remove the card passed as parameter from the player and returns it.
     removeCardFromHand(card)
 }
@@ -156,12 +165,11 @@ Class Card(deck, canvas, playerOwner){
     this.id;
     this.cardName;
     this.ranks = [TOP,LEFT,RIGHT,BOTTOM];
-    this.backgroundColor
+    this.backgroundColor;
     this.positionOnBoard;
     this.playerOwner;
     this.x;
-    this.y;
-    this.size;
+    this.y;    this.size;
 
     // Prints the whole card at x,y coordinates. Background, image and ranks.
     updatePositionAndDrawImageCard(x, y)
@@ -179,13 +187,61 @@ Class Card(deck, canvas, playerOwner){
 
     // Prints the back of a card.
     flipCard()
-
-    compareRank(rankToCompare)
-    captures()
 }
 ```
+### initializers.js
 
-### deck.js
+```
+const cardSize = 220;
+const playerCardsCoordinates = [];
+const opponentCardsCoordinate = [];
+const boardMatrix = [][];
+const cursorCoord = {}
+
+// Creates a matrix with the coordinates of the gameboard
+fillGameBoardMatrix()
+```
+### result.js
+
+```
+// Calculates all combination of card captures
+calculateResult(positionAttacker, cardAttacker, cards);
+
+// Compare two card ranks
+compareRank(cardAtt, cardDef, ranksAtt, ranksDef, posAtt, posDef);
+
+// Determinate if a defender card is captured. True if rank attacker is greater
+isCaptured(rankAttacker, rankDefender);
+
+// Captures the defender card
+captures(direction, contender);
+
+```
+### sound.js
+
+```
+Class Sound(){
+    this.flip = new Audio();
+    this.card = new Audio();
+    this.invalid = new Audio();
+    this.select = new Audio();
+    this.special = new Audio();
+    this.bgm = new Audio();
+    this.fanfare = new Audio();
+
+    playFlip()
+    playCard()
+    playInvalid()
+    playSelect()
+    playSpecial()
+    playBGM()
+    stopBGM()
+    playFanfare()
+    stopFanfare()
+}
+
+```
+### initializers.js
 
 ```
 Class Deck(){
@@ -209,37 +265,6 @@ Class Deck(){
     - addEventListener(startGame)
 ```
 
-## Tasks
-
--   Card - Define class properties
--   Card - loadImage
--   Card - loadCardRanks
--   Card - drawCard
--   Card - fillCardBackground
--   Card - flipCard
--   Card - compareRank
--   Player - Define class properties
--   Player - updatePlayerNumCards
--   Main - Define properties
--   Main - createSplashScreen
--   Main - removeSplashScreen
--   Main - createGameScreen
--   Main - removeGameScreen
--   Main - createGameOverScreen
--   Main - removeGameOverScreen
--   Main - createHTMLElement
--   Main - addEventListeners
--   Game - Define class properties
--   Game - start
--   Game - gameOver
--   Game - updateGameNumCardsElems
--   Game - Handle CardName Element
--   Game - Handle PlayerShift Element
--   Game - Handle CursorGame Element
--   Game - draftCardsToHand
--   Game - chooseCardOnHand
--   Game - moveCardToGameBoard
--   Game - handleKeyDown
 
 ## Links
 

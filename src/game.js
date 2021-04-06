@@ -1,49 +1,25 @@
 class Game {
 	constructor(gameScreen) {
-		this.canvas = null;
-		this.ctx = null;
 		this.gameScreen = gameScreen;
-		this.player = null;
-		this.opponent = null;
-		this.gameIsOver = false;
-		this.whichPlayerIsUp = null;
-		this.playerNumCardsElem;
-		this.opponentNumCardsElem;
+		this.playerNumCardsElem = this.gameScreen.querySelector("#player-num-cards");
+		this.opponentNumCardsElem = this.gameScreen.querySelector("#opponent-num-cards");
+		this.canvas = this.gameScreen.querySelector("#game-canvas");
+		this.ctx = this.canvas.getContext("2d");
 		this.deck = new Deck().cardList;
+		this.player = new Player("player", this.deck, this.canvas);;
+		this.opponent = new Player("opponent", this.deck, this.canvas);
+		this.gameIsOver = false;
+		this.whichPlayerIsUp = this.player;
 		this.cardsInPlay = new Array(9).fill(null);
 		this.lastCursorX;
 		this.lastCursorY;
-		this.gameBoardMatrix = this.fillGameBoardMatrix();
-		this.playerHandCoordinates = [
-			{ x: 1070, y: 30 }, // First Card
-			{ x: 1070, y: 130 }, // Second Card
-			{ x: 1070, y: 230 }, // Third Card
-			{ x: 1070, y: 330 }, // Fourth Card
-			{ x: 1070, y: 430 }, // Fifth Card
-		];
-		this.opponentHandCoordinates = [
-			{ x: 60, y: 30 }, // First Card
-			{ x: 60, y: 130 }, // Second Card
-			{ x: 60, y: 230 }, // Third Card
-			{ x: 60, y: 330 }, // Fourth Card
-			{ x: 60, y: 430 }, // Fifth Card
-		];
-		this.cursorCoordinates = {
-			playersHand: { x: 1030, y: 80 },
-			opponentsHand: { x: 20, y: 80 },
-			gameboard: { x: this.gameBoardMatrix[1][1].x + 72, y: this.gameBoardMatrix[1][1].y + 88 },
-		};
+		this.gameBoardMatrix = boardMatrix;
+		this.playerHandCoordinates = playerCardsCoordinates;
+		this.opponentHandCoordinates = opponentCardsCoordinates;
+		this.cursorCoordinates = cursorCoord;
 	}
 
 	start() {
-		//Number of cards elements
-		this.playerNumCardsElem = this.gameScreen.querySelector("#player-num-cards");
-		this.opponentNumCardsElem = this.gameScreen.querySelector("#opponent-num-cards");
-
-		//Get and create the canvas and it's content
-		this.canvas = this.gameScreen.querySelector("#game-canvas");
-		this.ctx = this.canvas.getContext("2d");
-
 		//Set canvas dimensions
 		this.canvasContainer = this.gameScreen.querySelector("#canvas-container");
 		this.containerWidth = this.canvasContainer.clientWidth;
@@ -51,11 +27,6 @@ class Game {
 		this.canvas.setAttribute("width", this.containerWidth);
 		this.canvas.setAttribute("height", this.containerHeight);
 		this.canvas.style.visibility = "visible";
-
-		//Player creation
-		this.player = new Player("player", this.deck, this.canvas);
-		this.opponent = new Player("opponent", this.deck, this.canvas);
-		this.whichPlayerIsUp = this.player;
 
 		//Draft cards
 		this.draftCardsToHand(this.player);
@@ -67,7 +38,7 @@ class Game {
 		this.updateGameCardLabelElem(this.player.cardsInHand[0].cardName);
 		this.showGameCardLabelElem();
 	}
-	// Returns true if the cardsInPlay array is full.
+	// Returns true if the cardsInPlay array is full. The game is ended
 	isGameOver() {
 		return this.cardsInPlay.filter((card) => card !== null).length === 9;
 	}
@@ -81,7 +52,7 @@ class Game {
 		this.opponentNumCardsElem.innerHTML = `<img src="assets/img/scores/${opponentCards}.png" alt="Opponent Score">`;
 	}
 
-	// Count all cards fromm a player
+	// Count all cards from a player
 	countCardsOnGame(player) {
 		let num = 0;
 		num += player.updateNumCards();
@@ -92,7 +63,7 @@ class Game {
 		return num;
 	}
 
-	//Move the Chocobo element and flips and shows the cards of each player
+	//Call move the Chocobo element function and flips or shows the cards of each player
 	swapPlayersShift() {
 		if (this.whichPlayerIsUp.name === "player") {
 			this.whichPlayerIsUp = this.opponent;
@@ -158,7 +129,7 @@ class Game {
 		this.gameScreen.querySelector("#card-game-name").innerHTML = cardName;
 	}
 
-	// Shows all the cards from the player passed as parameter
+	// Prints all the cards from the player passed as parameter
 	draftCardsToHand(playerToDraft) {
 		for (let i = 0; i < playerToDraft.cardsInHand.length; i++) {
 			let x = this.playerHandCoordinates[i].x;
@@ -185,11 +156,12 @@ class Game {
 			x = this.opponentHandCoordinates[0].x;
 			y = this.opponentHandCoordinates[0].y;
 		}
-		let width = 220;
+		let width = cardSize;
 		let height = 630;
 		this.ctx.clearRect(x, y, width, height);
 	}
 
+	// Returns a card from hand's player based on y.
 	chooseCardOnHand(player, y) {
 		let selectedCard;
 		switch (y) {
@@ -230,30 +202,5 @@ class Game {
 				index++;
 			}
 		}
-	}
-
-	// Creates a matrix with the coordinates of the gameboard
-	fillGameBoardMatrix() {
-		const initX = 340;
-		const initY = 20;
-		const size = 220;
-		const matrix = [
-			[
-				{ x: initX, y: initY },
-				{ x: initX + size, y: initY },
-				{ x: initX + size * 2, y: initY },
-			],
-			[
-				{ x: initX, y: initY + size },
-				{ x: initX + size, y: initY + size },
-				{ x: initX + size * 2, y: initY + size },
-			],
-			[
-				{ x: initX, y: initY + size * 2 },
-				{ x: initX + size, y: initY + size * 2 },
-				{ x: initX + size * 2, y: initY + size * 2 },
-			],
-		];
-		return matrix;
 	}
 }

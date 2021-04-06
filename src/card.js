@@ -11,7 +11,7 @@ class Card {
 		this.playerOwner = playerOwner;
 		this.x;
 		this.y;
-		this.size = 220;
+		this.size = cardSize;
 	}
 
 	// Prints the whole card at x,y coordinates. Background and image

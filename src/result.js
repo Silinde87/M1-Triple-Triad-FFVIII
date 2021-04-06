@@ -51,6 +51,7 @@ calculateResult = (posAtt, cardAtt, cards) => {
 	}
 };
 
+// Compare two card ranks
 compareRank = (cardAtt, cardDef, ranksAtt, ranksDef, posAtt, posDef) => {
 	const contender = {
 		ranksAtt: ranksAtt,
@@ -104,10 +105,14 @@ compareRank = (cardAtt, cardDef, ranksAtt, ranksDef, posAtt, posDef) => {
 			break;
 	}
 };
+
+// Determinate if a defender card is captured. True if rank attacker is greater
 isCaptured = (rankAttacker, rankDefender) => {
 	if(rankAttacker > rankDefender) sounds.playFlip();
 	return rankAttacker > rankDefender;
 };
+
+// Captures the defender card
 captures = (direction, cont) => {
 	switch (direction) {
 		// Defender at TOP
