@@ -79,12 +79,11 @@ createGameOverScreen = (result, winner) => {
 	`
 	);
 	document.body.appendChild(gameOverScreen);
-	debugger
-	if(result === 'draw'){
-		const resultGameOver = document.getElementById('result-gameover')
-		resultGameOver.innerHTML = 'Well done both of you! \nPress ENTER to start';
+
+	if (result === "draw") {
+		const resultGameOver = document.getElementById("result-gameover");
+		resultGameOver.innerHTML = "Well done both of you! \nPress ENTER to start";
 	}
-		
 };
 // Remove game over
 removeGameOverScreen = () => gameOverScreen.remove();
@@ -193,7 +192,7 @@ handleEnterKeyDown = () => {
 			if (game.cardsInPlay[index]) return;
 
 			// Calculate the fight between the cards.
-			game.calculateResult(index, cardToMove);
+			calculateResult(index, cardToMove, game.cardsInPlay);
 
 			// Move the card from the hand to the gameboard
 			game.moveCardToGameBoard(cardToMove, cellX, cellY);
@@ -219,8 +218,8 @@ handleEnterKeyDown = () => {
 				let playerCards = game.countCardsOnGame(game.player);
 				let opponentCards = game.countCardsOnGame(game.opponent);
 
-				if (playerCards > opponentCards) endGame("win", 'Player');
-				if (playerCards < opponentCards) endGame("win", 'Opponent');
+				if (playerCards > opponentCards) endGame("win", "Player");
+				if (playerCards < opponentCards) endGame("win", "Opponent");
 				if (playerCards == opponentCards) endGame("draw");
 
 				gameStatus = "initial";
@@ -305,6 +304,7 @@ window.addEventListener("keydown", (e) => {
 			if (card) {
 				card.updatePositionAndDrawImageCard(card.x, card.y);
 				card.drawRanksCard();
+				game.drawCursorGameElem();
 			}
 		});
 	}

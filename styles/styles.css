@@ -165,3 +165,9 @@ p {
 	align-items: center;
 	text-align: center;
 }
+
+@media (max-width: 1344px) {
+	main{
+		visibility: hidden;
+	}
+}
