@@ -79,12 +79,25 @@ p {
 	bottom: 30px;
 	right: 30px;
 	transition: transform 0.1s;
+	z-index: 99;
 }
 .fas:hover{
 	transform: scale(1.1);
 }
 .hide-sound{
 	visibility: hidden;
+}
+#chocobo-info{
+	display: none;
+	color: white;
+	flex-direction: column;
+}
+#chocobo-info > img {
+	height: 700px;
+	filter: drop-shadow(10px 5px 6px #a97e11);
+}
+#chocobo-info > p{
+	font-size: 4rem;
 }
 
 /* Splash Screen */
@@ -189,6 +202,10 @@ p {
 @media (max-width: 1340px) {
 	main, canvas,
 	#card-game-label {
-		visibility: hidden !important;
+		display: none !important;
 	}
+	#chocobo-info{
+		display: flex;
+	}
+
 }
