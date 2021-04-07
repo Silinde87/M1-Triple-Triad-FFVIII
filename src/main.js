@@ -3,6 +3,7 @@ let splashScreen;
 let gameScreen;
 let gameOverScreen;
 let gameStatus = "initial"; //Allows switch the "return key" behaviour
+let gameMode = "pve";
 let cardToMove;
 const sounds = new Sounds();
 const volumeButtons = document.querySelector("#volume-btns");
@@ -192,7 +193,7 @@ startGame = () => {
  * Sets game state. End game.
  */
 endGame = (result, winner) => {
-	if(!sounds.bgm.paused) sounds.playFanfare();
+	if (!sounds.bgm.paused) sounds.playFanfare();
 	sounds.stopBGM();
 	removeGameScreen();
 	createGameOverScreen(result, winner);
@@ -224,14 +225,15 @@ handleEnterKeyDown = () => {
 		case "placingCard":
 			let cellX = game.lastCursorX - 72;
 			let cellY = game.lastCursorY - 88;
-			// Exit condition if trying to place the card in occupied spot
 			let index = game.getPositionFromMatrixToArray(game.gameBoardMatrix, cellX, cellY);
+
+			// Exit condition if trying to place the card in occupied spot
 			if (game.cardsInPlay[index]) {
 				sounds.playInvalid();
 				return;
 			}
 			sounds.playCard();
-
+			debugger
 			// Calculate the fight between the cards.
 			calculateResult(index, cardToMove, game.cardsInPlay);
 
@@ -247,12 +249,20 @@ handleEnterKeyDown = () => {
 			game.draftCardsToHand(game.whichPlayerIsUp);
 
 			// Swap players
-			game.swapPlayersShift();
+			let testArr = game.cardsInPlay.some(el => el === null)
+			
+			if (gameMode === "pve" && game.whichPlayerIsUp.name === 'player' && testArr) {
+				//Gets IA's card
+				game.generateAIPlay();
+			}else{
+				game.swapPlayersShift();
+			}
 
 			//Updating game card label and showing it.
 			game.updateGameCardLabelElem(game.whichPlayerIsUp.cardsInHand[0].cardName);
 			game.showGameCardLabelElem();
 
+			debugger
 			//Update the number of cards element of players.
 			game.updateGameNumCardsElements();
 			if (game.isGameOver()) {
