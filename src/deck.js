@@ -1,4 +1,4 @@
-/* Card deck. */
+/** Class representing a Deck */
 /* ranks: [Top, Left, Right, Bottom] */
 class Deck {
 	constructor() {

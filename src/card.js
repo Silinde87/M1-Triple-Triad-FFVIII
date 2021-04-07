@@ -1,3 +1,4 @@
+/** Class representing a Card */
 class Card {
 	constructor(deck, canvas, playerOwner) {
 		this.canvas = canvas;
@@ -14,7 +15,11 @@ class Card {
 		this.size = cardSize;
 	}
 
-	// Prints the whole card at x,y coordinates. Background and image
+	/**
+	 * Prints the card at x,y coordinates. Background and image
+	 * @param {integer} x - The x value
+	 * @param {integer} y - The y value
+	 */
 	updatePositionAndDrawImageCard(x, y) {
 		this.x = x;
 		this.y = y;
@@ -23,7 +28,11 @@ class Card {
 		this.ctx.drawImage(img, this.x, this.y, this.size, this.size);
 	}
 
-	// Get ranks from a card passed as parameter and pushes it at ranks[].
+	/**
+	 * Get ranks from a card passed as parameter and pushes it at ranks[].
+	 * @param {Card} card - The Card from the ranks will be obtained
+	 * @return {array} - The list of ranks from the Card
+	 */
 	loadCardRanks(card) {
 		const ranks = [];
 		for (let i = 0; i < card.ranks.length; i++) {
@@ -31,13 +40,20 @@ class Card {
 		}
 		return ranks;
 	}
-	// Get a random card from deck.
+
+	/**
+	 * Get a random card from deck.
+	 * @param {array} deck - The list of cards
+	 * @return {Card} - The random card
+	 */
 	getCard(deck) {
 		const index = Math.floor(Math.random() * deck.length);
 		return deck[index];
 	}
 
-	// Prints the card background when called.
+	/**
+	 * Prints the card background when called.
+	 */
 	fillCardBackground() {
 		const gradientX1 = this.x + this.size / 2;
 		const gradientY1 = this.y;
@@ -57,7 +73,9 @@ class Card {
 		this.ctx.fillRect(this.x + 3, this.y + 3, this.size - 7, this.size - 7);
 	}
 
-	// Prints the ranks on card when called.
+	/**
+	 * Prints the ranks on card when called.
+	 */
 	drawRanksCard() {
 		const extra = [
 			{ x: 30, y: 15 }, // Top Rank
@@ -74,7 +92,9 @@ class Card {
 		}
 	}
 
-	// Prints the back of a card when called.
+	/**
+	 * Prints the back of a card when called.
+	 */
 	flipCard() {
 		const imgBack = document.getElementById(`card-back`);
 		this.ctx.drawImage(imgBack, this.x, this.y, this.size, this.size);

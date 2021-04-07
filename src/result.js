@@ -3,59 +3,70 @@ const LEFT = 1;
 const RIGHT = 2;
 const BOTTOM = 3;
 
-// Calculates all combination of card captures
+/**
+ * Calculates all combination of card captures
+ * @param {integer} posAtt - Position at gameboard of the attacker card (0-8).
+ * @param {Card} cardAtt - Card attacker.
+ * @param {array} cards - Cards placed at gameboard.
+ */
 calculateResult = (posAtt, cardAtt, cards) => {
 	switch (posAtt) {
 		case 0: // Attacker at first cell
-			if (cards[1]) compareRank(cardAtt, cards[1], cardAtt.ranks, cards[1].ranks, posAtt, 1);
-			if (cards[3]) compareRank(cardAtt, cards[3], cardAtt.ranks, cards[3].ranks, posAtt, 3);
+			if (cards[1]) compareRank(cardAtt, cards[1], posAtt, 1);
+			if (cards[3]) compareRank(cardAtt, cards[3], posAtt, 3);
 			break;
 		case 1: // Attacker at second cell
-			if (cards[0]) compareRank(cardAtt, cards[0], cardAtt.ranks, cards[0].ranks, posAtt, 0);
-			if (cards[4]) compareRank(cardAtt, cards[4], cardAtt.ranks, cards[4].ranks, posAtt, 4);
-			if (cards[2]) compareRank(cardAtt, cards[2], cardAtt.ranks, cards[2].ranks, posAtt, 2);
+			if (cards[0]) compareRank(cardAtt, cards[0], posAtt, 0);
+			if (cards[4]) compareRank(cardAtt, cards[4], posAtt, 4);
+			if (cards[2]) compareRank(cardAtt, cards[2], posAtt, 2);
 			break;
 		case 2: // Attacker at third cell
-			if (cards[1]) compareRank(cardAtt, cards[1], cardAtt.ranks, cards[1].ranks, posAtt, 1);
-			if (cards[5]) compareRank(cardAtt, cards[5], cardAtt.ranks, cards[5].ranks, posAtt, 5);
+			if (cards[1]) compareRank(cardAtt, cards[1], posAtt, 1);
+			if (cards[5]) compareRank(cardAtt, cards[5], posAtt, 5);
 			break;
 		case 3: // Attacker at fourth cell
-			if (cards[0]) compareRank(cardAtt, cards[0], cardAtt.ranks, cards[0].ranks, posAtt, 0);
-			if (cards[4]) compareRank(cardAtt, cards[4], cardAtt.ranks, cards[4].ranks, posAtt, 4);
-			if (cards[6]) compareRank(cardAtt, cards[6], cardAtt.ranks, cards[6].ranks, posAtt, 6);
+			if (cards[0]) compareRank(cardAtt, cards[0], posAtt, 0);
+			if (cards[4]) compareRank(cardAtt, cards[4], posAtt, 4);
+			if (cards[6]) compareRank(cardAtt, cards[6], posAtt, 6);
 			break;
 		case 4: // Attacker at fifth cell
-			if (cards[1]) compareRank(cardAtt, cards[1], cardAtt.ranks, cards[1].ranks, posAtt, 1);
-			if (cards[3]) compareRank(cardAtt, cards[3], cardAtt.ranks, cards[3].ranks, posAtt, 3);
-			if (cards[5]) compareRank(cardAtt, cards[5], cardAtt.ranks, cards[5].ranks, posAtt, 5);
-			if (cards[7]) compareRank(cardAtt, cards[7], cardAtt.ranks, cards[7].ranks, posAtt, 7);
+			if (cards[1]) compareRank(cardAtt, cards[1], posAtt, 1);
+			if (cards[3]) compareRank(cardAtt, cards[3], posAtt, 3);
+			if (cards[5]) compareRank(cardAtt, cards[5], posAtt, 5);
+			if (cards[7]) compareRank(cardAtt, cards[7], posAtt, 7);
 			break;
 		case 5: // Attacker at sixth cell
-			if (cards[2]) compareRank(cardAtt, cards[2], cardAtt.ranks, cards[2].ranks, posAtt, 2);
-			if (cards[4]) compareRank(cardAtt, cards[4], cardAtt.ranks, cards[4].ranks, posAtt, 4);
-			if (cards[8]) compareRank(cardAtt, cards[8], cardAtt.ranks, cards[8].ranks, posAtt, 8);
+			if (cards[2]) compareRank(cardAtt, cards[2], posAtt, 2);
+			if (cards[4]) compareRank(cardAtt, cards[4], posAtt, 4);
+			if (cards[8]) compareRank(cardAtt, cards[8], posAtt, 8);
 			break;
 		case 6: // Attacker at seventh cell
-			if (cards[3]) compareRank(cardAtt, cards[3], cardAtt.ranks, cards[3].ranks, posAtt, 3);
-			if (cards[7]) compareRank(cardAtt, cards[7], cardAtt.ranks, cards[7].ranks, posAtt, 7);
+			if (cards[3]) compareRank(cardAtt, cards[3], posAtt, 3);
+			if (cards[7]) compareRank(cardAtt, cards[7], posAtt, 7);
 			break;
 		case 7: // Attacker at sixth cell
-			if (cards[4]) compareRank(cardAtt, cards[4], cardAtt.ranks, cards[4].ranks, posAtt, 4);
-			if (cards[6]) compareRank(cardAtt, cards[6], cardAtt.ranks, cards[6].ranks, posAtt, 6);
-			if (cards[8]) compareRank(cardAtt, cards[8], cardAtt.ranks, cards[8].ranks, posAtt, 8);
+			if (cards[4]) compareRank(cardAtt, cards[4], posAtt, 4);
+			if (cards[6]) compareRank(cardAtt, cards[6], posAtt, 6);
+			if (cards[8]) compareRank(cardAtt, cards[8], posAtt, 8);
 			break;
 		case 8: // Attacker at seventh cell
-			if (cards[5]) compareRank(cardAtt, cards[5], cardAtt.ranks, cards[5].ranks, posAtt, 5);
-			if (cards[7]) compareRank(cardAtt, cards[7], cardAtt.ranks, cards[7].ranks, posAtt, 7);
+			if (cards[5]) compareRank(cardAtt, cards[5], posAtt, 5);
+			if (cards[7]) compareRank(cardAtt, cards[7], posAtt, 7);
 			break;
 	}
 };
 
-// Compare two card ranks
-compareRank = (cardAtt, cardDef, ranksAtt, ranksDef, posAtt, posDef) => {
+/**
+ * Compare ranks of two correlative card.
+ * @param {Card} cardAtt - Card attacker.
+ * @param {Card} cardDef - Card defender.
+ * @param {integer} posAtt - Position at gameboard of the attacker card (0-8).
+ * @param {integer} posDef - Position at gameboard of the attacker card (0-8).
+ */
+compareRank = (cardAtt, cardDef, posAtt, posDef) => {
 	const contender = {
-		ranksAtt: ranksAtt,
-		ranksDef: ranksDef,
+		ranksAtt: cardAtt.ranks,
+		ranksDef: cardDef.ranks,
 		cardAtt: cardAtt,
 		cardDef: cardDef,
 	};
@@ -106,13 +117,23 @@ compareRank = (cardAtt, cardDef, ranksAtt, ranksDef, posAtt, posDef) => {
 	}
 };
 
-// Determinate if a defender card is captured. True if rank attacker is greater
+/**
+ * Determinate if a defender card is captured. True if rank attacker is greater.
+ * @param {integer} rankAttacker - Rank of the attacker card.
+ * @param {integer} rankDefender - Rank of the defender card.
+ * @return {boolean} - The result of the capture.
+ */
 isCaptured = (rankAttacker, rankDefender) => {
-	if(rankAttacker > rankDefender) sounds.playFlip();
+	if (rankAttacker > rankDefender) sounds.playFlip();
 	return rankAttacker > rankDefender;
 };
 
-// Captures the defender card
+/**
+ * Captures the defender card, by changing his playerOwner.
+ * @param {integer} direction - Direction of the capture. 0-Top, 1-Left, 2-Right, 3-Bottom
+ * @param {object} cont - Contender. Simplified version of defender card.
+ */
+//
 captures = (direction, cont) => {
 	switch (direction) {
 		// Defender at TOP

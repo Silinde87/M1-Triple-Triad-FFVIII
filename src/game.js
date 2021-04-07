@@ -1,3 +1,4 @@
+/** Class representing a Game */
 class Game {
 	constructor(gameScreen) {
 		this.gameScreen = gameScreen;
@@ -19,6 +20,9 @@ class Game {
 		this.cursorCoordinates = cursorCoord;
 	}
 
+	/**
+     * Setups the game
+     */
 	start() {
 		//Set canvas dimensions
 		this.canvasContainer = this.gameScreen.querySelector("#canvas-container");
@@ -38,12 +42,18 @@ class Game {
 		this.updateGameCardLabelElem(this.player.cardsInHand[0].cardName);
 		this.showGameCardLabelElem();
 	}
-	// Returns true if the cardsInPlay array is full. The game is ended
+
+	/**
+     * Checks for the end of the game
+	 * @param {boolean} - Returns true if the cardsInPlay array is full
+     */
 	isGameOver() {
 		return this.cardsInPlay.filter((card) => card !== null).length === 9;
 	}
 
-	//Modify the quantity of cards of each player
+	/**
+     * Modify the quantity of cards of each player at html elements
+     */
 	updateGameNumCardsElements() {
 		let playerCards = this.countCardsOnGame(this.player);
 		let opponentCards = this.countCardsOnGame(this.opponent);
@@ -52,7 +62,11 @@ class Game {
 		this.opponentNumCardsElem.innerHTML = `<img src="assets/img/scores/${opponentCards}.png" alt="Opponent Score">`;
 	}
 
-	// Count all cards from a player
+	/**
+     * Count all cards from a player.
+     * @param {Player} player - The player to count.
+	 * @return {integer} - The quantity of cards at gameboard and hand
+     */
 	countCardsOnGame(player) {
 		let num = 0;
 		num += player.updateNumCards();
@@ -63,7 +77,9 @@ class Game {
 		return num;
 	}
 
-	//Call move the Chocobo element function and flips or shows the cards of each player
+	/**
+     * Call move the Chocobo element function and flips or shows the cards of each player
+     */
 	swapPlayersShift() {
 		if (this.whichPlayerIsUp.name === "player") {
 			this.whichPlayerIsUp = this.opponent;
@@ -87,7 +103,10 @@ class Game {
 		this.swapPlayerShiftElem(this.whichPlayerIsUp);
 	}
 
-	// Move the Chocobo Element
+	/**
+     * Move the Chocobo Element
+     * @param {Player} whichPlayerIsUp - The player who is currently playing
+     */
 	swapPlayerShiftElem(whichPlayerIsUp) {
 		const shiftElementContainer = this.gameScreen.querySelector("#turn-game-selector");
 		const shiftElement = shiftElementContainer.querySelector("img");
@@ -103,7 +122,9 @@ class Game {
 		}
 	}
 
-	// Handle cursor position on canvas
+	/**
+     * Handle cursor position on canvas
+     */
 	drawCursorGameElem() {
 		const imgCursor = document.getElementById("cursor");
 		this.ctx.drawImage(imgCursor, this.lastCursorX, this.lastCursorY, 38, 22);
@@ -118,7 +139,9 @@ class Game {
 		this.drawCursorGameElem();
 	}
 
-	//Handle GameCard Label Element
+	/**
+     * Handle GameCard Label Element
+     */
 	showGameCardLabelElem() {
 		document.querySelector("#card-game-label").style.visibility = "visible";
 	}
@@ -129,7 +152,10 @@ class Game {
 		this.gameScreen.querySelector("#card-game-name").innerHTML = cardName;
 	}
 
-	// Prints all the cards from the player passed as parameter
+	/**
+     * Prints all the cards from the player passed as parameter
+     * @param {Player} playerToDraft - The player which cards must be printed
+     */
 	draftCardsToHand(playerToDraft) {
 		for (let i = 0; i < playerToDraft.cardsInHand.length; i++) {
 			let x = this.playerHandCoordinates[i].x;
@@ -146,7 +172,10 @@ class Game {
 		}
 	}
 
-	// Remove cards from canvas on player pased as parameter.
+	/**
+     * Remove cards from canvas on player pased as parameter.
+     * @param {Player} player - The player which cards must be removed.
+     */
 	removeCardElements(player) {
 		let x, y;
 		if (player.name === "player") {
@@ -161,7 +190,12 @@ class Game {
 		this.ctx.clearRect(x, y, width, height);
 	}
 
-	// Returns a card from hand's player based on y.
+	/**
+     * Returns a card from hand's player based on y.
+     * @param {Player} player - The player who is choosing a card.
+	 * @param {integer} y - The vertical coordinate 
+	 * @return {Card} - Card selected by player
+     */
 	chooseCardOnHand(player, y) {
 		let selectedCard;
 		switch (y) {
@@ -184,14 +218,23 @@ class Game {
 		return selectedCard;
 	}
 
-	// Change x & y from card passed as parameter
-	// pushes it to cardsInPlay Array
-	// Draws it at new x & y.
+	/**
+     * Change x & y from card passed as parameter, pushes into cardsInPlay and draws it at x & y.
+	 * @param {Card} card - The card to move.
+     * @param {integer} x - The new x value
+	 * @param {integer} y - The new y value
+     */
 	moveCardToGameBoard(card, x, y) {
 		card.x = x;
 		card.y = y;
 	}
-	// Look for an x & y in a matrix and returns his position in 2d Array
+
+	/**
+     * Look for an x & y in a matrix and returns his position in 2d Array
+	 * @param {array} matrix - The 2d array to convert.
+     * @param {integer} x - The x value to find.
+	 * @param {integer} y - The y value to find.
+     */
 	getPositionFromMatrixToArray(matrix, x, y) {
 		let index = 0;
 		for (let array of matrix) {

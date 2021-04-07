@@ -1,3 +1,4 @@
+/** Class representing Sounds */
 class Sounds {
 	constructor() {
 		this.flip = new Audio("assets/sounds/sound-turn.wav");
@@ -25,20 +26,20 @@ class Sounds {
 	playSpecial() {
 		this.special.play();
 	}
-	playBGM(){
+	playBGM() {
 		this.bgm.currentTime = 0;
 		this.bgm.volume = 0.5;
 		this.bgm.play();
 	}
-	stopBGM(){
+	stopBGM() {
 		this.bgm.pause();
 	}
-	playFanfare(){
+	playFanfare() {
 		this.fanfare.currentTime = 0;
 		this.fanfare.volume = 0.5;
 		this.fanfare.play();
 	}
-	stopFanfare(){
+	stopFanfare() {
 		this.fanfare.pause();
 	}
 }

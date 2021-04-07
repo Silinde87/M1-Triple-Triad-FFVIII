@@ -9,8 +9,9 @@ const volumeButtons = document.querySelector("#volume-btns");
 const volumeUp = document.querySelector(".fa-volume-up");
 const volumeMute = document.querySelector(".fa-volume-mute");
 
-// SPLASH SCREEN //
-// Create splash
+/**
+ * Creates the splash screen of the game
+ */
 createSplashScreen = () => {
 	splashScreen = createHtmlElement(
 		"main",
@@ -27,11 +28,15 @@ createSplashScreen = () => {
 	);
 	document.body.appendChild(splashScreen);
 };
-// Remove Splash
+
+/**
+ * Removes the splash screen of the game
+ */
 removeSplashScreen = () => splashScreen.remove();
 
-// GAME SCREEN //
-// Create game
+/**
+ * Creates game screen
+ */
 createGameScreen = () => {
 	gameStatus = "choosingCard";
 
@@ -63,11 +68,17 @@ createGameScreen = () => {
 	);
 	document.body.appendChild(gameScreen);
 };
-// Remove game
+
+/**
+ * Removes game screen
+ */
 removeGameScreen = () => gameScreen.remove();
 
-// GAME OVER SCREEN //
-// Create game over
+/**
+ * Creates game over screen
+ * @param {string} result - The result of the game: win or draw.
+ * @param {string} winner - The winner of the game: player or opponent.
+ */
 createGameOverScreen = (result, winner) => {
 	gameOverScreen = createHtmlElement(
 		"main",
@@ -86,11 +97,16 @@ createGameOverScreen = (result, winner) => {
 		resultGameOver.innerHTML = "Well done both of you! \nPress ENTER to start";
 	}
 };
-// Remove game over
+
+/**
+ * Removes game over screen
+ */
 removeGameOverScreen = () => gameOverScreen.remove();
 
-// Preload the html elements with all the cards in play
-createPreloadedCardsElement = (game) => {
+/**
+ * Preload the HTMLImageElement with all the cards in play
+ */
+createPreloadedCardsElement = () => {
 	let deck = new Deck().cardList;
 
 	const preloadedCardsElement = createHtmlElement("div", "preloaded-cards", null, null);
@@ -125,7 +141,14 @@ createPreloadedCardsElement = (game) => {
 	document.body.appendChild(preloadedCardsElement);
 };
 
-// Creates DOM elements with many configuration optional parameters
+/**
+ * Creates DOM elements with many configuration optional parameters
+ * @param {string} type - Type of the HTML Element.
+ * @param {string} id - ID of the HTML Element. Can be null.
+ * @param {array} arrayClasses - Class or classes of the HTML Element. Can be null.
+ * @param {string} content - Content or children of the HTMLElement.
+ * @return {HTMLElement} - The HTMLElement created.
+ */
 createHtmlElement = (type, id, arrayClasses, content) => {
 	const element = document.createElement(type);
 	if (id) element.id = id;
@@ -145,7 +168,9 @@ createHtmlElement = (type, id, arrayClasses, content) => {
 	return element;
 };
 
-// Setting game state. Start Game.
+/**
+ * Sets game state. Start Game.
+ */
 startGame = () => {
 	sounds.playBGM();
 	removeSplashScreen();
@@ -163,15 +188,19 @@ startGame = () => {
 	);
 };
 
-// Setting game state. End Game.
+/**
+ * Sets game state. End game.
+ */
 endGame = (result, winner) => {
+	if(!sounds.bgm.paused) sounds.playFanfare();
 	sounds.stopBGM();
-	sounds.playFanfare();
 	removeGameScreen();
 	createGameOverScreen(result, winner);
 };
 
-// Handle ENTER keydown. Uses gameStatus to modify his functionality
+/**
+ * Handle ENTER keydown. Uses gameStatus to modify his functionality
+ */
 handleEnterKeyDown = () => {
 	switch (gameStatus) {
 		case "initial":
@@ -242,7 +271,9 @@ handleEnterKeyDown = () => {
 	}
 };
 
-// Handle ARROWS keydown. Uses gameStatus to modify his functionality
+/**
+ * Handle ARROWS keydown. Uses gameStatus to modify his functionality
+ */
 handleArrowKeyDown = (e) => {
 	switch (gameStatus) {
 		// ChoosingCard game status.
@@ -302,7 +333,9 @@ handleArrowKeyDown = (e) => {
 	}
 };
 
-// Handle ESCAPE keydown. Returns to choosingCard status.
+/**
+ * Handle ESCAPE keydown. Returns to choosingCard status.
+ */
 handleEscKeyDown = () => {
 	gameStatus = "choosingCard";
 	let handX;
@@ -327,7 +360,7 @@ window.addEventListener("load", () => {
 	createPreloadedCardsElement();
 });
 
-//Press Enter to continue
+//Enter key listeners
 window.addEventListener("keydown", (e) => {
 	if (e.key === "Enter") handleEnterKeyDown();
 	let arrowKeys = ["ArrowLeft", "ArrowUp", "ArrowRight", "ArrowDown"];
@@ -345,6 +378,7 @@ window.addEventListener("keydown", (e) => {
 	}
 });
 
+//Volumne buttons listeners
 volumeButtons.addEventListener("click", () => {
 	volumeUp.classList.toggle("hide-sound");
 	volumeMute.classList.toggle("hide-sound");

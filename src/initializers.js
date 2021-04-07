@@ -19,13 +19,15 @@ const opponentCardsCoordinates = [
 const boardMatrix = fillGameBoardMatrix();
 
 const cursorCoord = {
-    playersHand: { x: 1030, y: 80 },
-    opponentsHand: { x: 20, y: 80 },
-    gameboard: { x: boardMatrix[1][1].x + 72, y: boardMatrix[1][1].y + 88 },
+	playersHand: { x: 1030, y: 80 },
+	opponentsHand: { x: 20, y: 80 },
+	gameboard: { x: boardMatrix[1][1].x + 72, y: boardMatrix[1][1].y + 88 },
 };
 
-
-// Creates a matrix with the coordinates of the gameboard
+/**
+ * Creates a matrix with the coordinates of the gameboard
+ * @return {array} - The 2D Array with the gameboard x & y values in objects.
+ */
 function fillGameBoardMatrix() {
 	const initX = 340;
 	const initY = 20;
@@ -47,6 +49,4 @@ function fillGameBoardMatrix() {
 		],
 	];
 	return matrix;
-};
-
-
+}
