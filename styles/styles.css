@@ -93,11 +93,12 @@ p {
 	flex-direction: column;
 }
 #chocobo-info > img {
-	height: 700px;
+	width: 70%;
 	filter: drop-shadow(10px 5px 6px #a97e11);
+	align-self: center;
 }
 #chocobo-info > p{
-	font-size: 4rem;
+	font-size: 3rem;
 }
 
 /* Splash Screen */
