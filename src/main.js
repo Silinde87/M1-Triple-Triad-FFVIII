@@ -2,13 +2,16 @@ let game;
 let splashScreen;
 let gameScreen;
 let gameOverScreen;
-let gameStatus = "initial"; //Allows switch the "return key" behaviour
-let gameMode = "pve";
+let gameStatus = "splash"; //Allows switch the "return key" behaviour
+let gameMode;
 let cardToMove;
 const sounds = new Sounds();
 const volumeButtons = document.querySelector("#volume-btns");
 const volumeUp = document.querySelector(".fa-volume-up");
 const volumeMute = document.querySelector(".fa-volume-mute");
+let IATimeout = null;
+let cursorPVP;
+let cursorPVE;
 
 /**
  * Creates the splash screen of the game
@@ -20,9 +23,10 @@ createSplashScreen = () => {
 		["background"],
 		`<div id="login-label" class="info-label">
             <img class="info-text"src="assets/img/info-text.png" alt="info-label">
-            <p>Do you want to play?</p>
+            <p>Choose game mode:</p>
             <ul>
-                <li><img class="cursor" src="assets/img/cursor.png" alt="cursor"><p>Yes</p></li>
+                <li><img id="pvp" class="cursor" src="assets/img/cursor.png" alt="cursor"><p>Player vs Player</p></li>
+				<li><img id="pve" class="cursor cursor-hide" src="assets/img/cursor.png" alt="cursor"><p>Player vs AI</p></li>
             </ul>
         </div>
     `
@@ -174,12 +178,14 @@ createHtmlElement = (type, id, arrayClasses, content) => {
  */
 startGame = () => {
 	sounds.playBGM();
+	// cursorPVP = document.querySelector("#pvp");
+	// cursorPVE = document.querySelector("#pve");
 	removeSplashScreen();
-	if (gameOverScreen) {
-		sounds.stopFanfare();
-		removeGameOverScreen();
-	}
+	splashScreen = undefined;
+
 	createGameScreen();
+
+	gameMode = getGameMode();
 	game = new Game(gameScreen);
 	game.start();
 
@@ -199,14 +205,33 @@ endGame = (result, winner) => {
 	createGameOverScreen(result, winner);
 };
 
+getGameMode = () => {
+	if ([...cursorPVE.classList].includes("cursor-hide")) {
+		return "pvp";
+	} else {
+		return "pve";
+	}
+};
+
 /**
  * Handle ENTER keydown. Uses gameStatus to modify his functionality
  */
 handleEnterKeyDown = () => {
 	switch (gameStatus) {
-		case "initial":
+		case "splash":
+			if (gameOverScreen) {
+				sounds.stopFanfare();
+				removeGameOverScreen();
+			}
 			startGame();
 			gameStatus = "choosingCard";
+			break;
+		case "initial":
+			if (!splashScreen) {
+				removeGameOverScreen();
+				createSplashScreen();
+			}
+			gameStatus = "splash";
 			break;
 		case "choosingCard":
 			// Choose a card from hand
@@ -233,8 +258,7 @@ handleEnterKeyDown = () => {
 				return;
 			}
 			sounds.playCard();
-			debugger
-			// Calculate the fight between the cards.
+			// Calculate the fight between the cards and changes card's onwer if needed
 			calculateResult(index, cardToMove, game.cardsInPlay);
 
 			// Move the card from the hand to the gameboard
@@ -248,13 +272,25 @@ handleEnterKeyDown = () => {
 			// Draw again player card's element.
 			game.draftCardsToHand(game.whichPlayerIsUp);
 
-			// Swap players
-			let testArr = game.cardsInPlay.some(el => el === null)
-			
-			if (gameMode === "pve" && game.whichPlayerIsUp.name === 'player' && testArr) {
-				//Gets IA's card
-				game.generateAIPlay();
-			}else{
+			//PVE Mode, generate a random play.
+			if (gameMode === "pve" && game.whichPlayerIsUp.name === "player" && !game.isGameOver()) {
+				IATimeout = setTimeout(() => {
+					game.generateAIPlay();
+					sounds.card.play();
+					game.cardsInPlay.forEach((card) => {
+						if (card) {
+							card.updatePositionAndDrawImageCard(card.x, card.y);
+							card.drawRanksCard();
+						}
+					});
+					game.updateGameNumCardsElements();
+					IATimeout = null;
+				}, 1000);
+				game.lastCursorX = cursorCoord.playersHand.x;
+				game.lastCursorY = cursorCoord.playersHand.y;
+				game.drawCursorGameElem();
+			} else {
+				// PVP Mode, just swap players.
 				game.swapPlayersShift();
 			}
 
@@ -262,7 +298,6 @@ handleEnterKeyDown = () => {
 			game.updateGameCardLabelElem(game.whichPlayerIsUp.cardsInHand[0].cardName);
 			game.showGameCardLabelElem();
 
-			debugger
 			//Update the number of cards element of players.
 			game.updateGameNumCardsElements();
 			if (game.isGameOver()) {
@@ -285,8 +320,24 @@ handleEnterKeyDown = () => {
  * Handle ARROWS keydown. Uses gameStatus to modify his functionality
  */
 handleArrowKeyDown = (e) => {
-	switch (gameStatus) {
+	cursorPVP = document.querySelector("#pvp");
+	cursorPVE = document.querySelector("#pve");
+	switch (gameStatus) { 
 		// ChoosingCard game status.
+		case "splash":
+		case "initial":
+			sounds.select.play();
+			switch (e.key) {
+				case "ArrowUp":
+					cursorPVP.classList.remove("cursor-hide");
+					cursorPVE.classList.add("cursor-hide");
+					break;
+				case "ArrowDown":
+					cursorPVP.classList.add("cursor-hide");
+					cursorPVE.classList.remove("cursor-hide");
+					break;
+			}
+			break;
 		case "choosingCard":
 			const borders = [80, 190, 300, 410, 520];
 			let index = borders.indexOf(game.lastCursorY);
@@ -367,12 +418,16 @@ handleEscKeyDown = () => {
 // EVENTS LISTENERS //
 window.addEventListener("load", () => {
 	createSplashScreen();
+	cursorPVP = document.querySelector("#pvp");
+	cursorPVE = document.querySelector("#pve");
 	createPreloadedCardsElement();
 });
 
 //Enter key listeners
 window.addEventListener("keydown", (e) => {
-	if (e.key === "Enter") handleEnterKeyDown();
+	if (!IATimeout) {
+		if (e.key === "Enter") handleEnterKeyDown();
+	}
 	let arrowKeys = ["ArrowLeft", "ArrowUp", "ArrowRight", "ArrowDown"];
 	if (arrowKeys.includes(e.key)) handleArrowKeyDown(e);
 	if (e.key === "Escape") handleEscKeyDown();
