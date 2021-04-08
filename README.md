@@ -4,6 +4,15 @@
 
 🔗 [Live Demo](https://silinde87.github.io/M1-Triple-Triad-FFVIII/)
 
+<a href="https://github.com/Silinde87/repo-media/blob/main/images/triple-triad-screen1.jpg?raw=true" target="_blank">
+<img src="https://github.com/Silinde87/repo-media/blob/main/images/triple-triad-screen1.jpg?raw=true" width="405px" height="238px">
+</a>
+
+
+<a href="https://github.com/Silinde87/repo-media/blob/main/images/triple-triad-screen2.jpg?raw=true" target="_blank">
+<img src="https://github.com/Silinde87/repo-media/blob/main/images/triple-triad-screen2.jpg?raw=true" width="397px" height="238px">
+</a>
+
 ## Description
 
 Game Card Triple Triad from Final Fantasy VIII replica. Each player starts with five cards and places one card for each turn on the board. The one with the highest rank converts the adjacent one.
@@ -276,9 +285,9 @@ Class Deck(){
 
 URls for the project repo and deploy
 [Link Repo](https://github.com/Silinde87/M1-Triple-Triad-FFVIII)
-[Link Deploy](http://github.com)
+[Link Deploy](https://silinde87.github.io/M1-Triple-Triad-FFVIII/)
 
 ### Slides
 
-URls for the project presentation (slides)
-[Link Slides.com](http://slides.com)
+URls for the project presentation
+[Link Prezi.com](https://prezi.com/p/f6affqnog7gw/?present=1)
