@@ -68,6 +68,10 @@ createHTMLElement()
 startGame()
 // Setting game state. End Game.
 endGame()
+//Gets the game mode
+getGameMode()
+//Check if sound music is muted
+isMuted()
 
 // Handle ENTER keydown. Uses gameStatus to modify his functionality
 handleEnterKeyDown()

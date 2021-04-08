@@ -85,6 +85,7 @@ removeGameScreen = () => gameScreen.remove();
  * @param {string} winner - The winner of the game: player or opponent.
  */
 createGameOverScreen = (result, winner) => {
+	debugger
 	gameOverScreen = createHtmlElement(
 		"main",
 		"gameover-screen-container",
@@ -95,7 +96,12 @@ createGameOverScreen = (result, winner) => {
         </div>
 	`
 	);
+	
 	document.body.appendChild(gameOverScreen);
+	if(gameMode = 'pve'){
+		const resultGameOver = document.getElementById('result-gameover');
+		resultGameOver.innerHTML = 'Wait, what happened? Press ENTER to start';
+	}
 
 	if (result === "draw") {
 		const resultGameOver = document.getElementById("result-gameover");
@@ -204,6 +210,10 @@ endGame = (result, winner) => {
 	createGameOverScreen(result, winner);
 };
 
+/**
+ * Gets the game mode.
+ * @return {string} - Returns pvp or pve
+ */
 getGameMode = () => {
 	if (cursorPVE.classList.contains("cursor-hide")) {
 		return "pvp";
@@ -212,6 +222,10 @@ getGameMode = () => {
 	}
 };
 
+/**
+ * Check if sound music is muted.
+ * @return {boolean}
+ */
 isMuted = () => {
 	if (volumeUp.classList.contains("hide-sound") && !volumeMute.classList.contains("hide-sound")) {
 		return true;
@@ -312,8 +326,14 @@ handleEnterKeyDown = () => {
 				let playerCards = game.countCardsOnGame(game.player);
 				let opponentCards = game.countCardsOnGame(game.opponent);
 
+				//Player winds
 				if (playerCards > opponentCards) endGame("win", "Player");
-				if (playerCards < opponentCards) endGame("win", "Opponent");
+				// IA Wins in pve mode
+				debugger
+				if(playerCards < opponentCards && gameMode === 'pve') endGame('lose', 'Opponent');
+				// Opponent wins
+				if (playerCards < opponentCards && gameMode === 'pvp') endGame("win", "Opponent");
+				// Draw
 				if (playerCards == opponentCards) endGame("draw");
 
 				gameStatus = "initial";
