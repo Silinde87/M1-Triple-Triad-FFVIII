@@ -177,14 +177,15 @@ createHtmlElement = (type, id, arrayClasses, content) => {
  * Sets game state. Start Game.
  */
 startGame = () => {
-	sounds.playBGM();
-	// cursorPVP = document.querySelector("#pvp");
-	// cursorPVE = document.querySelector("#pve");
+	if(!isMuted()) sounds.playBGM();
+	cursorPVP = document.querySelector("#pvp");
+	cursorPVE = document.querySelector("#pve");
 	removeSplashScreen();
 	splashScreen = undefined;
 
 	createGameScreen();
 
+	debugger
 	gameMode = getGameMode();
 	game = new Game(gameScreen);
 	game.start();
@@ -199,17 +200,26 @@ startGame = () => {
  * Sets game state. End game.
  */
 endGame = (result, winner) => {
-	if (!sounds.bgm.paused) sounds.playFanfare();
+	if (!isMuted()) sounds.playFanfare();
 	sounds.stopBGM();
 	removeGameScreen();
 	createGameOverScreen(result, winner);
 };
 
 getGameMode = () => {
-	if ([...cursorPVE.classList].includes("cursor-hide")) {
+	debugger
+	if (cursorPVE.classList.contains("cursor-hide")) {
 		return "pvp";
 	} else {
 		return "pve";
+	}
+};
+
+isMuted = () => {
+	if (volumeUp.classList.contains("hide-sound") && !volumeMute.classList.contains("hide-sound")) {
+		return true;
+	} else {
+		return false;
 	}
 };
 
@@ -230,6 +240,7 @@ handleEnterKeyDown = () => {
 			if (!splashScreen) {
 				removeGameOverScreen();
 				createSplashScreen();
+				sounds.stopFanfare()
 			}
 			gameStatus = "splash";
 			break;
@@ -322,7 +333,7 @@ handleEnterKeyDown = () => {
 handleArrowKeyDown = (e) => {
 	cursorPVP = document.querySelector("#pvp");
 	cursorPVE = document.querySelector("#pve");
-	switch (gameStatus) { 
+	switch (gameStatus) {
 		// ChoosingCard game status.
 		case "splash":
 		case "initial":

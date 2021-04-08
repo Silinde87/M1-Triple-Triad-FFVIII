@@ -17,6 +17,7 @@ class Sounds {
 		this.card.play();
 	}
 	playInvalid() {
+		this.invalid.currentTime = 0;
 		this.invalid.play();
 	}
 	playSelect() {
@@ -28,6 +29,7 @@ class Sounds {
 	}
 	playBGM() {
 		this.bgm.currentTime = 0;
+		this.bgm.loop = true;
 		this.bgm.volume = 0.5;
 		this.bgm.play();
 	}
@@ -36,6 +38,7 @@ class Sounds {
 	}
 	playFanfare() {
 		this.fanfare.currentTime = 0;
+		this.fanfare.loop = true;
 		this.fanfare.volume = 0.5;
 		this.fanfare.play();
 	}
