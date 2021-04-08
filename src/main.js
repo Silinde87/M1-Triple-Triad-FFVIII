@@ -184,8 +184,6 @@ startGame = () => {
 	splashScreen = undefined;
 
 	createGameScreen();
-
-	debugger
 	gameMode = getGameMode();
 	game = new Game(gameScreen);
 	game.start();
@@ -207,7 +205,6 @@ endGame = (result, winner) => {
 };
 
 getGameMode = () => {
-	debugger
 	if (cursorPVE.classList.contains("cursor-hide")) {
 		return "pvp";
 	} else {

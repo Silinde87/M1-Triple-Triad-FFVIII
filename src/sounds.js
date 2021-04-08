@@ -30,7 +30,7 @@ class Sounds {
 	playBGM() {
 		this.bgm.currentTime = 0;
 		this.bgm.loop = true;
-		this.bgm.volume = 0.5;
+		this.bgm.volume = 0.3;
 		this.bgm.play();
 	}
 	stopBGM() {
@@ -39,7 +39,7 @@ class Sounds {
 	playFanfare() {
 		this.fanfare.currentTime = 0;
 		this.fanfare.loop = true;
-		this.fanfare.volume = 0.5;
+		this.fanfare.volume = 0.3;
 		this.fanfare.play();
 	}
 	stopFanfare() {

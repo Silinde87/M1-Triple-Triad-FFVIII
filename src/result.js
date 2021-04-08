@@ -124,7 +124,6 @@ compareRank = (cardAtt, cardDef, posAtt, posDef) => {
  * @return {boolean} - The result of the capture.
  */
 isCaptured = (rankAttacker, rankDefender) => {
-	if (rankAttacker > rankDefender) sounds.playFlip();
 	return rankAttacker > rankDefender;
 };
 
@@ -138,23 +137,31 @@ captures = (direction, cont) => {
 	switch (direction) {
 		// Defender at TOP
 		case 0:
-			if (isCaptured(cont.ranksAtt[TOP], cont.ranksDef[BOTTOM]))
+			if (isCaptured(cont.ranksAtt[TOP], cont.ranksDef[BOTTOM])){				
+				if(cont.cardDef.playerOwner !== cont.cardAtt.playerOwner) sounds.playFlip()
 				cont.cardDef.playerOwner = cont.cardAtt.playerOwner;
+			}
 			break;
 		// Defender at LEFT
 		case 1:
-			if (isCaptured(cont.ranksAtt[LEFT], cont.ranksDef[RIGHT]))
+			if (isCaptured(cont.ranksAtt[LEFT], cont.ranksDef[RIGHT])){
+				if(cont.cardDef.playerOwner !== cont.cardAtt.playerOwner) sounds.playFlip()
 				cont.cardDef.playerOwner = cont.cardAtt.playerOwner;
+			}
 			break;
 		// Defender at RIGHT
 		case 2:
-			if (isCaptured(cont.ranksAtt[RIGHT], cont.ranksDef[LEFT]))
+			if (isCaptured(cont.ranksAtt[RIGHT], cont.ranksDef[LEFT])){
+				if(cont.cardDef.playerOwner !== cont.cardAtt.playerOwner) sounds.playFlip()
 				cont.cardDef.playerOwner = cont.cardAtt.playerOwner;
+			}
 			break;
 		// Defender at LEFT
 		case 3:
-			if (isCaptured(cont.ranksAtt[BOTTOM], cont.ranksDef[TOP]))
+			if (isCaptured(cont.ranksAtt[BOTTOM], cont.ranksDef[TOP])){
+				if(cont.cardDef.playerOwner !== cont.cardAtt.playerOwner) sounds.playFlip()
 				cont.cardDef.playerOwner = cont.cardAtt.playerOwner;
+			}
 			break;
 	}
 };
