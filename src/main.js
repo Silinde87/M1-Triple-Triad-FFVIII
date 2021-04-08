@@ -98,11 +98,13 @@ createGameOverScreen = (result, winner) => {
 	);
 	
 	document.body.appendChild(gameOverScreen);
-	if(gameMode = 'pve'){
+
+	// Modifies game over screen when player lose in pve
+	if(gameMode = 'pve' && result === "lose"){
 		const resultGameOver = document.getElementById('result-gameover');
 		resultGameOver.innerHTML = 'Wait, what happened? Press ENTER to start';
 	}
-
+	// Modifies game over screen when draw.
 	if (result === "draw") {
 		const resultGameOver = document.getElementById("result-gameover");
 		resultGameOver.innerHTML = "Well done both of you! \nPress ENTER to start";

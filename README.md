@@ -20,15 +20,17 @@ The player with the most cards on the board wins the game.
 
 ## MVP (DOM - CANVAS)
 
-Player vs player plays the card game with a keyboard.
+Player vs Player or Player vs AI.
+Keyboard support.
 Without animations. Card disappear from hand and appears at gameboard.
 
 ## Backlog
 
--   Create animations for card movements
--   Implement Random IA for player vs IA
--   Implement realistic IA
--   Add mouse support
+-   Add game instructions at splash screen
+-   Implement realistic IA.
+-   Add mouse support.
+-   Create animations for card movements.
+-   Move the card some pixels horizontally when choosed.
 
 ## Data structure
 
