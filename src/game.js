@@ -246,4 +246,28 @@ class Game {
 			}
 		}
 	}
+
+	/**
+     * Generates a random AI play. Get's a random card, get an avaiable cell an move
+	 * the card there.
+	*/
+	generateAIPlay(){
+		let cardToMove = getRandomCard(this.opponent.cardsInHand);
+		let index = getAvailableCell(this.cardsInPlay);
+		calculateResult(index, cardToMove, this.cardsInPlay);
+		let i = arrayToMatrixIndex[index].i;
+		let j = arrayToMatrixIndex[index].j;
+		let cellX = boardMatrix[i][j].x;
+		let cellY = boardMatrix[i][j].y;
+		this.moveCardToGameBoard(cardToMove, cellX, cellY);
+		this.cardsInPlay.splice(index, 1, cardToMove);
+		this.opponent.removeCardFromHand(cardToMove);
+
+		this.removeCardElements(this.opponent);
+		this.opponent.cardsInHand.forEach((card) => card.flipCard());
+		
+		let cursorX = cursorCoord.playersHand.x;
+		let cursorY = cursorCoord.playersHand.y;
+		this.updatePositionCursorGameElem(cursorX, cursorY);
+	}
 }

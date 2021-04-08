@@ -24,6 +24,18 @@ const cursorCoord = {
 	gameboard: { x: boardMatrix[1][1].x + 72, y: boardMatrix[1][1].y + 88 },
 };
 
+const arrayToMatrixIndex = [
+	{ i: 0, j: 0 },
+	{ i: 0, j: 1 },
+	{ i: 0, j: 2 },
+	{ i: 1, j: 0 },
+	{ i: 1, j: 1 },
+	{ i: 1, j: 2 },
+	{ i: 2, j: 0 },
+	{ i: 2, j: 1 },
+	{ i: 2, j: 2 }
+];
+
 /**
  * Creates a matrix with the coordinates of the gameboard
  * @return {array} - The 2D Array with the gameboard x & y values in objects.

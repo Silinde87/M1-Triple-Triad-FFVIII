@@ -46,6 +46,9 @@ main{
 	height: 20px;
 	margin-right: 10px;
 }
+.cursor-hide{
+	opacity: 0;
+}
 .background {
 	background-image: url("../assets/img/board-mat.jpg");
 	background-size: contain;
@@ -108,9 +111,9 @@ p {
 	align-items: center;
 }
 #login-label {
-	background-size: 400px 150px;
-	width: 400px;
-	height: 150px;	
+	background-size: 360px 170px;
+	width: 360px;
+	height: 170px;	
 	display: flex;
 	align-items: center;
 	flex-direction: column;
