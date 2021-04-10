@@ -18,10 +18,17 @@
 Game Card Triple Triad from Final Fantasy VIII replica. Each player starts with five cards and places one card for each turn on the board. The one with the highest rank converts the adjacent one.
 The player with the most cards on the board wins the game.
 
+## Instructions
+
+Use `arrow keys` to move through the menu and cards.   
+Press `enter` key to select the item.  
+Press `esc` key to undo the selection.  
+Press `F5` to restart the game
+
 ## MVP (DOM - CANVAS)
 
-Player vs Player or Player vs AI.
-Keyboard support.
+Player vs Player or Player vs AI.  
+Keyboard support.  
 Without animations. Card disappear from hand and appears at gameboard.
 
 ## Backlog
