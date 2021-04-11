@@ -15,7 +15,7 @@
 
 ## Description
 
-Game Card Triple Triad from Final Fantasy VIII replica. Each player starts with five cards and places one card for each turn on the board. The one with the highest rank converts the adjacent one.
+Card-Game based, Triple Triad from Final Fantasy VIII replica. Each player starts with five cards and places one card for each turn on the board. The one with the highest rank converts the adjacent one.
 The player with the most cards on the board wins the game.
 
 ## Instructions
